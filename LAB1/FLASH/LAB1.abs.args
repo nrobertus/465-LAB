@@ -1,2 +1,2 @@
 -ViewHidden
--WmsgFob"%f%e:%l:%k:%d:%m\n"
+-WmsgFob"%f%e:%l:%k:%d %m\n"

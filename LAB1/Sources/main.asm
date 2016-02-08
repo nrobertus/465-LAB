@@ -23,6 +23,9 @@
 
 ; variable/data section
 MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
+				t: equ $60
+				m: equ $61
+				b: equ $62
 
 ; code section
 MyCode:     SECTION
@@ -31,12 +34,42 @@ _Startup:
             LDHX   #__SEG_END_SSTACK ; initialize the stack pointer
             TXS
 			CLI			; enable interrupts
+			MOV		#%1, PTADD
 
 mainLoop:
             ; Insert your code here
-            NOP
-
             feed_watchdog
-            BRA    mainLoop
+            LDA		PTAD
+            COMA
+            STA		PTAD
+            BRA delayLoop
+delayLoop:							; 1.99s delay loop.
+			feed_watchdog
+			LDA #53 				; Load A with 53
+			STA t					; store A into t
+			
+		Top:
+			feed_watchdog
+			LDA t					
+			SUB #1					; decrement A
+			BEQ mainLoop			; go to mainLoop if A equals 0
+			STA t					; store back into memory
+			LDA #65					
+			STA m					; store 65 into middle if not equal to zero and go to middle
+		Middle:
+			feed_watchdog
+			LDA m
+			SUB #1					; decrement M
+			STA m					; store back into m
+			BEQ Top					; if equal to 0 go to top
+			LDA #65
+			STA b					; store 65 into b and go to bottom
+		bottom: 
+			feed_watchdog	
+			LDA b
+			SUB #1					; decrement B
+			STA b					; store back into b 
+			BEQ Middle				; if equal to 0 branch to middle
+			BRA bottom				; if not 0 branch to bottom
 
 

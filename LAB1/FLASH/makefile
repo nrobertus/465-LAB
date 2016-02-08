@@ -104,7 +104,7 @@ LAB1.abs.s19: $(BBL_SRCS) $(EXECUTABLES)
 
 # Other Targets
 clean:
-	-$(RM) $(S_DEPS_QUOTED) "./*/*.obj"  $(CPP_DEPS_QUOTED) $(CC_DEPS_QUOTED) $(S_UPPER_DEPS_QUOTED) $(CXX_DEPS_QUOTED) "./*/*.d"  $(BURNER_OUTPUT_OUTPUTS_QUOTED) $(ASM_UPPER_DEPS_QUOTED) $(C_UPPER_DEPS_QUOTED) $(C++_DEPS_QUOTED) $(EXECUTABLES_QUOTED) $(C_DEPS_QUOTED) $(ProjDirPath)/FLASH/LAB1.abs $(ProjDirPath)/FLASH/LAB1.abs $(ProjDirPath)/FLASH/LAB1.abs.args $(ProjDirPath)/FLASH/LAB1.abs.s19 $(ProjDirPath)/FLASH/LAB1.args $(ProjDirPath)/FLASH/LAB1.map
+	-$(RM) $(S_DEPS_QUOTED) "./*/*.obj"  $(CPP_DEPS_QUOTED) $(CC_DEPS_QUOTED) $(S_UPPER_DEPS_QUOTED) $(CXX_DEPS_QUOTED) "./*/*.d"  $(BURNER_OUTPUT_OUTPUTS_QUOTED) $(ASM_UPPER_DEPS_QUOTED) $(C_UPPER_DEPS_QUOTED) $(C++_DEPS_QUOTED) $(EXECUTABLES_QUOTED) $(C_DEPS_QUOTED) $(ProjDirPath)/FLASH/LAB1.abs $(ProjDirPath)/FLASH/LAB1.abs.args $(ProjDirPath)/FLASH/LAB1.abs.s19 $(ProjDirPath)/FLASH/LAB1.args $(ProjDirPath)/FLASH/LAB1.map
 	-@echo ' '
 
 .PHONY: all clean dependents explicit-dependencies warning-messages
