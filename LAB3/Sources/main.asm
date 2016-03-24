@@ -5,7 +5,7 @@ INCLUDE 'derivative.inc'
 XDEF _Startup, main, t, b, m, n
 
 ; imports
-XREF __SEG_END_SSTACK, BF_check, Delay, keypad_write, clear_display, average_readings, one, two, three, four, five, six, seven, eight, nine   ; symbol defined by the linker for the end of the stack
+XREF __SEG_END_SSTACK, LCD_init, Clock_in, BF_check, Delay, keypad_write, clear_display, average_readings, one, two, three, four, five, six, seven, eight, nine   ; symbol defined by the linker for the end of the stack
 
 ; variable/data section
 MY_ZEROPAGE: SECTION  SHORT
@@ -34,97 +34,8 @@ _Startup:
 			ORA #%1000001
 			STA SOPT1
 			
-LCD_initialization:
-			MOV #40, t
-			MOV #255, b
-			JSR Delay				; wait for 15 ms
-			
-			BCLR 0, PTAD			; function set command
-			BCLR 1, PTAD
-			MOV #%00111100, PTBD
-			Clock_in
-			
-			MOV #20, t
-			MOV #255, b
-			JSR Delay				; wait for 4.1 ms
-			
-			BCLR 0, PTAD			; function set command
-			BCLR 1, PTAD
-			MOV #%00111100, PTBD	; function set command
-			Clock_in
-			
-			MOV #10, t
-			MOV #40, b
-			JSR Delay				; wait for 100 us
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00111100, PTBD	; function set command
-			Clock_in
-			
-			JSR BF_check			; check BF
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00101100, PTBD	; function set
-			Clock_in
-			
-			JSR BF_check			; check BF
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00101100, PTBD	; function set
-			Clock_in
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%10101100, PTBD	; set N and F here
-			Clock_in
-				
-			JSR BF_check			; check BF
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00001100, PTBD
-			Clock_in
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%10001100, PTBD	; Display off command
-			Clock_in
-			
-			JSR BF_check			; check BF
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00001100, PTBD
-			Clock_in
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00011100, PTBD	; Clear Display command
-			Clock_in
-			
-			JSR BF_check			; check BF
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00001100, PTBD
-			Clock_in
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%01101100, PTBD	; Entry Mode Set
-			Clock_in
-			
-			JSR BF_check			; check BF
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00001100, PTBD
-			Clock_in
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%11111100, PTBD	; Display On
-			Clock_in
-			
-			JSR BF_check
+initializations:
+	JSR LCD_init
 			
 ADC_initialization:
 ; initializes the analog to digital converter to use 8-bit mode
@@ -151,72 +62,72 @@ display_text:
 			BCLR 0, PTAD
 			
 			MOV #%01001100, PTBD
-			Clock_in
+			JSR Clock_in
 			MOV #%01011100, PTBD	; Write 'E'
-			Clock_in
+			JSR Clock_in
 			
 			JSR BF_check
 			
 			BSET 1, PTAD
 			BCLR 0, PTAD
 			MOV #%01101100, PTBD
-			Clock_in
+			JSR Clock_in
 			MOV #%11101100, PTBD	; Write 'n'
-			Clock_in
+			JSR Clock_in
 			
 			JSR BF_check
 			
 			BSET 1, PTAD
 			BCLR 0, PTAD
 			MOV #%01111100, PTBD
-			Clock_in
+			JSR Clock_in
 			MOV #%01001100, PTBD	; Write 't'
-			Clock_in
+			JSR Clock_in
 			
 			JSR BF_check
 			
 			BSET 1, PTAD
 			BCLR 0, PTAD
 			MOV #%01101100, PTBD
-			Clock_in
+			JSR Clock_in
 			MOV #%01011100, PTBD	; Write 'e'
-			Clock_in
+			JSR Clock_in
 			
 			JSR BF_check
 			
 			BSET 1, PTAD
 			BCLR 0, PTAD
 			MOV #%01111100, PTBD
-			Clock_in
+			JSR Clock_in
 			MOV #%00101100, PTBD	; Write 'r'
-			Clock_in
+			JSR Clock_in
 			
 			JSR BF_check
 			
 			BSET 1, PTAD
 			BCLR 0, PTAD
 			MOV #%00101100, PTBD
-			Clock_in
+			JSR Clock_in
 			MOV #%00001100, PTBD	; Write ' '
-			Clock_in
+			JSR Clock_in
 			
 			JSR BF_check
 			
 			BSET 1, PTAD
 			BCLR 0, PTAD
 			MOV #%01101100, PTBD
-			Clock_in
+			JSR Clock_in
 			MOV #%11101100, PTBD	; Write 'n'
-			Clock_in
+			JSR Clock_in
 			
 			JSR BF_check
 			
 			BSET 1, PTAD
 			BCLR 0, PTAD
 			MOV #%00111100, PTBD
-			Clock_in
+			JSR Clock_in
 			MOV #%10101100, PTBD	; Write ':'
-			Clock_in
+			JSR Clock_in
 			
 			JSR BF_check
 			JMP done

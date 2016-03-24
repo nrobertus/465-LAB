@@ -5,7 +5,6 @@ XREF t, b
 			
 MyCode:     SECTION
 BF_check:
-			feed_watchdog
 			BSET 0, PTAD				; set as read from LCD
 			BCLR 1, PTAD
 			PTBDD_Upper_input			; data direction as input

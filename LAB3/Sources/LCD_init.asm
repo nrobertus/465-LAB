@@ -2,15 +2,15 @@
 INCLUDE 'derivative.inc'
 
 ; export symbols
-XDEF LCD_initialization
+XDEF LCD_init
 
 ; imports
-XREF BF_check, Delay, t, b, m, n
+XREF BF_check, Delay, Clock_in t, b, m, n
 
 ; code section
 MyCode:     SECTION
 
-LCD_initialization:
+LCD_init:
 	MOV #40, t
 	MOV #255, b
 	JSR Delay				; wait for 15 ms
@@ -101,3 +101,4 @@ LCD_initialization:
 	JSR Clock_in
 	
 	JSR BF_check
+	RTS
