@@ -1,10 +1,7 @@
-			INCLUDE 'derivative.inc'
+INCLUDE 'derivative.inc'
             
-			XDEF BF_check, clear_display, new_address
-
-			XREF t, b
-            
-MY_ZEROPAGE: SECTION  SHORT
+XDEF BF_check, clear_display, new_address
+XREF t, b
 			
 MyCode:     SECTION
 BF_check:

@@ -1,11 +1,6 @@
-			;INCLUDE 'derivative.inc'
-            
-			XDEF Delay
-         
-			XREF t, b, m
-            
-MY_ZEROPAGE: SECTION  SHORT
-			
+XDEF Delay
+XREF t, b, m
+
 MyCode:     SECTION
 Delay:
 	MOV b, m
@@ -16,12 +11,9 @@ Delay:
 	bottom:
 			DEC b
 			BEQ top
-			BRA bottom
-			
-	ass:
-			
-			RTS
-			
+			BRA bottom			
+	ass:			
+			RTS			
 ; 20 ms delay $60 30, $61 255
 ; 4.75 ms delay $60 8, $61 255
 ; 116 us delay $60 2, $61 40

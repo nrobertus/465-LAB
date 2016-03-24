@@ -1,13 +1,7 @@
-			INCLUDE 'derivative.inc'
-			XDEF keypad_write
-            ; we export both '_Startup' and 'main' as symbols. Either can
-            ; be referenced in the linker .prm file or from C/C++ later on
-            
-            
-            
-            XREF b, t, m   ; symbol defined by the linker for the end of the stack
+INCLUDE 'derivative.inc'
 
-MY_ZEROPAGE: SECTION  SHORT
+XDEF keypad_write
+XREF b, t, m   ; symbol defined by the linker for the end of the stack
 			
 MyCode:     SECTION
 keypad_write:

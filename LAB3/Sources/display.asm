@@ -1,12 +1,8 @@
-            INCLUDE 'derivative.inc'
+INCLUDE 'derivative.inc'
             
-            XDEF display   
-            
-			XREF n, clear_display, BF_check, new_address, DAA_decode   ; symbol defined by the linker for the end of the stack
+XDEF display
+XREF n, clear_display, BF_check, new_address, DAA_decode   ; symbol defined by the linker for the end of the stack
 
-
-; variable/data section
-MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
 MyCode:     SECTION
 display:
 ; clear the LCD display and jump to the second line of the LCD display.

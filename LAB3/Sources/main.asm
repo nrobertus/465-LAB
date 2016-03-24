@@ -1,28 +1,14 @@
-;*******************************************************************
-;* This stationery serves as the framework for a user application. *
-;* For a more comprehensive program that demonstrates the more     *
-;* advanced functionality of this processor, please see the        *
-;* demonstration applications, located in the examples             *
-;* subdirectory of the "Freescale CodeWarrior for HC08" program    *
-;* directory.                                                      *
-;*******************************************************************
-
 ; Include derivative-specific definitions
-            INCLUDE 'derivative.inc'
-            
+INCLUDE 'derivative.inc'
 
 ; export symbols
-            XDEF _Startup, main, t, b, m, n
-            ; we export both '_Startup' and 'main' as symbols. Either can
-            ; be referenced in the linker .prm file or from C/C++ later on
-            
-            
-            
-			XREF __SEG_END_SSTACK, BF_check, Delay, keypad_write, clear_display, average_readings, one, two, three, four, five, six, seven, eight, nine   ; symbol defined by the linker for the end of the stack
+XDEF _Startup, main, t, b, m, n
 
+; imports
+XREF __SEG_END_SSTACK, BF_check, Delay, keypad_write, clear_display, average_readings, one, two, three, four, five, six, seven, eight, nine   ; symbol defined by the linker for the end of the stack
 
 ; variable/data section
-MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
+MY_ZEROPAGE: SECTION  SHORT
 ; equates used for the delay subroutine and storing how many times a temperature sensor is read from.
 			n: EQU $83
 			t: EQU $71
@@ -44,12 +30,11 @@ _Startup:
 			MOV #$FF, PTBDD
 			MOV #%00000001, $82
 			
-			LDA SOPT1				; Enable the reset switch.
-			ORA #%00000001
+			LDA SOPT1				; Reset on, watchdog off
+			ORA #%1000001
 			STA SOPT1
 			
 LCD_initialization:
-			feed_watchdog
 			MOV #40, t
 			MOV #255, b
 			JSR Delay				; wait for 15 ms

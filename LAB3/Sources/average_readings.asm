@@ -1,12 +1,8 @@
-            INCLUDE 'derivative.inc'
+INCLUDE 'derivative.inc'
             
-            XDEF average_readings            
-            
-			XREF n, convert_temp, displayx   ; symbol defined by the linker for the end of the stack
+XDEF average_readings  
+XREF n, convert_temp, displayx   ; symbol defined by the linker for the end of the stack
 
-
-; variable/data section
-MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
 MyCode:     SECTION
 ; All math is done with counts 
 average_readings:

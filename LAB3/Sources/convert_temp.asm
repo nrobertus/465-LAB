@@ -1,14 +1,9 @@
-            INCLUDE 'derivative.inc'
+INCLUDE 'derivative.inc'
             
-            XDEF convert_temp   
-            
-			XREF n, display   ; symbol defined by the linker for the end of the stack
+XDEF convert_temp   
+XREF n, display   ; symbol defined by the linker for the end of the stack
 
-
-; variable/data section
-MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
 MyCode:     SECTION
-;All math is done with counts 
 convert_temp:
 ;If the reading of the internal temperature sensor is greater than 54 base 10 branch to cold slope. If the reading of the internal temperature sensor is less then 54 base 10 branch to hot slope.
 

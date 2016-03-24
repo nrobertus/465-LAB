@@ -1,12 +1,8 @@
-            INCLUDE 'derivative.inc'
+INCLUDE 'derivative.inc'
             
-            XDEF DAA_decode            
-            
-			XREF one, two, three, four, five, six, seven, eight, nine, zero   ; symbol defined by the linker for the end of the stack
+XDEF DAA_decode
+XREF one, two, three, four, five, six, seven, eight, nine, zero   ; symbol defined by the linker for the end of the stack
 
-
-; variable/data section
-MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
 MyCode:     SECTION
 DAA_decode:
 ; based on the binary number loaded into the accumulator. 0 - 9 is written to the LCD display			

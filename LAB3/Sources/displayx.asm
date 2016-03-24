@@ -1,12 +1,8 @@
             INCLUDE 'derivative.inc'
             
-            XDEF displayx   
-            
-			XREF n, clear_display, BF_check, new_address, DAA_decode   ; symbol defined by the linker for the end of the stack
+XDEF displayx
+XREF n, clear_display, BF_check, new_address, DAA_decode   ; symbol defined by the linker for the end of the stack
 
-
-; variable/data section
-MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
 MyCode:     SECTION
 displayx:
 			MOV $85, $88
