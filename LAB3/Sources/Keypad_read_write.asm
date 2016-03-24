@@ -1,7 +1,7 @@
 INCLUDE 'derivative.inc'
 
 XDEF keypad_write
-XREF b, t, m   ; symbol defined by the linker for the end of the stack
+XREF b, t, m, PTBDD_Upper_output, PTBDD_Upper_input
 			
 MyCode:     SECTION
 keypad_write:
@@ -16,7 +16,7 @@ keypad_write:
 			CMP $60					; to 1110 1111
 			BEQ Delay_Loop			; we will actually branch to last known LED sequence
 			
-			PTBDD_Upper_output		; bits 4,5,6,7 of PTBD are outputs
+			JSR PTBDD_Upper_output		; bits 4,5,6,7 of PTBD are outputs
 			
 			; store the row number into $61 and clear the bottom byte.
 			MOV $60, $61			; Store 1110 1111 into $61
@@ -40,7 +40,7 @@ keypad_write:
 			BSET 3, PTBD			; Set bit three (G2A=1) for a rising edge of clock
 			
 			; Read from keypad.
-			PTBDD_Upper_input		; Configure bits 4, 5, 6, 7 as inputs
+			JSR PTBDD_Upper_input		; Configure bits 4, 5, 6, 7 as inputs
 			
 			BCLR 3, PTBD			; Bring the clock back down
 			BSET 0, PTBD			; Enable bus transceiver to pass data to bus
@@ -75,7 +75,7 @@ Re_read:
 									; which means that a button was pressed
 			BEQ done				; if key not pressed, go to done.
 			
-			PTBDD_Upper_input		; Configure bits 4, 5, 6, 7 as inputs
+			JSR PTBDD_Upper_input		; Configure bits 4, 5, 6, 7 as inputs
 			BCLR 3, PTBD			; Bring the clock back down
 			BSET 0, PTBD			; Enable bus transceiver to pass data to bus
 			MOV PTBD, $6A			; Move the data from bus to $6A

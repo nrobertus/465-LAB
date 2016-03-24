@@ -1,7 +1,7 @@
 INCLUDE 'derivative.inc'
-            
+        
+;exports		
 XDEF PTBDD_Upper_output, PTBDD_Upper_input, Clock_in
-XREF BF_check
 			
 MyCode:     SECTION
 

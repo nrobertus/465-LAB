@@ -2,14 +2,14 @@
 INCLUDE 'derivative.inc'
 
 ; export symbols
-XDEF _Startup, main, t, b, m, n
+XDEF _Startup, main, t, b, m, n, letter
 
 ; imports
-XREF __SEG_END_SSTACK, LCD_init, Clock_in, BF_check, Delay, keypad_write, clear_display, average_readings, one, two, three, four, five, six, seven, eight, nine   ; symbol defined by the linker for the end of the stack
+XREF __SEG_END_SSTACK, PTBDD_Upper_output, LCD_init, Clock_in, BF_check, Delay, keypad_write, clear_display, average_readings, one, two, three, four, five, six, seven, eight, nine   ; symbol defined by the linker for the end of the stack
 
 ; variable/data section
 MY_ZEROPAGE: SECTION  SHORT
-; equates used for the delay subroutine and storing how many times a temperature sensor is read from.
+			letter: EQU $84
 			n: EQU $83
 			t: EQU $71
 			m: EQU $72
@@ -118,7 +118,7 @@ display_text:
 			JMP done
 decode:
 ; toggles the heartbeat LED on/off
-			PTBDD_Upper_output
+			JSR PTBDD_Upper_output
 			LDA $82
 			EOR #XOR_Mask
 			STA $82

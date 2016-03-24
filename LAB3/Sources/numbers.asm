@@ -82,11 +82,11 @@ partA:
 	BSET 1, PTAD            ; set RS = 1
 	BCLR 0, PTAD            ; set R/W = 0
 	MOV #%00111100, PTBD    ; Write to the LCD display
-	Clock_in
+	JSR Clock_in
 	RTS
 	
 partB:
 	MOV #%00001100, PTBD	
-	Clock_in
+	JSR Clock_in
 	JSR BF_check            ; Jump to BF_check
 	RTS                     
