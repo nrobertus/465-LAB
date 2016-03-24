@@ -1,0 +1,184 @@
+*** EVALUATION ***
+PROGRAM "lab0p2.abs"
+
+*********************************************************************************************
+TARGET SECTION
+---------------------------------------------------------------------------------------------
+Processor   : Freescale HC08
+Memory Model: SMALL
+File Format : ELF\DWARF 2.0
+Linker      : SmartLinker V-5.0.50 Build 13087, Mar 29 2013
+
+*********************************************************************************************
+FILE SECTION
+---------------------------------------------------------------------------------------------
+MCUinit_asm.obj                         Model: SMALL,         Lang: Assembler
+main_asm.obj                            Model: SMALL,         Lang: Assembler
+
+*********************************************************************************************
+STARTUP SECTION
+---------------------------------------------------------------------------------------------
+Entry point: 0xE000 (_Startup)
+
+*********************************************************************************************
+SECTION-ALLOCATION SECTION
+Section Name                    Size  Type     From       To       Segment
+---------------------------------------------------------------------------------------------
+.init                             13     R     0xE000     0xE00C   ROM
+MCUinit_asm__ORG00001              1     R     0xFFBD     0xFFBD   .absSeg0
+MCUinit_asm__ORG00002              1     R     0xFFBF     0xFFBF   .absSeg1
+MCUinit_asm__ORG00003             48     R     0xFFD0     0xFFFF   .absSeg2
+CODE_SECT                         96     R     0xE00D     0xE06C   ROM
+.stack                            64   R/W      0x100      0x13F   RAM
+
+Summary of section sizes per section type:
+READ_ONLY (R):          9F (dec:      159)
+READ_WRITE (R/W):       40 (dec:       64)
+
+*********************************************************************************************
+VECTOR-ALLOCATION SECTION
+    Address     InitValue   InitFunction
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+OBJECT-ALLOCATION SECTION
+     Name               Module                 Addr   hSize   dSize     Ref    Section   RLIB
+---------------------------------------------------------------------------------------------
+MODULE:                 -- MCUinit_asm.obj --
+- PROCEDURES:
+     MCU_init                                  E00D      26      38       1   CODE_SECT   
+     SkipTrim                                  E033      32      50       0   CODE_SECT   
+     isrVtpmovf                                E065       8       8       1   CODE_SECT   
+- VARIABLES:
+     VAR00001                                  FFBD       1       1       0   .text       
+     VAR00002                                  FFBF       1       1       0   .text       
+     VAR00003                                  FFD0       2       2       0   .text       
+     VAR00004                                  FFD2       2       2       0   .text       
+     VAR00005                                  FFD4       2       2       0   .text       
+     VAR00006                                  FFD6       2       2       0   .text       
+     VAR00007                                  FFD8       2       2       0   .text       
+     VAR00008                                  FFDA       2       2       0   .text       
+     VAR00009                                  FFDC       2       2       0   .text       
+     VAR00010                                  FFDE       2       2       0   .text       
+     VAR00011                                  FFE0       2       2       0   .text       
+     VAR00012                                  FFE2       2       2       0   .text       
+     VAR00013                                  FFE4       2       2       0   .text       
+     VAR00014                                  FFE6       2       2       0   .text       
+     VAR00015                                  FFE8       2       2       0   .text       
+     VAR00016                                  FFEA       2       2       0   .text       
+     VAR00017                                  FFEC       2       2       0   .text       
+     VAR00018                                  FFEE       2       2       0   .text       
+     VAR00019                                  FFF0       2       2       0   .text       
+     VAR00020                                  FFF2       2       2       0   .text       
+     VAR00021                                  FFF4       2       2       0   .text       
+     VAR00022                                  FFF6       2       2       0   .text       
+     VAR00023                                  FFF8       2       2       0   .text       
+     VAR00024                                  FFFA       2       2       0   .text       
+     VAR00025                                  FFFC       2       2       0   .text       
+     VAR00026                                  FFFE       2       2       0   .text       
+MODULE:                 -- main_asm.obj --
+- PROCEDURES:
+     _Startup                                  E000       A      10       1   .init       
+     main                                      E000       0       0       0   .init       
+     mainLoop                                  E00A       3       3       0   .init       
+- VARIABLES:
+- LABELS:
+     __SEG_END_SSTACK                           140       0       0       1               
+
+*********************************************************************************************
+MODULE STATISTIC
+  Name                                      Data   Code  Const
+---------------------------------------------------------------------------------------------
+  MCUinit_asm.obj                              0     96     50
+  main_asm.obj                                 0     13      0
+  other                                       64      0      0
+
+*********************************************************************************************
+SECTION USE IN OBJECT-ALLOCATION SECTION
+---------------------------------------------------------------------------------------------
+SECTION: ".text"
+  VAR00001 VAR00002 VAR00003 VAR00004 VAR00005 VAR00006 VAR00007 VAR00008 
+  VAR00009 VAR00010 VAR00011 VAR00012 VAR00013 VAR00014 VAR00015 VAR00016 
+  VAR00017 VAR00018 VAR00019 VAR00020 VAR00021 VAR00022 VAR00023 VAR00024 
+  VAR00025 VAR00026 
+SECTION: ".init"
+  main _Startup mainLoop 
+SECTION: "CODE_SECT"
+  MCU_init SkipTrim isrVtpmovf 
+
+*********************************************************************************************
+OBJECT LIST SORTED BY ADDRESS
+     Name                                      Addr   hSize   dSize     Ref    Section   RLIB
+---------------------------------------------------------------------------------------------
+     main                                      E000       0       0       0   .init       
+     _Startup                                  E000       A      10       1   .init       
+     mainLoop                                  E00A       3       3       0   .init       
+     MCU_init                                  E00D      26      38       1   CODE_SECT   
+     SkipTrim                                  E033      32      50       0   CODE_SECT   
+     isrVtpmovf                                E065       8       8       1   CODE_SECT   
+     VAR00001                                  FFBD       1       1       0   .text       
+     VAR00002                                  FFBF       1       1       0   .text       
+     VAR00003                                  FFD0       2       2       0   .text       
+     VAR00004                                  FFD2       2       2       0   .text       
+     VAR00005                                  FFD4       2       2       0   .text       
+     VAR00006                                  FFD6       2       2       0   .text       
+     VAR00007                                  FFD8       2       2       0   .text       
+     VAR00008                                  FFDA       2       2       0   .text       
+     VAR00009                                  FFDC       2       2       0   .text       
+     VAR00010                                  FFDE       2       2       0   .text       
+     VAR00011                                  FFE0       2       2       0   .text       
+     VAR00012                                  FFE2       2       2       0   .text       
+     VAR00013                                  FFE4       2       2       0   .text       
+     VAR00014                                  FFE6       2       2       0   .text       
+     VAR00015                                  FFE8       2       2       0   .text       
+     VAR00016                                  FFEA       2       2       0   .text       
+     VAR00017                                  FFEC       2       2       0   .text       
+     VAR00018                                  FFEE       2       2       0   .text       
+     VAR00019                                  FFF0       2       2       0   .text       
+     VAR00020                                  FFF2       2       2       0   .text       
+     VAR00021                                  FFF4       2       2       0   .text       
+     VAR00022                                  FFF6       2       2       0   .text       
+     VAR00023                                  FFF8       2       2       0   .text       
+     VAR00024                                  FFFA       2       2       0   .text       
+     VAR00025                                  FFFC       2       2       0   .text       
+     VAR00026                                  FFFE       2       2       0   .text       
+
+*********************************************************************************************
+UNUSED-OBJECTS SECTION
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+COPYDOWN SECTION
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+OBJECT-DEPENDENCIES SECTION
+---------------------------------------------------------------------------------------------
+_Startup                  USES __SEG_END_SSTACK MCU_init 
+
+*********************************************************************************************
+DEPENDENCY TREE
+*********************************************************************************************
+ main and _Startup Group
+ | 
+ +- main                
+ |    
+ +- _Startup            
+    | 
+    +- MCU_init            
+         
+ _ORG00003           
+ | 
+ +- isrVtpmovf          
+ |    
+ +- _Startup             (see above)
+    
+*********************************************************************************************
+STATISTIC SECTION
+---------------------------------------------------------------------------------------------
+
+ExeFile:
+--------
+Number of blocks to be downloaded: 5
+Total size of all blocks to be downloaded: 159
+

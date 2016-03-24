@@ -2,7 +2,7 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-#Progress monitor hint: 1
+#Progress monitor hint: 6
 first : all
 -include ../makefile.init
 
@@ -55,22 +55,22 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-LAB1.abs \
+Lab1.abs \
 
 EXECUTABLES_QUOTED += \
-"LAB1.abs" \
+"Lab1.abs" \
 
 EXECUTABLES_OS_FORMAT += \
-LAB1.abs \
+Lab1.abs \
 
 BURNER_OUTPUT_OUTPUTS += \
-LAB1.abs.s19 \
+Lab1.abs.s19 \
 
 BURNER_OUTPUT_OUTPUTS_QUOTED += \
-"LAB1.abs.s19" \
+"Lab1.abs.s19" \
 
 BURNER_OUTPUT_OUTPUTS_OS_FORMAT += \
-LAB1.abs.s19 \
+Lab1.abs.s19 \
 
 
 # All Target
@@ -81,30 +81,30 @@ call-burner := 1
 endif
 endif
 ifeq ($(call-burner),1)
-all: LAB1.abs LAB1.abs.s19
+all: Lab1.abs Lab1.abs.s19
 else
-all: LAB1.abs
+all: Lab1.abs
 endif
 
 # Tool invocations
-LAB1.abs: $(OBJS) $(USER_OBJS) ../Project_Settings/Linker_Files/Project.prm
+Lab1.abs: $(OBJS) $(USER_OBJS) ../Project_Settings/Linker_Files/Project.prm
 	@echo 'Building target: $@'
-	@echo 'Executing target #2 $@'
+	@echo 'Executing target #7 $@'
 	@echo 'Invoking: S08 Linker'
-	"$(HC08ToolsEnv)/linker" -ArgFile"LAB1.args" -O"LAB1.abs"
+	"$(HC08ToolsEnv)/linker" -ArgFile"Lab1.args" -O"Lab1.abs"
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-LAB1.abs.s19: $(BBL_SRCS) $(EXECUTABLES)
-	@echo 'Executing target #3 $@'
+Lab1.abs.s19: $(BBL_SRCS) $(EXECUTABLES)
+	@echo 'Executing target #8 $@'
 	@echo 'Invoking: S08 Burner'
-	"$(HC08ToolsEnv)/burner" -ArgFile"LAB1.abs.args" -f="$<" -env"ABS_FILE=$(strip $(EXECUTABLES_OS_FORMAT))"
+	"$(HC08ToolsEnv)/burner" -ArgFile"Lab1.abs.args" -f="$<" -env"ABS_FILE=$(strip $(EXECUTABLES_OS_FORMAT))"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(S_DEPS_QUOTED) "./*/*.obj"  $(CPP_DEPS_QUOTED) $(CC_DEPS_QUOTED) $(S_UPPER_DEPS_QUOTED) $(CXX_DEPS_QUOTED) "./*/*.d"  $(BURNER_OUTPUT_OUTPUTS_QUOTED) $(ASM_UPPER_DEPS_QUOTED) $(C_UPPER_DEPS_QUOTED) $(C++_DEPS_QUOTED) $(EXECUTABLES_QUOTED) $(C_DEPS_QUOTED) $(ProjDirPath)/FLASH/LAB1.abs $(ProjDirPath)/FLASH/LAB1.abs.args $(ProjDirPath)/FLASH/LAB1.abs.s19 $(ProjDirPath)/FLASH/LAB1.args $(ProjDirPath)/FLASH/LAB1.map
+	-$(RM) $(S_DEPS_QUOTED) "./*/*.obj"  $(CPP_DEPS_QUOTED) $(CC_DEPS_QUOTED) $(S_UPPER_DEPS_QUOTED) $(CXX_DEPS_QUOTED) "./*/*.d"  $(BURNER_OUTPUT_OUTPUTS_QUOTED) $(ASM_UPPER_DEPS_QUOTED) $(C_UPPER_DEPS_QUOTED) $(C++_DEPS_QUOTED) $(EXECUTABLES_QUOTED) $(C_DEPS_QUOTED) $(ProjDirPath)/FLASH/Lab1.abs $(ProjDirPath)/FLASH/Lab1.abs $(ProjDirPath)/FLASH/Lab1.abs.args $(ProjDirPath)/FLASH/Lab1.abs.s19 $(ProjDirPath)/FLASH/Lab1.args $(ProjDirPath)/FLASH/Lab1.map
 	-@echo ' '
 
 .PHONY: all clean dependents explicit-dependencies warning-messages

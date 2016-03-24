@@ -1,0 +1,368 @@
+;**********************************************************************
+;*																      *
+;* Authors: Levi Hartman, Erik Andersen							      *
+;* Project: Lab 5, Real-Time Clock with I2C Serial Two-Wire Interface *
+;* Date: 4/16/2015												      *
+;*																      *
+;*																      *
+;**********************************************************************
+
+; Include derivative-specific definitions
+            INCLUDE 'derivative.inc'
+            
+
+; export symbols
+            XDEF _Startup, main, t, b, m, n, Month, dummy, Day, Year, Hour, Minutes, Seconds
+
+			XREF __SEG_END_SSTACK, BF_check, Delay, keypad_write, clear_display, new_address, write_to_time, LCD_write  ; symbol defined by the linker for the end of the stack
+
+
+; variable/data section
+MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
+
+			n: EQU $8D
+			dummy: EQU $8C
+			Month: EQU $85
+			Day: EQU $86
+			Year: EQU $87
+			Hour: EQU $89
+			Minutes: EQU $8A
+			Seconds: EQU $8B
+			t: EQU $71
+			m: EQU $72
+			b: EQU $73
+			XOR_Mask: EQU %00010000
+			
+; Me write code here
+MyCode:     SECTION
+main:
+_Startup:							; literally... this happens on Startup. Nothing exciting...
+			BSET 0, PTADD			; Set data direction for port A to outputs.
+			BSET 1, PTADD
+			BSET 2, PTADD
+			BSET 3, PTADD
+			BCLR 2, PTADD
+			BCLR 2, PTAD			; Clear all of port A
+			BCLR 3, PTAD
+			BCLR 4, PTAD
+			BCLR 5, PTAD
+			MOV #$FF, PTBDD			; set data direction for port B
+			MOV #%00000001, $82		; initial heartbeat LED.
+			
+			LDA SOPT1				; Enable the reset switch.
+			ORA #%00000001
+			AND #%01111111			; disable watchdog
+			STA SOPT1
+			
+			
+			
+			MOV #0, n
+			
+LCD_initialization:
+			feed_watchdog
+			MOV #40, t
+			MOV #255, b
+			JSR Delay				; wait for 15 ms
+			
+			BCLR 0, PTAD			; function set command
+			BCLR 1, PTAD
+			MOV #%00111100, PTBD
+			Clock_in
+			
+			MOV #20, t
+			MOV #255, b
+			JSR Delay				; wait for 4.1 ms
+			
+			BCLR 0, PTAD			
+			BCLR 1, PTAD
+			MOV #%00111100, PTBD	; function set command
+			Clock_in
+			
+			MOV #10, t
+			MOV #40, b
+			JSR Delay				; wait for 100 us
+			
+			BCLR 0, PTAD			
+			BCLR 1, PTAD
+			MOV #%00111100, PTBD	; function set command
+			Clock_in
+			
+			JSR BF_check			; check BF
+			
+			BCLR 0, PTAD			
+			BCLR 1, PTAD
+			MOV #%00101100, PTBD	; function set
+			Clock_in
+			
+			JSR BF_check			; check BF
+			
+			BCLR 0, PTAD			
+			BCLR 1, PTAD
+			MOV #%00101100, PTBD	; function set
+			Clock_in
+			BCLR 0, PTAD			
+			BCLR 1, PTAD
+			MOV #%10101100, PTBD	; set N and F here
+			Clock_in
+				
+			JSR BF_check			; check BF
+			
+			BCLR 0, PTAD			
+			BCLR 1, PTAD
+			MOV #%00001100, PTBD
+			Clock_in
+			BCLR 0, PTAD			
+			BCLR 1, PTAD
+			MOV #%10001100, PTBD	; Display off command
+			Clock_in
+			
+			JSR BF_check			; check BF
+			
+			BCLR 0, PTAD			
+			BCLR 1, PTAD
+			MOV #%00001100, PTBD
+			Clock_in
+			BCLR 0, PTAD			
+			BCLR 1, PTAD
+			MOV #%00011100, PTBD	; Clear Display command
+			Clock_in
+			
+			JSR BF_check			; check BF
+			
+			BCLR 0, PTAD			
+			BCLR 1, PTAD
+			MOV #%00001100, PTBD
+			Clock_in
+			BCLR 0, PTAD			
+			BCLR 1, PTAD
+			MOV #%01101100, PTBD	; Entry Mode Set
+			Clock_in
+			
+			JSR BF_check			; check BF
+			
+			BCLR 0, PTAD			
+			BCLR 1, PTAD
+			MOV #%00001100, PTBD
+			Clock_in
+			BCLR 0, PTAD			
+			BCLR 1, PTAD
+			MOV #%11111100, PTBD	; Display On
+			Clock_in
+			
+			JSR BF_check
+			
+ask_date:
+			
+			MOV #$45, $83			; Write 'E'
+			JSR LCD_write
+			
+			MOV #$6E, $83			; Write 'n'
+			JSR LCD_write
+			
+			MOV #$74, $83			; Write 't'
+			JSR LCD_write
+			
+			MOV #$65, $83			; Write 'e'
+			JSR LCD_write
+			
+			MOV #$72, $83			; Write 'r'
+			JSR LCD_write
+			
+			MOV #$20, $83			; Write ' '
+			JSR LCD_write
+			
+			MOV #$4D, $83			; Write 'M'
+			JSR LCD_write
+			
+			MOV #$4D, $83			; Write 'M'
+			JSR LCD_write
+			
+			MOV #$2F, $83			; Write '/'
+			JSR LCD_write
+			
+			MOV #$44, $83			; Write 'D'
+			JSR LCD_write
+			
+			MOV #$44, $83			; Write 'D'
+			JSR LCD_write
+			
+			MOV #$2F, $83			; Write '/'
+			JSR LCD_write
+			
+			MOV #$59, $83			; Write 'Y'
+			JSR LCD_write
+			
+			MOV #$59, $83			; Write 'Y'
+			JSR LCD_write
+			
+			MOV #$3A, $83			; Write ':'
+			JSR LCD_write
+			
+			JSR new_address
+			CLRX
+			JMP done
+ask_time:
+			JSR clear_display
+			MOV #$45, $83			; Write 'E'
+			JSR LCD_write
+			
+			MOV #$6E, $83			; Write 'n'
+			JSR LCD_write
+			
+			MOV #$74, $83			; Write 't'
+			JSR LCD_write
+			
+			MOV #$65, $83			; Write 'e'
+			JSR LCD_write
+			
+			MOV #$72, $83			; Write 'r'
+			JSR LCD_write
+			
+			MOV #$20, $83			; Write ' '
+			JSR LCD_write
+			
+			MOV #$68, $83			; Write 'h'
+			JSR LCD_write
+			
+			MOV #$68, $83			; Write 'h'
+			JSR LCD_write
+			
+			MOV #$2F, $83			; Write '/'
+			JSR LCD_write
+			
+			MOV #$6D, $83			; Write 'm'
+			JSR LCD_write
+			
+			MOV #$6D, $83			; Write 'm'
+			JSR LCD_write
+			
+			MOV #$2F, $83			; Write '/'
+			JSR LCD_write
+			
+			MOV #$73, $83			; Write 's'
+			JSR LCD_write
+			
+			MOV #$73, $83			; Write 's'
+			JSR LCD_write
+			
+			MOV #$3A, $83			; Write ':'
+			JSR LCD_write
+			
+			JSR new_address
+			INCX
+			JMP done
+decode:
+
+			; determine which button was pressed.
+			TXA
+			CMP #3
+			BEQ ask_time
+			
+			PTBDD_Upper_output
+			LDA $82
+			EOR #XOR_Mask			; Toggle Heartbeat LED
+			STA $82
+			MOV $82, PTBD
+			BSET 3, PTBD			; Clock Heartbeat LED
+			JMP decode1
+			
+zero:
+			MOV #$30, $83
+			JSR LCD_write
+			
+			MOV #0, dummy
+			JSR write_to_time
+			JMP done
+one:		
+			MOV #$31, $83
+			JSR LCD_write
+			
+			MOV #1, dummy
+			JSR write_to_time
+			JMP done
+two:
+			MOV #$32, $83
+			JSR LCD_write
+			
+			MOV #2, dummy
+			JSR write_to_time
+			JMP done
+three:
+			MOV #$33, $83
+			JSR LCD_write
+			
+			MOV #3, dummy
+			JSR write_to_time
+			JMP done
+four:
+			MOV #$34, $83
+			JSR LCD_write
+			
+			MOV #4, dummy
+			JSR write_to_time
+			JMP done
+			
+decode1:			
+			LDA $70					; Load the pattern from memory
+			CMP #%01110111
+			BEQ one
+			CMP #%10110111
+			BEQ two
+			CMP #%11010111
+			BEQ three
+			CMP #%01111011
+			BEQ four
+			CMP #%10111011
+			BEQ five
+			CMP #%11011011
+			BEQ six
+			CMP #%01111101
+			BEQ seven
+			CMP #%10111101
+			BEQ eight
+			CMP #%11011101
+			BEQ nine
+			CMP #%10111110
+			BEQ zero
+			JMP done
+			
+five:
+			MOV #$35, $83
+			JSR LCD_write
+			
+			MOV #5, dummy
+			JSR write_to_time
+			JMP done
+six:
+			MOV #$36, $83
+			JSR LCD_write
+			
+			MOV #6, dummy
+			JSR write_to_time
+			JMP done
+seven:
+			MOV #$37, $83
+			JSR LCD_write
+			
+			MOV #7, dummy
+			JSR write_to_time
+			JMP done
+eight:
+			MOV #$38, $83
+			JSR LCD_write
+			
+			MOV #8, dummy
+			JSR write_to_time
+			JMP done
+nine:
+			MOV #$39, $83
+			JSR LCD_write
+			
+			MOV #9, dummy
+			JSR write_to_time
+			JMP done
+
+done:
+			MOV #%11110111, $60		; return to reading from the keypad.
+			JSR keypad_write
+			JMP decode	

@@ -1,0 +1,14 @@
+"$(ProjDirPath)/Project_Settings/Linker_Files/Project.prm"
+-M
+-ViewHidden
+-WmsgFob"%f%e:%l:%k:%d %m\n" 
+-Add("$(ProjDirPath)/FLASH/Sources/BF_check_asm.obj"
+"$(ProjDirPath)/FLASH/Sources/Delay_asm.obj"
+"$(ProjDirPath)/FLASH/Sources/Keypad_read_write_asm.obj"
+"$(ProjDirPath)/FLASH/Sources/LCD_write_asm.obj"
+"$(ProjDirPath)/FLASH/Sources/display_asm.obj"
+"$(ProjDirPath)/FLASH/Sources/display_a_asm.obj"
+"$(ProjDirPath)/FLASH/Sources/main_asm.obj"
+"$(ProjDirPath)/FLASH/Sources/mode_a_asm.obj"
+"$(ProjDirPath)/FLASH/Sources/mode_b_asm.obj"
+"$(ProjDirPath)/FLASH/Sources/temp_set_asm.obj")

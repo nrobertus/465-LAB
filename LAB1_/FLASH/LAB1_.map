@@ -1,0 +1,179 @@
+*** EVALUATION ***
+PROGRAM "LAB1_.abs"
+
+*********************************************************************************************
+TARGET SECTION
+---------------------------------------------------------------------------------------------
+Processor   : Freescale HC08
+Memory Model: SMALL
+File Format : ELF\DWARF 2.0
+Linker      : SmartLinker V-5.0.51 Build 14019, Jan 20 2014
+
+*********************************************************************************************
+FILE SECTION
+---------------------------------------------------------------------------------------------
+main_asm.obj                            Model: SMALL,         Lang: Assembler
+
+*********************************************************************************************
+STARTUP SECTION
+---------------------------------------------------------------------------------------------
+Entry point: 0xE000 (_Startup)
+
+*********************************************************************************************
+SECTION-ALLOCATION SECTION
+Section Name                    Size  Type     From       To       Segment
+---------------------------------------------------------------------------------------------
+.init                            656     R     0xE000     0xE28F   ROM
+.stack                            64   R/W      0x100      0x13F   RAM
+.vectSeg0_vect                     2     R     0xFFFE     0xFFFF   .vectSeg0
+
+Summary of section sizes per section type:
+READ_ONLY (R):         292 (dec:      658)
+READ_WRITE (R/W):       40 (dec:       64)
+
+*********************************************************************************************
+VECTOR-ALLOCATION SECTION
+    Address     InitValue   InitFunction
+---------------------------------------------------------------------------------------------
+     0xFFFE        0xE000   _Startup
+
+*********************************************************************************************
+OBJECT-ALLOCATION SECTION
+     Name               Module                 Addr   hSize   dSize     Ref    Section   RLIB
+---------------------------------------------------------------------------------------------
+MODULE:                 -- main_asm.obj --
+- PROCEDURES:
+     _Startup                                  E000      52      82       0   .init       
+     main                                      E000       0       0       0   .init       
+     start                                     E052       9       9       5   .init       
+     decode                                    E05B      1C      28       1   .init       
+     Pattern_A                                 E077      1B      27       0   .init       
+     Pattern_B                                 E092      35      53       1   .init       
+     Reset_XOR                                 E0C7       6       6       0   .init       
+     Pattern_C_away                            E0CD       6       6       0   .init       
+     Pattern_C_together                        E0D3       6       6       0   .init       
+     Pattern_D                                 E0D9       6       6       0   .init       
+     keypad_write                              E0DF      4D      77       1   .init       
+     Re_read                                   E12C      28      40       0   .init       
+     done                                      E154       1       1       0   .init       
+     Delay_Loop                                E155       8       8       0   .init       
+     Top                                       E15D       C      12       0   .init       
+     Middle                                    E169       C      12       0   .init       
+     bottom                                    E175       A      10       0   .init       
+     pattern_c_away                            E17F      38      56       1   .init       
+     pattern_c_together                        E1B7      32      50       1   .init       
+     reset                                     E1E9       6       6       0   .init       
+     pattern_d                                 E1EF      3B      59       2   .init       
+     one                                       E22A      11      17       0   .init       
+     two                                       E23B      11      17       0   .init       
+     three                                     E24C      11      17       0   .init       
+     four                                      E25D      11      17       0   .init       
+     five                                      E26E      11      17       0   .init       
+     six                                       E27F      11      17       0   .init       
+- VARIABLES:
+- LABELS:
+     check                                        F       0       0       0   .text       
+     XOR_mask                                    65       0       0       0   .text       
+     XOR_mask_C                                  69       0       0       0   .text       
+     XOR_mask_C2                                 6C       0       0       0   .text       
+     t                                           71       0       0       0   .text       
+     m                                           72       0       0       0   .text       
+     b                                           73       0       0       0   .text       
+     clear_bottom                                F0       0       0       0   .text       
+
+*********************************************************************************************
+MODULE STATISTIC
+  Name                                      Data   Code  Const
+---------------------------------------------------------------------------------------------
+  main_asm.obj                                 0    656      0
+  other                                       64      2      0
+
+*********************************************************************************************
+SECTION USE IN OBJECT-ALLOCATION SECTION
+---------------------------------------------------------------------------------------------
+SECTION: ".text"
+  check XOR_mask XOR_mask_C XOR_mask_C2 t m b clear_bottom 
+SECTION: ".init"
+  main _Startup start decode Pattern_A Pattern_B Reset_XOR Pattern_C_away 
+  Pattern_C_together Pattern_D keypad_write Re_read done Delay_Loop Top Middle 
+  bottom pattern_c_away pattern_c_together reset pattern_d one two three four 
+  five six 
+
+*********************************************************************************************
+OBJECT LIST SORTED BY ADDRESS
+     Name                                      Addr   hSize   dSize     Ref    Section   RLIB
+---------------------------------------------------------------------------------------------
+     check                                        F       0       0       0   .text       
+     XOR_mask                                    65       0       0       0   .text       
+     XOR_mask_C                                  69       0       0       0   .text       
+     XOR_mask_C2                                 6C       0       0       0   .text       
+     t                                           71       0       0       0   .text       
+     m                                           72       0       0       0   .text       
+     b                                           73       0       0       0   .text       
+     clear_bottom                                F0       0       0       0   .text       
+     main                                      E000       0       0       0   .init       
+     _Startup                                  E000      52      82       0   .init       
+     start                                     E052       9       9       5   .init       
+     decode                                    E05B      1C      28       1   .init       
+     Pattern_A                                 E077      1B      27       0   .init       
+     Pattern_B                                 E092      35      53       1   .init       
+     Reset_XOR                                 E0C7       6       6       0   .init       
+     Pattern_C_away                            E0CD       6       6       0   .init       
+     Pattern_C_together                        E0D3       6       6       0   .init       
+     Pattern_D                                 E0D9       6       6       0   .init       
+     keypad_write                              E0DF      4D      77       1   .init       
+     Re_read                                   E12C      28      40       0   .init       
+     done                                      E154       1       1       0   .init       
+     Delay_Loop                                E155       8       8       0   .init       
+     Top                                       E15D       C      12       0   .init       
+     Middle                                    E169       C      12       0   .init       
+     bottom                                    E175       A      10       0   .init       
+     pattern_c_away                            E17F      38      56       1   .init       
+     pattern_c_together                        E1B7      32      50       1   .init       
+     reset                                     E1E9       6       6       0   .init       
+     pattern_d                                 E1EF      3B      59       2   .init       
+     one                                       E22A      11      17       0   .init       
+     two                                       E23B      11      17       0   .init       
+     three                                     E24C      11      17       0   .init       
+     four                                      E25D      11      17       0   .init       
+     five                                      E26E      11      17       0   .init       
+     six                                       E27F      11      17       0   .init       
+
+*********************************************************************************************
+UNUSED-OBJECTS SECTION
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+COPYDOWN SECTION
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+OBJECT-DEPENDENCIES SECTION
+---------------------------------------------------------------------------------------------
+start                     USES keypad_write decode 
+Pattern_A                 USES start 
+Pattern_B                 USES start 
+Reset_XOR                 USES Pattern_B 
+Pattern_C_away            USES pattern_c_away start 
+Pattern_C_together        USES pattern_c_together start 
+Pattern_D                 USES pattern_d start 
+reset                     USES pattern_d 
+
+*********************************************************************************************
+DEPENDENCY TREE
+*********************************************************************************************
+ main and _Startup Group
+ | 
+ +- main                
+ |    
+ +- _Startup            
+      
+*********************************************************************************************
+STATISTIC SECTION
+---------------------------------------------------------------------------------------------
+
+ExeFile:
+--------
+Number of blocks to be downloaded: 2
+Total size of all blocks to be downloaded: 658
+

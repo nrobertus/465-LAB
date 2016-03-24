@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?fileVersion 4.0.0?>
+
+<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+	<storageModule moduleId="org.eclipse.cdt.core.settings">
+		<cconfiguration id="toolchain.config.hcs08.release.796731870">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="toolchain.config.hcs08.release.796731870" moduleId="org.eclipse.cdt.core.settings" name="FLASH">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.managedbuilder.core.ManagedBuildManager" point="org.eclipse.cdt.core.ScannerInfoProvider"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.LltErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.AsmErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.IcodeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.CobjErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.S08ErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.LnkErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.MwfeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.MakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactExtension="abs" artifactName="LabProject0HeartbeatLed" buildProperties="" cleanCommand="&quot;${system:ECLIPSE_HOME}/../gnu/bin/rm&quot; -f" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;com.freescale.core.ide.cdt.errorParsers.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser;com.freescale.core.ide.cdt.errorParsers.MwfeErrorParser;com.freescale.core.ide.cdt.errorParsers.LnkErrorParser;com.freescale.core.ide.cdt.errorParsers.AsmErrorParser;com.freescale.core.ide.cdt.errorParsers.CobjErrorParser;com.freescale.core.ide.cdt.errorParsers.IcodeErrorParser;com.freescale.core.ide.cdt.errorParsers.LltErrorParser;com.freescale.core.ide.cdt.errorParsers.S08ErrorParser" id="toolchain.config.hcs08.release.796731870" isPrebuildInvalidatingBuild="false" name="FLASH" parent="toolchain.config.hcs08.release">
+					<folderInfo id="toolchain.config.hcs08.release.796731870." name="/" resourcePath="">
+						<toolChain id="hcs08.project.toolchain.821247094" name="HCS08 Toolchain" superClass="hcs08.project.toolchain">
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="hc08.toolchain.platform.1844439243" name="HC08 Targetplatform" superClass="hc08.toolchain.platform"/>
+							<builder buildPath="${ProjDirPath}/FLASH" id="hc08.toolchain.builder.18438525" name="GNU Make Builder.FLASH" superClass="hc08.toolchain.builder"/>
+							<tool id="s08.toolchain.decoder.1285154932" name="S08 Disassembler" superClass="s08.toolchain.decoder"/>
+							<tool id="hc08.toolchain.linker.1213243396" name="S08 Linker" superClass="hc08.toolchain.linker">
+								<option id="hc08.toolchain.linker.base.general.paramFile.1059912890" superClass="hc08.toolchain.linker.base.general.paramFile" value="${ProjDirPath}/Project_Settings/Linker_Files/Project.prm" valueType="string"/>
+								<inputType id="hc08.toolchain.linker.base.input.1687208842" name="Linker Input" superClass="hc08.toolchain.linker.base.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="hc08.toolchain.burner.477043154" name="S08 Burner" superClass="hc08.toolchain.burner"/>
+							<tool id="hcs08.toolchain.compiler.462635141" name="HCS08 Compiler" superClass="hcs08.toolchain.compiler">
+								<option id="hsc08.toolchain.compiler.base.input.i.1653164192" superClass="hsc08.toolchain.compiler.base.input.i" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Project_Headers&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${MCUToolsBaseDir}/lib/hc08c/device/src&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${MCUToolsBaseDir}/lib/hc08c/lib&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${MCUToolsBaseDir}/lib/hc08c/src&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${MCUToolsBaseDir}/lib/hc08c/device/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${MCUToolsBaseDir}/lib/hc08c/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${MCUToolsBaseDir}/lib/hc08c/device/asm_include&quot;"/>
+								</option>
+								<inputType id="hcs08.toolchain.compiler.base.input.c.396634640" name="HCS08 Compiler C Input" superClass="hcs08.toolchain.compiler.base.input.c"/>
+								<inputType id="hcs08.toolchain.compiler.base.input.cpp.1270942449" name="HCS08 Compiler CPP Input" superClass="hcs08.toolchain.compiler.base.input.cpp"/>
+							</tool>
+							<tool id="hc08.toolchain.assembler.703296839" name="HCS08 Assembler" superClass="hc08.toolchain.assembler">
+								<option id="hc08.toolchain.assembler.base.include.dirs.1236504579" superClass="hc08.toolchain.assembler.base.include.dirs" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Project_Headers&quot;"/>
+								</option>
+								<option id="hc08.toolchain.asm.base.codegen.asmdbg.424518097" superClass="hc08.toolchain.asm.base.codegen.asmdbg" value="true" valueType="boolean"/>
+								<inputType id="hc08.toolchain.assembler.base.input.959173218" name="HC08 Assembler Input" superClass="hc08.toolchain.assembler.base.input"/>
+							</tool>
+							<tool id="hc08.toolchain.preprocessor.725367776" name="HCS08 Preprocessor" superClass="hc08.toolchain.preprocessor"/>
+						</toolChain>
+					</folderInfo>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+	</storageModule>
+	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+		<project id="Lab Project 0 Heartbeat Led.toolchain.hcs08.executable.1129185447" name="Freescale HCS08 Project" projectType="toolchain.hcs08.executable"/>
+	</storageModule>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="toolchain.config.hcs08.release.796731870;toolchain.config.hcs08.release.796731870.;hcs08.toolchain.compiler.462635141;hcs08.toolchain.compiler.base.input.cpp.1270942449">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.freescale.hc08.cdt.toolchain.hcs08.discoveryProfile"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="toolchain.config.hcs08.release.796731870;toolchain.config.hcs08.release.796731870.;hcs08.toolchain.compiler.462635141;hcs08.toolchain.compiler.base.input.c.396634640">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.freescale.hc08.cdt.toolchain.hcs08.discoveryProfile"/>
+		</scannerConfigBuildInfo>
+	</storageModule>
+</cproject>

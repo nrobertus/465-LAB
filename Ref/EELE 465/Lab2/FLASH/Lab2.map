@@ -1,0 +1,361 @@
+*** EVALUATION ***
+PROGRAM "Lab2.abs"
+
+*********************************************************************************************
+TARGET SECTION
+---------------------------------------------------------------------------------------------
+Processor   : Freescale HC08
+Memory Model: SMALL
+File Format : ELF\DWARF 2.0
+Linker      : SmartLinker V-5.0.50 Build 13087, Mar 29 2013
+
+*********************************************************************************************
+FILE SECTION
+---------------------------------------------------------------------------------------------
+Awrite_asm.obj                          Model: SMALL,         Lang: Assembler
+BF_check_asm.obj                        Model: SMALL,         Lang: Assembler
+Bwrite_asm.obj                          Model: SMALL,         Lang: Assembler
+Cwrite_asm.obj                          Model: SMALL,         Lang: Assembler
+Delay_asm.obj                           Model: SMALL,         Lang: Assembler
+Dwrite_asm.obj                          Model: SMALL,         Lang: Assembler
+Ewrite_asm.obj                          Model: SMALL,         Lang: Assembler
+Fwrite_asm.obj                          Model: SMALL,         Lang: Assembler
+Keypad_read_write_asm.obj               Model: SMALL,         Lang: Assembler
+eight_asm.obj                           Model: SMALL,         Lang: Assembler
+five_asm.obj                            Model: SMALL,         Lang: Assembler
+four_asm.obj                            Model: SMALL,         Lang: Assembler
+main_asm.obj                            Model: SMALL,         Lang: Assembler
+nine_asm.obj                            Model: SMALL,         Lang: Assembler
+one_asm.obj                             Model: SMALL,         Lang: Assembler
+seven_asm.obj                           Model: SMALL,         Lang: Assembler
+six_asm.obj                             Model: SMALL,         Lang: Assembler
+three_asm.obj                           Model: SMALL,         Lang: Assembler
+two_asm.obj                             Model: SMALL,         Lang: Assembler
+zero_asm.obj                            Model: SMALL,         Lang: Assembler
+
+*********************************************************************************************
+STARTUP SECTION
+---------------------------------------------------------------------------------------------
+Entry point: 0xE000 (_Startup)
+
+*********************************************************************************************
+SECTION-ALLOCATION SECTION
+Section Name                    Size  Type     From       To       Segment
+---------------------------------------------------------------------------------------------
+.init                            456     R     0xE000     0xE1C7   ROM
+MyCode                          1010     R     0xE1C8     0xE5B9   ROM
+.stack                            64   R/W      0x100      0x13F   RAM
+.vectSeg0_vect                     2     R     0xFFFE     0xFFFF   .vectSeg0
+
+Summary of section sizes per section type:
+READ_ONLY (R):         5BC (dec:     1468)
+READ_WRITE (R/W):       40 (dec:       64)
+
+*********************************************************************************************
+VECTOR-ALLOCATION SECTION
+    Address     InitValue   InitFunction
+---------------------------------------------------------------------------------------------
+     0xFFFE        0xE000   _Startup
+
+*********************************************************************************************
+OBJECT-ALLOCATION SECTION
+     Name               Module                 Addr   hSize   dSize     Ref    Section   RLIB
+---------------------------------------------------------------------------------------------
+MODULE:                 -- Awrite_asm.obj --
+- PROCEDURES:
+     Awrite                                    E1C8      28      40       1   MyCode      
+- VARIABLES:
+MODULE:                 -- BF_check_asm.obj --
+- PROCEDURES:
+     BF_check                                  E1F0      3B      59      24   MyCode      
+     done                                      E22B      1F      31       0   MyCode      
+     new_address                               E24A      28      40       0   MyCode      
+     clear_display                             E272      28      40       0   MyCode      
+- VARIABLES:
+MODULE:                 -- Bwrite_asm.obj --
+- PROCEDURES:
+     Bwrite                                    E29A      28      40       1   MyCode      
+- VARIABLES:
+MODULE:                 -- Cwrite_asm.obj --
+- PROCEDURES:
+     Cwrite                                    E2C2      28      40       1   MyCode      
+- VARIABLES:
+MODULE:                 -- Delay_asm.obj --
+- PROCEDURES:
+     Delay                                     E2EA       3       3       3   MyCode      
+     top                                       E2ED       7       7       0   MyCode      
+     bottom                                    E2F4       6       6       0   MyCode      
+     ass                                       E2FA       1       1       0   MyCode      
+- VARIABLES:
+MODULE:                 -- Dwrite_asm.obj --
+- PROCEDURES:
+     Dwrite                                    E2FB      28      40       1   MyCode      
+- VARIABLES:
+MODULE:                 -- Ewrite_asm.obj --
+- PROCEDURES:
+     Ewrite                                    E323      28      40       1   MyCode      
+- VARIABLES:
+MODULE:                 -- Fwrite_asm.obj --
+- PROCEDURES:
+     Fwrite                                    E34B      28      40       1   MyCode      
+- VARIABLES:
+MODULE:                 -- Keypad_read_write_asm.obj --
+- PROCEDURES:
+     keypad_write                              E373      50      80       1   MyCode      
+     Re_read                                   E3C3      28      40       0   MyCode      
+     done                                      E3EB       1       1       0   MyCode      
+     Delay_Loop                                E3EC       B      11       0   MyCode      
+     Top                                       E3F7      12      18       0   MyCode      
+     Middle                                    E409      12      18       0   MyCode      
+     bottom                                    E41B       F      15       0   MyCode      
+- VARIABLES:
+MODULE:                 -- eight_asm.obj --
+- PROCEDURES:
+     eight                                     E42A      28      40       1   MyCode      
+- VARIABLES:
+MODULE:                 -- five_asm.obj --
+- PROCEDURES:
+     five                                      E452      28      40       1   MyCode      
+- VARIABLES:
+MODULE:                 -- four_asm.obj --
+- PROCEDURES:
+     four                                      E47A      28      40       1   MyCode      
+- VARIABLES:
+MODULE:                 -- main_asm.obj --
+- PROCEDURES:
+     _Startup                                  E000     10C     268       0   .init       
+     main                                      E000       0       0       0   .init       
+     decode                                    E10C      53      83       1   .init       
+     done                                      E15F       9       9      17   .init       
+     A_write                                   E168       6       6       0   .init       
+     B_write                                   E16E       6       6       0   .init       
+     C_write                                   E174       6       6       0   .init       
+     D_write                                   E17A       6       6       0   .init       
+     E_write                                   E180       6       6       0   .init       
+     F_write                                   E186       6       6       0   .init       
+     one_write                                 E18C       6       6       0   .init       
+     two_write                                 E192       6       6       0   .init       
+     three_write                               E198       6       6       0   .init       
+     four_write                                E19E       6       6       0   .init       
+     five_write                                E1A4       6       6       0   .init       
+     six_write                                 E1AA       6       6       0   .init       
+     seven_write                               E1B0       6       6       0   .init       
+     eight_write                               E1B6       6       6       0   .init       
+     nine_write                                E1BC       6       6       0   .init       
+     zero_write                                E1C2       6       6       0   .init       
+- VARIABLES:
+- LABELS:
+     t                                           71       0       0       4   .text       
+     m                                           72       0       0       6   .text       
+     b                                           73       0       0       7   .text       
+MODULE:                 -- nine_asm.obj --
+- PROCEDURES:
+     nine                                      E4A2      28      40       1   MyCode      
+- VARIABLES:
+MODULE:                 -- one_asm.obj --
+- PROCEDURES:
+     one                                       E4CA      28      40       1   MyCode      
+- VARIABLES:
+MODULE:                 -- seven_asm.obj --
+- PROCEDURES:
+     seven                                     E4F2      28      40       1   MyCode      
+- VARIABLES:
+MODULE:                 -- six_asm.obj --
+- PROCEDURES:
+     six                                       E51A      28      40       1   MyCode      
+- VARIABLES:
+MODULE:                 -- three_asm.obj --
+- PROCEDURES:
+     three                                     E542      28      40       1   MyCode      
+- VARIABLES:
+MODULE:                 -- two_asm.obj --
+- PROCEDURES:
+     two                                       E56A      28      40       1   MyCode      
+- VARIABLES:
+MODULE:                 -- zero_asm.obj --
+- PROCEDURES:
+     zero                                      E592      28      40       1   MyCode      
+- VARIABLES:
+
+*********************************************************************************************
+MODULE STATISTIC
+  Name                                      Data   Code  Const
+---------------------------------------------------------------------------------------------
+  Awrite_asm.obj                               0     40      0
+  BF_check_asm.obj                             0    170      0
+  Bwrite_asm.obj                               0     40      0
+  Cwrite_asm.obj                               0     40      0
+  Delay_asm.obj                                0     17      0
+  Dwrite_asm.obj                               0     40      0
+  Ewrite_asm.obj                               0     40      0
+  Fwrite_asm.obj                               0     40      0
+  Keypad_read_write_asm.obj                    0    183      0
+  eight_asm.obj                                0     40      0
+  five_asm.obj                                 0     40      0
+  four_asm.obj                                 0     40      0
+  main_asm.obj                                 0    456      0
+  nine_asm.obj                                 0     40      0
+  one_asm.obj                                  0     40      0
+  seven_asm.obj                                0     40      0
+  six_asm.obj                                  0     40      0
+  three_asm.obj                                0     40      0
+  two_asm.obj                                  0     40      0
+  zero_asm.obj                                 0     40      0
+  other                                       64      2      0
+
+*********************************************************************************************
+SECTION USE IN OBJECT-ALLOCATION SECTION
+---------------------------------------------------------------------------------------------
+SECTION: ".text"
+  t m b 
+SECTION: ".init"
+  main _Startup decode done A_write B_write C_write D_write E_write F_write 
+  one_write two_write three_write four_write five_write six_write seven_write 
+  eight_write nine_write zero_write 
+SECTION: "MyCode"
+  Awrite BF_check done new_address clear_display Bwrite Cwrite Delay top 
+  bottom ass Dwrite Ewrite Fwrite keypad_write Re_read done Delay_Loop Top 
+  Middle bottom eight five four nine one seven six three two zero 
+
+*********************************************************************************************
+OBJECT LIST SORTED BY ADDRESS
+     Name                                      Addr   hSize   dSize     Ref    Section   RLIB
+---------------------------------------------------------------------------------------------
+     t                                           71       0       0       4   .text       
+     m                                           72       0       0       6   .text       
+     b                                           73       0       0       7   .text       
+     main                                      E000       0       0       0   .init       
+     _Startup                                  E000     10C     268       0   .init       
+     decode                                    E10C      53      83       1   .init       
+     done                                      E15F       9       9      17   .init       
+     A_write                                   E168       6       6       0   .init       
+     B_write                                   E16E       6       6       0   .init       
+     C_write                                   E174       6       6       0   .init       
+     D_write                                   E17A       6       6       0   .init       
+     E_write                                   E180       6       6       0   .init       
+     F_write                                   E186       6       6       0   .init       
+     one_write                                 E18C       6       6       0   .init       
+     two_write                                 E192       6       6       0   .init       
+     three_write                               E198       6       6       0   .init       
+     four_write                                E19E       6       6       0   .init       
+     five_write                                E1A4       6       6       0   .init       
+     six_write                                 E1AA       6       6       0   .init       
+     seven_write                               E1B0       6       6       0   .init       
+     eight_write                               E1B6       6       6       0   .init       
+     nine_write                                E1BC       6       6       0   .init       
+     zero_write                                E1C2       6       6       0   .init       
+     Awrite                                    E1C8      28      40       1   MyCode      
+     BF_check                                  E1F0      3B      59      24   MyCode      
+     done                                      E22B      1F      31       0   MyCode      
+     new_address                               E24A      28      40       0   MyCode      
+     clear_display                             E272      28      40       0   MyCode      
+     Bwrite                                    E29A      28      40       1   MyCode      
+     Cwrite                                    E2C2      28      40       1   MyCode      
+     Delay                                     E2EA       3       3       3   MyCode      
+     top                                       E2ED       7       7       0   MyCode      
+     bottom                                    E2F4       6       6       0   MyCode      
+     ass                                       E2FA       1       1       0   MyCode      
+     Dwrite                                    E2FB      28      40       1   MyCode      
+     Ewrite                                    E323      28      40       1   MyCode      
+     Fwrite                                    E34B      28      40       1   MyCode      
+     keypad_write                              E373      50      80       1   MyCode      
+     Re_read                                   E3C3      28      40       0   MyCode      
+     done                                      E3EB       1       1       0   MyCode      
+     Delay_Loop                                E3EC       B      11       0   MyCode      
+     Top                                       E3F7      12      18       0   MyCode      
+     Middle                                    E409      12      18       0   MyCode      
+     bottom                                    E41B       F      15       0   MyCode      
+     eight                                     E42A      28      40       1   MyCode      
+     five                                      E452      28      40       1   MyCode      
+     four                                      E47A      28      40       1   MyCode      
+     nine                                      E4A2      28      40       1   MyCode      
+     one                                       E4CA      28      40       1   MyCode      
+     seven                                     E4F2      28      40       1   MyCode      
+     six                                       E51A      28      40       1   MyCode      
+     three                                     E542      28      40       1   MyCode      
+     two                                       E56A      28      40       1   MyCode      
+     zero                                      E592      28      40       1   MyCode      
+
+*********************************************************************************************
+UNUSED-OBJECTS SECTION
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+COPYDOWN SECTION
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+OBJECT-DEPENDENCIES SECTION
+---------------------------------------------------------------------------------------------
+_Startup                  USES Delay BF_check done 
+done                      USES keypad_write decode 
+A_write                   USES Awrite done 
+B_write                   USES Bwrite done 
+C_write                   USES Cwrite done 
+D_write                   USES Dwrite done 
+E_write                   USES Ewrite done 
+F_write                   USES Fwrite done 
+one_write                 USES one done 
+two_write                 USES two done 
+three_write               USES three done 
+four_write                USES four done 
+five_write                USES five done 
+six_write                 USES six done 
+seven_write               USES seven done 
+eight_write               USES eight done 
+nine_write                USES nine done 
+zero_write                USES zero done 
+Awrite                    USES BF_check 
+new_address               USES BF_check 
+clear_display             USES BF_check 
+Bwrite                    USES BF_check 
+Cwrite                    USES BF_check 
+Delay                     USES b m 
+top                       USES t m b 
+bottom                    USES b 
+Dwrite                    USES BF_check 
+Ewrite                    USES BF_check 
+Fwrite                    USES BF_check 
+Delay_Loop                USES t m b 
+Top                       USES t m 
+Middle                    USES m b 
+bottom                    USES b 
+eight                     USES BF_check 
+five                      USES BF_check 
+four                      USES BF_check 
+nine                      USES BF_check 
+one                       USES BF_check 
+seven                     USES BF_check 
+six                       USES BF_check 
+three                     USES BF_check 
+two                       USES BF_check 
+zero                      USES BF_check 
+
+*********************************************************************************************
+DEPENDENCY TREE
+*********************************************************************************************
+ main and _Startup Group
+ | 
+ +- main                
+ |    
+ +- _Startup            
+    | 
+    +- Delay               
+    |    
+    +- BF_check            
+    |    
+    +- done                
+       | 
+       +- keypad_write        
+       |    
+       +- decode              
+            
+*********************************************************************************************
+STATISTIC SECTION
+---------------------------------------------------------------------------------------------
+
+ExeFile:
+--------
+Number of blocks to be downloaded: 2
+Total size of all blocks to be downloaded: 1468
+

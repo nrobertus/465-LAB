@@ -1,0 +1,406 @@
+*** EVALUATION ***
+PROGRAM "Lab3.abs"
+
+*********************************************************************************************
+TARGET SECTION
+---------------------------------------------------------------------------------------------
+Processor   : Freescale HC08
+Memory Model: SMALL
+File Format : ELF\DWARF 2.0
+Linker      : SmartLinker V-5.0.51 Build 14019, Jan 20 2014
+
+*********************************************************************************************
+FILE SECTION
+---------------------------------------------------------------------------------------------
+BF_check_asm.obj                        Model: SMALL,         Lang: Assembler
+DAA_decode_asm.obj                      Model: SMALL,         Lang: Assembler
+Delay_asm.obj                           Model: SMALL,         Lang: Assembler
+Keypad_read_write_asm.obj               Model: SMALL,         Lang: Assembler
+average_readings_asm.obj                Model: SMALL,         Lang: Assembler
+convert_temp_asm.obj                    Model: SMALL,         Lang: Assembler
+display_asm.obj                         Model: SMALL,         Lang: Assembler
+displayx_asm.obj                        Model: SMALL,         Lang: Assembler
+eight_asm.obj                           Model: SMALL,         Lang: Assembler
+five_asm.obj                            Model: SMALL,         Lang: Assembler
+four_asm.obj                            Model: SMALL,         Lang: Assembler
+main_asm.obj                            Model: SMALL,         Lang: Assembler
+nine_asm.obj                            Model: SMALL,         Lang: Assembler
+one_asm.obj                             Model: SMALL,         Lang: Assembler
+seven_asm.obj                           Model: SMALL,         Lang: Assembler
+six_asm.obj                             Model: SMALL,         Lang: Assembler
+three_asm.obj                           Model: SMALL,         Lang: Assembler
+two_asm.obj                             Model: SMALL,         Lang: Assembler
+zero_asm.obj                            Model: SMALL,         Lang: Assembler
+
+*********************************************************************************************
+STARTUP SECTION
+---------------------------------------------------------------------------------------------
+Entry point: 0xE000 (_Startup)
+
+*********************************************************************************************
+SECTION-ALLOCATION SECTION
+Section Name                    Size  Type     From       To       Segment
+---------------------------------------------------------------------------------------------
+.init                            742     R     0xE000     0xE2E5   ROM
+MyCode                          2053     R     0xE2E6     0xEAEA   ROM
+.stack                            64   R/W      0x100      0x13F   RAM
+.vectSeg0_vect                     2     R     0xFFFE     0xFFFF   .vectSeg0
+
+Summary of section sizes per section type:
+READ_ONLY (R):         AED (dec:     2797)
+READ_WRITE (R/W):       40 (dec:       64)
+
+*********************************************************************************************
+VECTOR-ALLOCATION SECTION
+    Address     InitValue   InitFunction
+---------------------------------------------------------------------------------------------
+     0xFFFE        0xE000   _Startup
+
+*********************************************************************************************
+OBJECT-ALLOCATION SECTION
+     Name               Module                 Addr   hSize   dSize     Ref    Section   RLIB
+---------------------------------------------------------------------------------------------
+MODULE:                 -- BF_check_asm.obj --
+- PROCEDURES:
+     BF_check                                  E2E6      3B      59      54   MyCode      
+     done                                      E321      1F      31       0   MyCode      
+     new_address                               E340      28      40       1   MyCode      
+     clear_display                             E368      28      40       2   MyCode      
+- VARIABLES:
+MODULE:                 -- DAA_decode_asm.obj --
+- PROCEDURES:
+     DAA_decode                                E390      2A      42      12   MyCode      
+     one_write                                 E3BA       6       6       0   MyCode      
+     two_write                                 E3C0       6       6       0   MyCode      
+     three_write                               E3C6       6       6       0   MyCode      
+     four_write                                E3CC       6       6       0   MyCode      
+     five_write                                E3D2       6       6       0   MyCode      
+     six_write                                 E3D8       6       6       0   MyCode      
+     seven_write                               E3DE       6       6       0   MyCode      
+     eight_write                               E3E4       6       6       0   MyCode      
+     nine_write                                E3EA       6       6       0   MyCode      
+     zero_write                                E3F0       6       6       0   MyCode      
+     done                                      E3F6       1       1      10   MyCode      
+- VARIABLES:
+MODULE:                 -- Delay_asm.obj --
+- PROCEDURES:
+     Delay                                     E3F7       3       3      12   MyCode      
+     top                                       E3FA       7       7       0   MyCode      
+     bottom                                    E401       6       6       0   MyCode      
+     ass                                       E407       1       1       0   MyCode      
+- VARIABLES:
+MODULE:                 -- Keypad_read_write_asm.obj --
+- PROCEDURES:
+     keypad_write                              E408      50      80       1   MyCode      
+     Re_read                                   E458      28      40       0   MyCode      
+     done                                      E480       1       1       0   MyCode      
+     Delay_Loop                                E481       B      11       0   MyCode      
+     Top                                       E48C      12      18       0   MyCode      
+     Middle                                    E49E      12      18       0   MyCode      
+     bottom                                    E4B0       F      15       0   MyCode      
+- VARIABLES:
+MODULE:                 -- average_readings_asm.obj --
+- PROCEDURES:
+     average_readings                          E4BF       A      10       9   MyCode      
+     for_loop                                  E4C9      11      17       0   MyCode      
+     check_coco                                E4DA       5       5       0   MyCode      
+     check_n                                   E4DF      2D      45       0   MyCode      
+     for_loopx                                 E50C      13      19       0   MyCode      
+     check_cocox                               E51F       5       5       0   MyCode      
+     check_nx                                  E524      2E      46       0   MyCode      
+- VARIABLES:
+MODULE:                 -- convert_temp_asm.obj --
+- PROCEDURES:
+     convert_temp                              E552       8       8       1   MyCode      
+     cold_slope                                E55A      2C      44       0   MyCode      
+     hot_slope                                 E586      2C      44       0   MyCode      
+     done                                      E5B2       1       1       2   MyCode      
+- VARIABLES:
+MODULE:                 -- display_asm.obj --
+- PROCEDURES:
+     display                                   E5B3     135     309       2   MyCode      
+     write_3                                   E6E8      4C      76       0   MyCode      
+     write_2                                   E734      4A      74       0   MyCode      
+- VARIABLES:
+MODULE:                 -- displayx_asm.obj --
+- PROCEDURES:
+     displayx                                  E77E     147     327       1   MyCode      
+     write_3                                   E8C5      4C      76       0   MyCode      
+     write_2                                   E911      4A      74       0   MyCode      
+- VARIABLES:
+MODULE:                 -- eight_asm.obj --
+- PROCEDURES:
+     eight                                     E95B      28      40       2   MyCode      
+- VARIABLES:
+MODULE:                 -- five_asm.obj --
+- PROCEDURES:
+     five                                      E983      28      40       2   MyCode      
+- VARIABLES:
+MODULE:                 -- four_asm.obj --
+- PROCEDURES:
+     four                                      E9AB      28      40       2   MyCode      
+- VARIABLES:
+MODULE:                 -- main_asm.obj --
+- PROCEDURES:
+     _Startup                                  E000     12A     298       0   .init       
+     main                                      E000       0       0       0   .init       
+     display_text                              E12A      DF     223       1   .init       
+     decode                                    E209      1A      26       1   .init       
+     E_write                                   E223       6       6       0   .init       
+     decode1                                   E229      2D      45       1   .init       
+     one_write                                 E256       F      15       0   .init       
+     two_write                                 E265       F      15       0   .init       
+     three_write                               E274       F      15       0   .init       
+     four_write                                E283       F      15       0   .init       
+     five_write                                E292       F      15       0   .init       
+     six_write                                 E2A1       F      15       0   .init       
+     seven_write                               E2B0       F      15       0   .init       
+     eight_write                               E2BF       F      15       0   .init       
+     nine_write                                E2CE       F      15       0   .init       
+     done                                      E2DD       9       9      11   .init       
+- VARIABLES:
+- LABELS:
+     t                                           71       0       0       4   .text       
+     m                                           72       0       0       6   .text       
+     b                                           73       0       0       7   .text       
+     n                                           83       0       0       4   .text       
+MODULE:                 -- nine_asm.obj --
+- PROCEDURES:
+     nine                                      E9D3      28      40       2   MyCode      
+- VARIABLES:
+MODULE:                 -- one_asm.obj --
+- PROCEDURES:
+     one                                       E9FB      28      40       2   MyCode      
+- VARIABLES:
+MODULE:                 -- seven_asm.obj --
+- PROCEDURES:
+     seven                                     EA23      28      40       2   MyCode      
+- VARIABLES:
+MODULE:                 -- six_asm.obj --
+- PROCEDURES:
+     six                                       EA4B      28      40       2   MyCode      
+- VARIABLES:
+MODULE:                 -- three_asm.obj --
+- PROCEDURES:
+     three                                     EA73      28      40       2   MyCode      
+- VARIABLES:
+MODULE:                 -- two_asm.obj --
+- PROCEDURES:
+     two                                       EA9B      28      40       2   MyCode      
+- VARIABLES:
+MODULE:                 -- zero_asm.obj --
+- PROCEDURES:
+     zero                                      EAC3      28      40       1   MyCode      
+- VARIABLES:
+
+*********************************************************************************************
+MODULE STATISTIC
+  Name                                      Data   Code  Const
+---------------------------------------------------------------------------------------------
+  BF_check_asm.obj                             0    170      0
+  DAA_decode_asm.obj                           0    103      0
+  Delay_asm.obj                                0     17      0
+  Keypad_read_write_asm.obj                    0    183      0
+  average_readings_asm.obj                     0    147      0
+  convert_temp_asm.obj                         0     97      0
+  display_asm.obj                              0    459      0
+  displayx_asm.obj                             0    477      0
+  eight_asm.obj                                0     40      0
+  five_asm.obj                                 0     40      0
+  four_asm.obj                                 0     40      0
+  main_asm.obj                                 0    742      0
+  nine_asm.obj                                 0     40      0
+  one_asm.obj                                  0     40      0
+  seven_asm.obj                                0     40      0
+  six_asm.obj                                  0     40      0
+  three_asm.obj                                0     40      0
+  two_asm.obj                                  0     40      0
+  zero_asm.obj                                 0     40      0
+  other                                       64      2      0
+
+*********************************************************************************************
+SECTION USE IN OBJECT-ALLOCATION SECTION
+---------------------------------------------------------------------------------------------
+SECTION: ".text"
+  t m b n 
+SECTION: ".init"
+  main _Startup display_text decode E_write decode1 one_write two_write 
+  three_write four_write five_write six_write seven_write eight_write 
+  nine_write done 
+SECTION: "MyCode"
+  BF_check done new_address clear_display DAA_decode one_write two_write 
+  three_write four_write five_write six_write seven_write eight_write 
+  nine_write zero_write done Delay top bottom ass keypad_write Re_read done 
+  Delay_Loop Top Middle bottom average_readings for_loop check_coco check_n 
+  for_loopx check_cocox check_nx convert_temp cold_slope hot_slope done display 
+  write_3 write_2 displayx write_3 write_2 eight five four nine one seven six 
+  three two zero 
+
+*********************************************************************************************
+OBJECT LIST SORTED BY ADDRESS
+     Name                                      Addr   hSize   dSize     Ref    Section   RLIB
+---------------------------------------------------------------------------------------------
+     t                                           71       0       0       4   .text       
+     m                                           72       0       0       6   .text       
+     b                                           73       0       0       7   .text       
+     n                                           83       0       0       4   .text       
+     main                                      E000       0       0       0   .init       
+     _Startup                                  E000     12A     298       0   .init       
+     display_text                              E12A      DF     223       1   .init       
+     decode                                    E209      1A      26       1   .init       
+     E_write                                   E223       6       6       0   .init       
+     decode1                                   E229      2D      45       1   .init       
+     one_write                                 E256       F      15       0   .init       
+     two_write                                 E265       F      15       0   .init       
+     three_write                               E274       F      15       0   .init       
+     four_write                                E283       F      15       0   .init       
+     five_write                                E292       F      15       0   .init       
+     six_write                                 E2A1       F      15       0   .init       
+     seven_write                               E2B0       F      15       0   .init       
+     eight_write                               E2BF       F      15       0   .init       
+     nine_write                                E2CE       F      15       0   .init       
+     done                                      E2DD       9       9      11   .init       
+     BF_check                                  E2E6      3B      59      54   MyCode      
+     done                                      E321      1F      31       0   MyCode      
+     new_address                               E340      28      40       1   MyCode      
+     clear_display                             E368      28      40       2   MyCode      
+     DAA_decode                                E390      2A      42      12   MyCode      
+     one_write                                 E3BA       6       6       0   MyCode      
+     two_write                                 E3C0       6       6       0   MyCode      
+     three_write                               E3C6       6       6       0   MyCode      
+     four_write                                E3CC       6       6       0   MyCode      
+     five_write                                E3D2       6       6       0   MyCode      
+     six_write                                 E3D8       6       6       0   MyCode      
+     seven_write                               E3DE       6       6       0   MyCode      
+     eight_write                               E3E4       6       6       0   MyCode      
+     nine_write                                E3EA       6       6       0   MyCode      
+     zero_write                                E3F0       6       6       0   MyCode      
+     done                                      E3F6       1       1      10   MyCode      
+     Delay                                     E3F7       3       3      12   MyCode      
+     top                                       E3FA       7       7       0   MyCode      
+     bottom                                    E401       6       6       0   MyCode      
+     ass                                       E407       1       1       0   MyCode      
+     keypad_write                              E408      50      80       1   MyCode      
+     Re_read                                   E458      28      40       0   MyCode      
+     done                                      E480       1       1       0   MyCode      
+     Delay_Loop                                E481       B      11       0   MyCode      
+     Top                                       E48C      12      18       0   MyCode      
+     Middle                                    E49E      12      18       0   MyCode      
+     bottom                                    E4B0       F      15       0   MyCode      
+     average_readings                          E4BF       A      10       9   MyCode      
+     for_loop                                  E4C9      11      17       0   MyCode      
+     check_coco                                E4DA       5       5       0   MyCode      
+     check_n                                   E4DF      2D      45       0   MyCode      
+     for_loopx                                 E50C      13      19       0   MyCode      
+     check_cocox                               E51F       5       5       0   MyCode      
+     check_nx                                  E524      2E      46       0   MyCode      
+     convert_temp                              E552       8       8       1   MyCode      
+     cold_slope                                E55A      2C      44       0   MyCode      
+     hot_slope                                 E586      2C      44       0   MyCode      
+     done                                      E5B2       1       1       2   MyCode      
+     display                                   E5B3     135     309       2   MyCode      
+     write_3                                   E6E8      4C      76       0   MyCode      
+     write_2                                   E734      4A      74       0   MyCode      
+     displayx                                  E77E     147     327       1   MyCode      
+     write_3                                   E8C5      4C      76       0   MyCode      
+     write_2                                   E911      4A      74       0   MyCode      
+     eight                                     E95B      28      40       2   MyCode      
+     five                                      E983      28      40       2   MyCode      
+     four                                      E9AB      28      40       2   MyCode      
+     nine                                      E9D3      28      40       2   MyCode      
+     one                                       E9FB      28      40       2   MyCode      
+     seven                                     EA23      28      40       2   MyCode      
+     six                                       EA4B      28      40       2   MyCode      
+     three                                     EA73      28      40       2   MyCode      
+     two                                       EA9B      28      40       2   MyCode      
+     zero                                      EAC3      28      40       1   MyCode      
+
+*********************************************************************************************
+UNUSED-OBJECTS SECTION
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+COPYDOWN SECTION
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+OBJECT-DEPENDENCIES SECTION
+---------------------------------------------------------------------------------------------
+_Startup                  USES Delay BF_check 
+display_text              USES BF_check done 
+decode                    USES decode1 
+E_write                   USES clear_display display_text 
+decode1                   USES done 
+one_write                 USES one Delay average_readings done 
+two_write                 USES two Delay average_readings done 
+three_write               USES three Delay average_readings done 
+four_write                USES four Delay average_readings done 
+five_write                USES five Delay average_readings done 
+six_write                 USES six Delay average_readings done 
+seven_write               USES seven Delay average_readings done 
+eight_write               USES eight Delay average_readings done 
+nine_write                USES nine Delay average_readings done 
+done                      USES keypad_write decode 
+new_address               USES BF_check 
+clear_display             USES BF_check 
+one_write                 USES one done 
+two_write                 USES two done 
+three_write               USES three done 
+four_write                USES four done 
+five_write                USES five done 
+six_write                 USES six done 
+seven_write               USES seven done 
+eight_write               USES eight done 
+nine_write                USES nine done 
+zero_write                USES zero done 
+Delay                     USES b m 
+top                       USES t m b 
+bottom                    USES b 
+Delay_Loop                USES t m b 
+Top                       USES t m 
+Middle                    USES m b 
+bottom                    USES b 
+average_readings          USES n 
+check_n                   USES n convert_temp 
+check_nx                  USES n displayx 
+cold_slope                USES display done 
+hot_slope                 USES display done 
+display                   USES clear_display new_address BF_check DAA_decode 
+write_3                   USES BF_check DAA_decode 
+write_2                   USES BF_check DAA_decode 
+displayx                  USES BF_check DAA_decode 
+write_3                   USES BF_check DAA_decode 
+write_2                   USES BF_check DAA_decode 
+eight                     USES BF_check 
+five                      USES BF_check 
+four                      USES BF_check 
+nine                      USES BF_check 
+one                       USES BF_check 
+seven                     USES BF_check 
+six                       USES BF_check 
+three                     USES BF_check 
+two                       USES BF_check 
+zero                      USES BF_check 
+
+*********************************************************************************************
+DEPENDENCY TREE
+*********************************************************************************************
+ main and _Startup Group
+ | 
+ +- main                
+ |    
+ +- _Startup            
+    | 
+    +- Delay               
+    |    
+    +- BF_check            
+         
+*********************************************************************************************
+STATISTIC SECTION
+---------------------------------------------------------------------------------------------
+
+ExeFile:
+--------
+Number of blocks to be downloaded: 3
+Total size of all blocks to be downloaded: 2797
+

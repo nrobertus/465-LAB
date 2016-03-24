@@ -1,0 +1,257 @@
+*** EVALUATION ***
+PROGRAM "LAB2.abs"
+
+*********************************************************************************************
+TARGET SECTION
+---------------------------------------------------------------------------------------------
+Processor   : Freescale HC08
+Memory Model: SMALL
+File Format : ELF\DWARF 2.0
+Linker      : SmartLinker V-5.0.51 Build 14019, Jan 20 2014
+
+*********************************************************************************************
+FILE SECTION
+---------------------------------------------------------------------------------------------
+main_asm.obj                            Model: SMALL,         Lang: Assembler
+
+*********************************************************************************************
+STARTUP SECTION
+---------------------------------------------------------------------------------------------
+Entry point: 0xE000 (_Startup)
+
+*********************************************************************************************
+SECTION-ALLOCATION SECTION
+Section Name                    Size  Type     From       To       Segment
+---------------------------------------------------------------------------------------------
+.init                           1455     R     0xE000     0xE5AE   ROM
+.stack                            64   R/W      0x100      0x13F   RAM
+.vectSeg0_vect                     2     R     0xFFFE     0xFFFF   .vectSeg0
+
+Summary of section sizes per section type:
+READ_ONLY (R):         5B1 (dec:     1457)
+READ_WRITE (R/W):       40 (dec:       64)
+
+*********************************************************************************************
+VECTOR-ALLOCATION SECTION
+    Address     InitValue   InitFunction
+---------------------------------------------------------------------------------------------
+     0xFFFE        0xE000   _Startup
+
+*********************************************************************************************
+OBJECT-ALLOCATION SECTION
+     Name               Module                 Addr   hSize   dSize     Ref    Section   RLIB
+---------------------------------------------------------------------------------------------
+MODULE:                 -- main_asm.obj --
+- PROCEDURES:
+     _Startup                                  E000     10C     268       0   .init       
+     main                                      E000       0       0       0   .init       
+     decode                                    E10C      53      83       1   .init       
+     done                                      E15F       9       9      17   .init       
+     A_write                                   E168       6       6       0   .init       
+     B_write                                   E16E       6       6       0   .init       
+     C_write                                   E174       6       6       0   .init       
+     D_write                                   E17A       6       6       0   .init       
+     E_write                                   E180       6       6       0   .init       
+     F_write                                   E186       6       6       0   .init       
+     one_write                                 E18C       6       6       0   .init       
+     two_write                                 E192       6       6       0   .init       
+     three_write                               E198       6       6       0   .init       
+     four_write                                E19E       6       6       0   .init       
+     five_write                                E1A4       6       6       0   .init       
+     six_write                                 E1AA       6       6       0   .init       
+     seven_write                               E1B0       6       6       0   .init       
+     eight_write                               E1B6       6       6       0   .init       
+     nine_write                                E1BC       6       6       0   .init       
+     zero_write                                E1C2       6       6       0   .init       
+     keypad_write                              E1C8      50      80       1   .init       
+     Re_read                                   E218      28      40       0   .init       
+     keypad_done                               E240       1       1       0   .init       
+     keypad_Delay_Loop                         E241       8       8       0   .init       
+     Top                                       E249       F      15       0   .init       
+     Middle                                    E258       F      15       0   .init       
+     bottom                                    E267       D      13       0   .init       
+     Delay                                     E274       3       3       3   .init       
+     top                                       E277       7       7       0   .init       
+     delay_bottom                              E27E       6       6       0   .init       
+     last                                      E284       1       1       0   .init       
+     BF_check                                  E285      3B      59      24   .init       
+     bf_done                                   E2C0      1F      31       0   .init       
+     bf_new_address                            E2DF      28      40       0   .init       
+     bf_clear_display                          E307      28      40       0   .init       
+     Awrite                                    E32F      28      40       1   .init       
+     Bwrite                                    E357      28      40       1   .init       
+     Cwrite                                    E37F      28      40       1   .init       
+     Dwrite                                    E3A7      28      40       1   .init       
+     Ewrite                                    E3CF      28      40       1   .init       
+     Fwrite                                    E3F7      28      40       1   .init       
+     zero                                      E41F      28      40       1   .init       
+     one                                       E447      28      40       1   .init       
+     two                                       E46F      28      40       1   .init       
+     three                                     E497      28      40       1   .init       
+     four                                      E4BF      28      40       1   .init       
+     five                                      E4E7      28      40       1   .init       
+     six                                       E50F      28      40       1   .init       
+     seven                                     E537      28      40       1   .init       
+     eight                                     E55F      28      40       1   .init       
+     nine                                      E587      28      40       1   .init       
+- VARIABLES:
+- LABELS:
+     t                                           71       0       0       0   .text       
+     m                                           72       0       0       0   .text       
+     b                                           73       0       0       0   .text       
+
+*********************************************************************************************
+MODULE STATISTIC
+  Name                                      Data   Code  Const
+---------------------------------------------------------------------------------------------
+  main_asm.obj                                 0   1455      0
+  other                                       64      2      0
+
+*********************************************************************************************
+SECTION USE IN OBJECT-ALLOCATION SECTION
+---------------------------------------------------------------------------------------------
+SECTION: ".text"
+  t m b 
+SECTION: ".init"
+  main _Startup decode done A_write B_write C_write D_write E_write F_write 
+  one_write two_write three_write four_write five_write six_write seven_write 
+  eight_write nine_write zero_write keypad_write Re_read keypad_done 
+  keypad_Delay_Loop Top Middle bottom Delay top delay_bottom last BF_check 
+  bf_done bf_new_address bf_clear_display Awrite Bwrite Cwrite Dwrite Ewrite 
+  Fwrite zero one two three four five six seven eight nine 
+
+*********************************************************************************************
+OBJECT LIST SORTED BY ADDRESS
+     Name                                      Addr   hSize   dSize     Ref    Section   RLIB
+---------------------------------------------------------------------------------------------
+     t                                           71       0       0       0   .text       
+     m                                           72       0       0       0   .text       
+     b                                           73       0       0       0   .text       
+     main                                      E000       0       0       0   .init       
+     _Startup                                  E000     10C     268       0   .init       
+     decode                                    E10C      53      83       1   .init       
+     done                                      E15F       9       9      17   .init       
+     A_write                                   E168       6       6       0   .init       
+     B_write                                   E16E       6       6       0   .init       
+     C_write                                   E174       6       6       0   .init       
+     D_write                                   E17A       6       6       0   .init       
+     E_write                                   E180       6       6       0   .init       
+     F_write                                   E186       6       6       0   .init       
+     one_write                                 E18C       6       6       0   .init       
+     two_write                                 E192       6       6       0   .init       
+     three_write                               E198       6       6       0   .init       
+     four_write                                E19E       6       6       0   .init       
+     five_write                                E1A4       6       6       0   .init       
+     six_write                                 E1AA       6       6       0   .init       
+     seven_write                               E1B0       6       6       0   .init       
+     eight_write                               E1B6       6       6       0   .init       
+     nine_write                                E1BC       6       6       0   .init       
+     zero_write                                E1C2       6       6       0   .init       
+     keypad_write                              E1C8      50      80       1   .init       
+     Re_read                                   E218      28      40       0   .init       
+     keypad_done                               E240       1       1       0   .init       
+     keypad_Delay_Loop                         E241       8       8       0   .init       
+     Top                                       E249       F      15       0   .init       
+     Middle                                    E258       F      15       0   .init       
+     bottom                                    E267       D      13       0   .init       
+     Delay                                     E274       3       3       3   .init       
+     top                                       E277       7       7       0   .init       
+     delay_bottom                              E27E       6       6       0   .init       
+     last                                      E284       1       1       0   .init       
+     BF_check                                  E285      3B      59      24   .init       
+     bf_done                                   E2C0      1F      31       0   .init       
+     bf_new_address                            E2DF      28      40       0   .init       
+     bf_clear_display                          E307      28      40       0   .init       
+     Awrite                                    E32F      28      40       1   .init       
+     Bwrite                                    E357      28      40       1   .init       
+     Cwrite                                    E37F      28      40       1   .init       
+     Dwrite                                    E3A7      28      40       1   .init       
+     Ewrite                                    E3CF      28      40       1   .init       
+     Fwrite                                    E3F7      28      40       1   .init       
+     zero                                      E41F      28      40       1   .init       
+     one                                       E447      28      40       1   .init       
+     two                                       E46F      28      40       1   .init       
+     three                                     E497      28      40       1   .init       
+     four                                      E4BF      28      40       1   .init       
+     five                                      E4E7      28      40       1   .init       
+     six                                       E50F      28      40       1   .init       
+     seven                                     E537      28      40       1   .init       
+     eight                                     E55F      28      40       1   .init       
+     nine                                      E587      28      40       1   .init       
+
+*********************************************************************************************
+UNUSED-OBJECTS SECTION
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+COPYDOWN SECTION
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+OBJECT-DEPENDENCIES SECTION
+---------------------------------------------------------------------------------------------
+_Startup                  USES Delay BF_check done 
+done                      USES keypad_write decode 
+A_write                   USES Awrite done 
+B_write                   USES Bwrite done 
+C_write                   USES Cwrite done 
+D_write                   USES Dwrite done 
+E_write                   USES Ewrite done 
+F_write                   USES Fwrite done 
+one_write                 USES one done 
+two_write                 USES two done 
+three_write               USES three done 
+four_write                USES four done 
+five_write                USES five done 
+six_write                 USES six done 
+seven_write               USES seven done 
+eight_write               USES eight done 
+nine_write                USES nine done 
+zero_write                USES zero done 
+bf_new_address            USES BF_check 
+bf_clear_display          USES BF_check 
+Awrite                    USES BF_check 
+Bwrite                    USES BF_check 
+Cwrite                    USES BF_check 
+Dwrite                    USES BF_check 
+Ewrite                    USES BF_check 
+Fwrite                    USES BF_check 
+zero                      USES BF_check 
+one                       USES BF_check 
+two                       USES BF_check 
+three                     USES BF_check 
+four                      USES BF_check 
+five                      USES BF_check 
+six                       USES BF_check 
+seven                     USES BF_check 
+eight                     USES BF_check 
+nine                      USES BF_check 
+
+*********************************************************************************************
+DEPENDENCY TREE
+*********************************************************************************************
+ main and _Startup Group
+ | 
+ +- main                
+ |    
+ +- _Startup            
+    | 
+    +- Delay               
+    |    
+    +- BF_check            
+    |    
+    +- done                
+       | 
+       +- keypad_write        
+       |    
+       +- decode              
+            
+*********************************************************************************************
+STATISTIC SECTION
+---------------------------------------------------------------------------------------------
+
+ExeFile:
+--------
+Number of blocks to be downloaded: 2
+Total size of all blocks to be downloaded: 1457
+

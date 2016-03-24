@@ -1,3 +1,3 @@
-#Tue Feb 02 14:50:30 MST 2016
 eclipse.preferences.version=1
-useridperkey=nathan-surface.LAB1_FLASH_PnE U-MultiLink\=natha_000;nathan-surface.LAB1_FLASH_PnE U-MultiLink Target\=natha_000;
+org.eclipse.rse.systemtype.local.systemType.defaultUserId=natha_000
+useridperkey=nathan-surface.LAB3_FLASH_PnE U-MultiLink Target\=natha_000;nathan-surface.Lab_0_2_FLASH_PnE U-MultiLink Target\=natha_000;nathan-surface.LAB3_FLASH_PnE U-MultiLink\=natha_000;nathan-surface.Lab_0_2_FLASH_PnE U-MultiLink\=natha_000;

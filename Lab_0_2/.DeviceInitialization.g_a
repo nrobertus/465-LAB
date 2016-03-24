@@ -1,0 +1,182 @@
+<GenerationInfo_G_A>
+  <Options>
+    <ProjectName>DeviceInitialization</ProjectName>
+    <ProjectDirectory>C:\Projects\School\465-LAB\Lab_0_2\</ProjectDirectory>
+    <ProjectMainModuleName>DeviceInitialization</ProjectMainModuleName>
+    <DestEventsDirectory>Sources\</DestEventsDirectory>
+    <DestDriversSubDirectory>..\Generated_Code\</DestDriversSubDirectory>
+    <DestDocumentationDirectory>Documentation\</DestDocumentationDirectory>
+    <DestCompiledFilesSubDirectory />
+    <DestTemporaryDirectory />
+    <GenCpuDerivative>MC9S08QG8MPB</GenCpuDerivative>
+    <GenFiles>
+      <LinkerFileGenerated>false</LinkerFileGenerated>
+      <MakefileGenerated>false</MakefileGenerated>
+      <GenSharedModules lines_count="0" />
+      <GenExtraFiles lines_count="0" />
+      <GenLinkedFiles lines_count="0" />
+      <GenEventModules lines_count="0" />
+      <GenAllModules lines_count="1">
+        <Line>Cpu</Line>
+      </GenAllModules>
+      <GenExternModules lines_count="0" />
+      <GenBeanModules lines_count="0" />
+    </GenFiles>
+    <SignalListFile />
+    <DestinationCompiler>MetrowerksHCS08asm_MCUINIT</DestinationCompiler>
+    <ProjectModificationStamp>10</ProjectModificationStamp>
+  </Options>
+  <CpuID_2>
+    <Generated>true</Generated>
+    <GenCompName>Cpu</GenCompName>
+    <GenComponentVersion>01.262</GenComponentVersion>
+    <GenDriverVersion>01.08</GenDriverVersion>
+    <GenEventModule>Events</GenEventModule>
+    <HeaderAge>-1</HeaderAge>
+    <CodeAge>-1</CodeAge>
+    <AsemblAge>-1</AsemblAge>
+    <GenNumMethods>20</GenNumMethods>
+    <SetHighSpeed>false</SetHighSpeed>
+    <SetLowSpeed>false</SetLowSpeed>
+    <SetSlowSpeed>false</SetSlowSpeed>
+    <GetSpeedMode>false</GetSpeedMode>
+    <SetIntVect>false</SetIntVect>
+    <GetIntVect>false</GetIntVect>
+    <EnableInt>false</EnableInt>
+    <DisableInt>false</DisableInt>
+    <GetResetSource>false</GetResetSource>
+    <SetWaitMode>false</SetWaitMode>
+    <SetStopMode>false</SetStopMode>
+    <GetLowVoltageFlag>false</GetLowVoltageFlag>
+    <ClearLowVoltageFlag>false</ClearLowVoltageFlag>
+    <GetLowVoltageWarningFlag>false</GetLowVoltageWarningFlag>
+    <ClearLowVoltageWarningFlag>false</ClearLowVoltageWarningFlag>
+    <GetPartialPowerDownFlag>false</GetPartialPowerDownFlag>
+    <ClearPartialPowerDownFlag>false</ClearPartialPowerDownFlag>
+    <GetIdentification>false</GetIdentification>
+    <SetBackdoorKey>false</SetBackdoorKey>
+    <Delay100US>false</Delay100US>
+    <GenNumEvents>3</GenNumEvents>
+    <OnReset_Selected>1</OnReset_Selected>
+    <OnReset_Name>Cpu_OnReset</OnReset_Name>
+    <OnReset_Priority>interrupts disabled</OnReset_Priority>
+    <OnSwINT_Selected>1</OnSwINT_Selected>
+    <OnSwINT_Name>Cpu_OnSwINT</OnSwINT_Name>
+    <OnSwINT_Priority>interrupts disabled</OnSwINT_Priority>
+    <OnLvdINT_Selected>0</OnLvdINT_Selected>
+    <OnLvdINT_Name>Cpu_OnLvdINT</OnLvdINT_Name>
+    <OnLvdINT_Priority>interrupts disabled</OnLvdINT_Priority>
+    <ISR_ISRnameLVD>isrVlvd</ISR_ISRnameLVD>
+    <ISR_ISRnameReset>_Startup</ISR_ISRnameReset>
+    <ISR_ISRnameSWI>isrVswi</ISR_ISRnameSWI>
+    <GenSmartUserChangesDetected_Header>false</GenSmartUserChangesDetected_Header>
+    <GenSmartUserChangesDetected_Code>false</GenSmartUserChangesDetected_Code>
+    <GenSmartUserChangesDetected_Asembl>false</GenSmartUserChangesDetected_Asembl>
+    <GenExtraFilesCount>0</GenExtraFilesCount>
+  </CpuID_2>
+  <ComponentID_3>
+    <Generated>true</Generated>
+    <GenCompName>TPM</GenCompName>
+    <GenComponentVersion>01.084</GenComponentVersion>
+    <GenDriverVersion>01.20</GenDriverVersion>
+    <GenEventModule />
+    <HeaderAge>-1</HeaderAge>
+    <CodeAge>-1</CodeAge>
+    <AsemblAge>-1</AsemblAge>
+    <GenNumMethods>1</GenNumMethods>
+    <Init>false</Init>
+    <GenNumEvents>0</GenNumEvents>
+    <ISR_ISRNameInt>isrVtpmovf</ISR_ISRNameInt>
+    <GenSmartUserChangesDetected_Header>false</GenSmartUserChangesDetected_Header>
+    <GenSmartUserChangesDetected_Code>false</GenSmartUserChangesDetected_Code>
+    <GenSmartUserChangesDetected_Asembl>false</GenSmartUserChangesDetected_Asembl>
+    <GenMethodPos>0</GenMethodPos>
+    <GenExtraFilesCount>0</GenExtraFilesCount>
+  </ComponentID_3>
+  <ComponentID_4>
+    <Generated>true</Generated>
+    <GenCompName>COPFree</GenCompName>
+    <GenComponentVersion>01.056</GenComponentVersion>
+    <GenDriverVersion>01.14</GenDriverVersion>
+    <GenEventModule />
+    <HeaderAge>-1</HeaderAge>
+    <CodeAge>-1</CodeAge>
+    <AsemblAge>-1</AsemblAge>
+    <GenNumMethods>1</GenNumMethods>
+    <Init>false</Init>
+    <GenNumEvents>0</GenNumEvents>
+    <GenSmartUserChangesDetected_Header>false</GenSmartUserChangesDetected_Header>
+    <GenSmartUserChangesDetected_Code>false</GenSmartUserChangesDetected_Code>
+    <GenSmartUserChangesDetected_Asembl>false</GenSmartUserChangesDetected_Asembl>
+    <GenMethodPos>0</GenMethodPos>
+    <GenExtraFilesCount>0</GenExtraFilesCount>
+  </ComponentID_4>
+  <UsedSrcFiles>
+    <SrcFile0>Drivers\Common\CheckRegBits8_Rst.prg=1116866294</SrcFile0>
+    <SrcFile1>Drivers\Common\CommonRegInitialization.prg=1116866294</SrcFile1>
+    <SrcFile2>Drivers\Common\SetReg8.prg=1127381294</SrcFile2>
+    <SrcFile3>Drivers\Common\SetReg16_Rst.prg=1116866294</SrcFile3>
+    <SrcFile4>Drivers\HCS08\InitPin.prg=1116866294</SrcFile4>
+    <SrcFile5>Drivers\HCS08\MC9S08_DefineRegsAndBitsAccess.prg=1116866294</SrcFile5>
+    <SrcFile6>Drivers\Common\Header.end=1116866294</SrcFile6>
+    <SrcFile7>Drivers\HCS08\MC9S08_SharedInterruptVectors.prg=1116866294</SrcFile7>
+    <SrcFile8>Drivers\Common\SetReg16.prg=1127381294</SrcFile8>
+    <SrcFile9>Drivers\Common\GeneralParametersNone.inc=1116866294</SrcFile9>
+    <SrcFile10>Drivers\Common\CommonRegInit.prg=1116866294</SrcFile10>
+    <SrcFile11>Drivers\Common\MC9S08Abstract_Init.inc=1116866294</SrcFile11>
+    <SrcFile12>Drivers\Common\DummyReadReg8.prg=1116866294</SrcFile12>
+    <SrcFile13>Drivers\Common\PE_MisraEnableRules.prg=1116866294</SrcFile13>
+    <SrcFile14>Drivers\Common\DefineISRcomplete.prg=1120616155</SrcFile14>
+    <SrcFile15>Drivers\Common\CommonRegInitialization_Flash.prg=1116866294</SrcFile15>
+    <SrcFile16>Drivers\Common\GeneralInternalDescription.prg=1116866294</SrcFile16>
+    <SrcFile17>Drivers\HCS08\Init_PORT_HCS08.prg=1127381294</SrcFile17>
+    <SrcFile18>Drivers\HC08\Common_HCx08\MC9x08_WhileSet.prg=1116866294</SrcFile18>
+    <SrcFile19>Drivers\Common\CommonRegInit_WriteOnce.prg=1116866294</SrcFile19>
+    <SrcFile20>Drivers\Init_COP_HCS08.src=1116866294</SrcFile20>
+    <SrcFile21>Drivers\Common\GeneralPublicGlobal.inc=1116866294</SrcFile21>
+    <SrcFile22>Drivers\Common\HeaderDeviceInit.inc=1116866294</SrcFile22>
+    <SrcFile23>Drivers\HC08\Common_HCx08\MC9x08_WhileNotSet.prg=1116866294</SrcFile23>
+    <SrcFile24>Drivers\Common\GenReg8BitsInitInfo.prg=1116866294</SrcFile24>
+    <SrcFile25>Drivers\HC08\Common_HCx08\MC9x08_MCUinit_Implement_code_begin.prg=1116866294</SrcFile25>
+    <SrcFile26>Drivers\HCS08.src=1116866294</SrcFile26>
+    <SrcFile27>Drivers\HC08\Common_HCx08\MC9x08_COPreset.prg=1116866294</SrcFile27>
+    <SrcFile28>Drivers\Common\DeviceInitializationUserDeclarations.inc=1116866294</SrcFile28>
+    <SrcFile29>Drivers\Common\SetReg8_Rst.prg=1116866294</SrcFile29>
+    <SrcFile30>Drivers\Init_TPM_HCS08.src=1116866294</SrcFile30>
+    <SrcFile31>Drivers\HCS08\ASM\MC9S08.drv=1122284138</SrcFile31>
+    <SrcFile32>Drivers\HC08\Common_HCx08\MC9x08_MCUinit_Interface_end.prg=1116866294</SrcFile32>
+    <SrcFile33>Drivers\HCS08\InternalPeripherals_IO.prg=1116866294</SrcFile33>
+    <SrcFile34>Drivers\HCS08\MC9S08_LowLevelInit.prg=1116866294</SrcFile34>
+    <SrcFile35>Drivers\HCS08\MC9S08_DefineCommonSymbols.prg=1116866294</SrcFile35>
+    <SrcFile36>Drivers\Common\CommonInitialization_WriteOnce.prg=1116866294</SrcFile36>
+    <SrcFile37>Drivers\HC08\Common_HCx08\MC9x08_MCUinit_Implement_end.prg=1116866294</SrcFile37>
+    <SrcFile38>Drivers\Common\CommonInitialization_PIB.prg=1116866294</SrcFile38>
+    <SrcFile39>Drivers\HC08\Common_HCx08\MC9x08_MCUinit_Implement_header.prg=1116866294</SrcFile39>
+    <SrcFile40>Drivers\HC08\Common_HCx08\MC9x08_InitTrimCode.prg=1116866294</SrcFile40>
+    <SrcFile41>Drivers\Common\CommonEnabling.prg=1116866294</SrcFile41>
+    <SrcFile42>Drivers\HC08\Common_HCx08\MC9x08_MCUinit_Implement_code_end.prg=1116866294</SrcFile42>
+    <SrcFile43>Drivers\HCS08\TimerSubroutines_Output.prg=1116866294</SrcFile43>
+    <SrcFile44>Drivers\Common\PE_MisraDisableRules.prg=1116866294</SrcFile44>
+    <SrcFile45>Drivers\Common\SetRegBits8.prg=1127381294</SrcFile45>
+    <SrcFile46>Drivers\Common\Doxy_CollectRegInitInfo.prg=1116866294</SrcFile46>
+    <SrcFile47>Drivers\Common\SetRegBits8_Rst.prg=1116866294</SrcFile47>
+    <SrcFile48>Drivers\Common\DefineISR.prg=1120303303</SrcFile48>
+    <SrcFile49>Drivers\Common\InitReg8Block.prg=1116866294</SrcFile49>
+    <SrcFile50>Drivers\Common\DeclareISR.prg=1146382935</SrcFile50>
+    <SrcFile51>Drivers\HCS08\MC9S08_EntryPointCode.prg=1116866294</SrcFile51>
+    <SrcFile52>Drivers\HCS08\Init_TPM_HCS08.drv=1116866294</SrcFile52>
+    <SrcFile53>Drivers\HCS08\MC9S08_InterruptVectorTableROM.prg=1116866294</SrcFile53>
+    <SrcFile54>Drivers\HC08\Common_HCx08\MC9x08_MCUinit_Interface_begin.prg=1116866294</SrcFile54>
+    <SrcFile55>Drivers\HCS08\Init_COP_HCS08.drv=1116866294</SrcFile55>
+    <SrcFile56>Drivers\HC08\Common_HCx08\MC9x08_WhileNotValue.prg=1116866294</SrcFile56>
+    <SrcFile57>Drivers\Common\GeneralISR.inc=1116866294</SrcFile57>
+    <SrcFile58>Drivers\Common\InitReg8.prg=1116866294</SrcFile58>
+    <SrcFile59>Drivers\Common\CommonInitialization.prg=1116866294</SrcFile59>
+    <SrcFile60>Drivers\Common\GeneralMethod.inc=1116866294</SrcFile60>
+    <SrcFile61>Drivers\Common\GeneralReturnNothing.inc=1116866294</SrcFile61>
+    <SrcFile62>Drivers\Common\DeclareISRcomplete.prg=1127381294</SrcFile62>
+    <SrcFile63>Drivers\Common\CommonInitialization_FLASH.prg=1116866294</SrcFile63>
+    <SrcFile64>Drivers\Common\HeaderCopyright.inc=1146382935</SrcFile64>
+    <SrcFile65>Drivers\Common\HeaderDeviceInit.asm=1116866294</SrcFile65>
+  </UsedSrcFiles>
+</GenerationInfo_G_A>
