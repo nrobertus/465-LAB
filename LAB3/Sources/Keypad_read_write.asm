@@ -4,12 +4,11 @@ XDEF keypad_write
 XREF b, t, m, PTBDD_Upper_output, PTBDD_Upper_input
 			
 MyCode:     SECTION
-keypad_write:
-		
+keypad_write:		
 			LSL $60					; logical shift left so that the next row 
 									; on keypad will be tested if key not pressed
 			
-			feed_watchdog
+			
 			
 			; see if all the rows have been tested
 			LDA #%11100000			; test $60 to see if it needs to be reinitialized
@@ -67,7 +66,6 @@ keypad_write:
 			BEQ keypad_write		; if key not pressed in row repeat for next row number
 			BRA Delay_Loop
 Re_read:
-
 			; see if a button was pressed.
 			LDA #%00001111			; load accumulator
 			ORA $61					; Accumulator has 1110 1111
@@ -96,26 +94,22 @@ Delay_Loop:
 			LDA #50					; Load A with 65
 			STA t					; store A into t, m, and b
 			STA m
-			STA b
-			
-		Top:
-			feed_watchdog
+			STA b			
+		Top:			
 			LDA t					
 			SUB #1					; decrement A
 			BEQ Re_read				; go to reread if A equals 0
 			STA t					; store back into memory
 			LDA #50					
 			STA m					; store 65 into middle if not equal to zero and go to middle
-		Middle:
-			feed_watchdog
+		Middle:			
 			LDA m
 			SUB #1					; decrement
 			STA m					; store back into m
 			BEQ Top					; if equal to 0 go to top
 			LDA #50
 			STA b					; store 65 into b and go to bottom
-		bottom: 
-			feed_watchdog	
+		bottom: 				
 			LDA b
 			SUB #1					; decrement
 			STA b					; store back into b 

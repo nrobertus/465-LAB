@@ -16,7 +16,6 @@ average_readings:
 for_loop:
 ; internal sensor
 ; asks for a temperature reading from the internal temperature sensor.
-			feed_watchdog
 			BCLR 6, ADCSC1
 			BCLR 5, ADCSC1
 			BSET 4, ADCSC1
@@ -65,7 +64,6 @@ check_n:
 for_loopx:
 ; external sensor
 ; asks for a temperature reading from the external temperature sensor.
-			feed_watchdog
 			BCLR 2, PTADD
 			BCLR 6, ADCSC1
 			BCLR 5, ADCSC1
