@@ -1,13 +1,35 @@
-INCLUDE 'derivative.inc'
+;*******************************************************************
+;* This stationery serves as the framework for a user application. *
+;* For a more comprehensive program that demonstrates the more     *
+;* advanced functionality of this processor, please see the        *
+;* demonstration applications, located in the examples             *
+;* subdirectory of the "Freescale CodeWarrior for HC08" program    *
+;* directory.                                                      *
+;*******************************************************************
 
-XDEF keypad_write
-XREF b, t, m, PTBDD_Upper_output, PTBDD_Upper_input
-			
+; Include derivative-specific definitions
+            INCLUDE 'derivative.inc'
+            
+
+; export symbols
+            XDEF keypad_write
+            ; we export both '_Startup' and 'main' as symbols. Either can
+            ; be referenced in the linker .prm file or from C/C++ later on
+            
+            
+            
+            XREF b, t, m, PTBDD_Upper_output, PTBDD_Upper_input   ; symbol defined by the linker for the end of the stack
+
+
+; variable/data section
+MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
+
+; code section
 MyCode:     SECTION
-keypad_write:		
+keypad_write:
+		
 			LSL $60					; logical shift left so that the next row 
 									; on keypad will be tested if key not pressed
-			
 			
 			
 			; see if all the rows have been tested
@@ -66,6 +88,7 @@ keypad_write:
 			BEQ keypad_write		; if key not pressed in row repeat for next row number
 			BRA Delay_Loop
 Re_read:
+
 			; see if a button was pressed.
 			LDA #%00001111			; load accumulator
 			ORA $61					; Accumulator has 1110 1111
@@ -94,22 +117,23 @@ Delay_Loop:
 			LDA #50					; Load A with 65
 			STA t					; store A into t, m, and b
 			STA m
-			STA b			
-		Top:			
+			STA b
+			
+		Top:
 			LDA t					
 			SUB #1					; decrement A
 			BEQ Re_read				; go to reread if A equals 0
 			STA t					; store back into memory
 			LDA #50					
 			STA m					; store 65 into middle if not equal to zero and go to middle
-		Middle:			
+		Middle:
 			LDA m
 			SUB #1					; decrement
 			STA m					; store back into m
 			BEQ Top					; if equal to 0 go to top
 			LDA #50
 			STA b					; store 65 into b and go to bottom
-		bottom: 				
+		bottom: 
 			LDA b
 			SUB #1					; decrement
 			STA b					; store back into b 

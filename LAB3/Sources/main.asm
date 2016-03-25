@@ -1,15 +1,28 @@
+;*******************************************************************
+;* This stationery serves as the framework for a user application. *
+;* For a more comprehensive program that demonstrates the more     *
+;* advanced functionality of this processor, please see the        *
+;* demonstration applications, located in the examples             *
+;* subdirectory of the "Freescale CodeWarrior for HC08" program    *
+;* directory.                                                      *
+;*******************************************************************
+
 ; Include derivative-specific definitions
-INCLUDE 'derivative.inc'
+            INCLUDE 'derivative.inc'
+            
 
 ; export symbols
-XDEF _Startup, main, t, b, m, n, letter
+            XDEF _Startup, main, t, b, m, n
+            ; we export both '_Startup' and 'main' as symbols. Either can
+            ; be referenced in the linker .prm file or from C/C++ later on
+            
+            
+            
+            XREF ADC_init, PTBDD_Upper_output, LCD_init, Clock_in, BF_check, Delay, keypad_write, clear_display, average_readings, one, two, three, four, five, six, seven, eight, nine   ; symbol defined by the linker for the end of the stack
 
-; imports
-XREF __SEG_END_SSTACK, PTBDD_Upper_output, LCD_init, Clock_in, BF_check, Delay, keypad_write, clear_display, average_readings, one, two, three, four, five, six, seven, eight, nine   ; symbol defined by the linker for the end of the stack
 
 ; variable/data section
-MY_ZEROPAGE: SECTION  SHORT
-			letter: EQU $84
+MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
 			n: EQU $83
 			t: EQU $71
 			m: EQU $72
@@ -31,7 +44,8 @@ _Startup:
 			MOV #%00000001, $82
 			
 			LDA SOPT1				; Reset on, watchdog off
-			ORA #%1000001
+			ORA #%00000001
+			AND #%01111111
 			STA SOPT1
 			
 initializations:
@@ -217,5 +231,6 @@ done:
 ; move the first buttone of the kepad to be scanned into address $60 then jump to keypad_write and jump to decode which toggles the heartbeat LED. 
 			MOV #%11110111, $60
 			JSR keypad_write
-			JMP decode	
-			
+			JMP decode
+
+

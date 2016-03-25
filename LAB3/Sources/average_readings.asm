@@ -1,8 +1,30 @@
-INCLUDE 'derivative.inc'
-            
-XDEF average_readings  
-XREF n, convert_temp, displayx   ; symbol defined by the linker for the end of the stack
+;*******************************************************************
+;* This stationery serves as the framework for a user application. *
+;* For a more comprehensive program that demonstrates the more     *
+;* advanced functionality of this processor, please see the        *
+;* demonstration applications, located in the examples             *
+;* subdirectory of the "Freescale CodeWarrior for HC08" program    *
+;* directory.                                                      *
+;*******************************************************************
 
+; Include derivative-specific definitions
+            INCLUDE 'derivative.inc'
+            
+
+; export symbols
+            XDEF average_readings
+            ; we export both '_Startup' and 'main' as symbols. Either can
+            ; be referenced in the linker .prm file or from C/C++ later on
+            
+            
+            
+            XREF n, convert_temp, displayx   ; symbol defined by the linker for the end of the stack
+
+
+; variable/data section
+MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
+
+; code section
 MyCode:     SECTION
 ; All math is done with counts 
 average_readings:
@@ -16,6 +38,7 @@ average_readings:
 for_loop:
 ; internal sensor
 ; asks for a temperature reading from the internal temperature sensor.
+			feed_watchdog
 			BCLR 6, ADCSC1
 			BCLR 5, ADCSC1
 			BSET 4, ADCSC1
@@ -64,6 +87,7 @@ check_n:
 for_loopx:
 ; external sensor
 ; asks for a temperature reading from the external temperature sensor.
+			feed_watchdog
 			BCLR 2, PTADD
 			BCLR 6, ADCSC1
 			BCLR 5, ADCSC1
@@ -112,3 +136,4 @@ check_nx:
 			JSR displayx
 			RTS		
 			
+
