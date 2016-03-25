@@ -13,18 +13,11 @@
 
 ; export symbols
             XDEF PTBDD_Upper_output, PTBDD_Upper_input, Clock_in
-            ; we export both '_Startup' and 'main' as symbols. Either can
-            ; be referenced in the linker .prm file or from C/C++ later on
-            
-            
-            
-            XREF __SEG_END_SSTACK   ; symbol defined by the linker for the end of the stack
 
+            XREF __SEG_END_SSTACK   
 
-; variable/data section
-MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
+MY_ZEROPAGE: SECTION  SHORT        
 
-; code section
 MyCode:     SECTION
 PTBDD_Upper_output:
 	LDA #%11110000
@@ -37,9 +30,9 @@ PTBDD_Upper_input:
 	STA PTBDD
 	RTS
 Clock_in:
-	BCLR 3, PTBD        ; Bring the clock back down
+	BCLR 3, PTBD        ; Clear clock bit
 	NOP
 	NOP
 	NOP
-	BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
+	BSET 3, PTBD        ; set bit for rising clock
 	RTS

@@ -13,21 +13,17 @@
 
 ; export symbols
             XDEF ADC_init
-            ; we export both '_Startup' and 'main' as symbols. Either can
-            ; be referenced in the linker .prm file or from C/C++ later on
             
             
             
             XREF __SEG_END_SSTACK   ; symbol defined by the linker for the end of the stack
 
 
-; variable/data section
-MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
+MY_ZEROPAGE: SECTION  SHORT        
 
-; code section
 MyCode:     SECTION
 ADC_init:
-; initializes the analog to digital converter to use 8-bit mode
+; initializes the ADC into eight bit mode
 	MOV #%00000000, ADCCFG
 			
 	BCLR 6, ADCSC2

@@ -13,21 +13,15 @@
 
 ; export symbols
             XDEF convert_temp
-            ; we export both '_Startup' and 'main' as symbols. Either can
-            ; be referenced in the linker .prm file or from C/C++ later on
             
-            
-            
-            XREF n, display   ; symbol defined by the linker for the end of the stack
+            XREF n, display
 
 
-; variable/data section
-MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
+MY_ZEROPAGE: SECTION  SHORT 
 
-; code section
 MyCode:     SECTION
 convert_temp:
-;If the reading of the internal temperature sensor is greater than 54 base 10 branch to cold slope. If the reading of the internal temperature sensor is less then 54 base 10 branch to hot slope.
+;check to see if we should go to the cold or hot conversion
 
 			LDA #54
 			CMP $85
@@ -35,7 +29,7 @@ convert_temp:
 			BPL hot_slope
 			
 cold_slope:
-;Converts the reading of the internal temperature sensor into a temperature and jumps to display.
+;convert to temp and then move on to display
 			LDA $85
 			SUB #55
 			CLRX
@@ -63,7 +57,7 @@ cold_slope:
 			JSR display
 			JMP done
 hot_slope:
-;Converts the reading of the internal temperature sensor into a temperature and jumps to display
+;convert temperature and go to the display
 			LDA #55
 			SUB $85
 			CLRX
@@ -92,5 +86,5 @@ hot_slope:
 			JSR display
 			JMP done
 done:
-;Return to subroutine from where called from.
+;Return from whence you came. 
 			RTS

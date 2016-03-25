@@ -13,21 +13,14 @@
 
 ; export symbols
             XDEF display
-            ; we export both '_Startup' and 'main' as symbols. Either can
-            ; be referenced in the linker .prm file or from C/C++ later on
-            
-            
-            
+     
             XREF n, clear_display, BF_check, new_address, DAA_decode, PTBDD_Upper_output, Clock_in   ; symbol defined by the linker for the end of the stack
 
+MY_ZEROPAGE: SECTION  SHORT 
 
-; variable/data section
-MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
-
-; code section
 MyCode:     SECTION
 display:
-; clear the LCD display and jump to the second line of the LCD display.
+; clear LCD and move to the next line of display
 			feed_watchdog
 			MOV $86, $88
 			JSR clear_display
@@ -37,10 +30,10 @@ display:
 			BSET 1, PTADD
 			BSET 1, PTAD
 			BCLR 0, PTAD
-; Writes "T,C:" onto the LCD display.				
+; Write "T,C:" labels			
 			MOV #%01011100, PTBD
 			JSR Clock_in
-			MOV #%01001100, PTBD	; Write 'T'
+			MOV #%01001100, PTBD	;  'T'
 			JSR Clock_in
 			
 			JSR BF_check
@@ -49,7 +42,7 @@ display:
 			BCLR 0, PTAD
 			MOV #%00101100, PTBD
 			JSR Clock_in
-			MOV #%11001100, PTBD	; Write ','
+			MOV #%11001100, PTBD	;  ','
 			JSR Clock_in
 			
 			JSR BF_check
@@ -58,7 +51,7 @@ display:
 			BCLR 0, PTAD
 			MOV #%01001100, PTBD
 			JSR Clock_in
-			MOV #%00111100, PTBD	; Write 'C'
+			MOV #%00111100, PTBD	;  'C'
 			JSR Clock_in
 			
 			JSR BF_check
@@ -67,13 +60,13 @@ display:
 			BCLR 0, PTAD
 			MOV #%00111100, PTBD
 			JSR Clock_in
-			MOV #%10101100, PTBD	; Write ':'
+			MOV #%10101100, PTBD	;  ':'
 			JSR Clock_in
 			
 			JSR BF_check
 			
 celsius_display:
-; convert the hex value of temperature into BCD and branch to DAA_decode			
+; convert hex and decode		
 			LDA $86
 			CLRH
 			LDX #10
@@ -83,21 +76,21 @@ celsius_display:
 			JSR DAA_decode
 			MOV $85, $86
 			JSR DAA_decode
-; Write ' ' to the LCD display.			
+;print a space		
 			BSET 1, PTAD
 			BCLR 0, PTAD
 			MOV #%00101100, PTBD
 			JSR Clock_in
-			MOV #%00001100, PTBD	; Write ' '
+			MOV #%00001100, PTBD	;  ' '
 			JSR Clock_in
 			JSR BF_check
 
 kelvin_display:
-; Writes "T,K:" onto the LCD display.	
+; print "T,K:" 	
 			feed_watchdog
 			JSR PTBDD_Upper_output
-			BCLR 1, PTAD				; set RS = 0
-			BCLR 0, PTAD				; set R/W = 0
+			BCLR 1, PTAD				; RS <= 0
+			BCLR 0, PTAD				; R/W <= 0
 			
 			BSET 0, PTADD
 			BSET 1, PTADD
@@ -106,7 +99,7 @@ kelvin_display:
 			
 			MOV #%01011100, PTBD
 			JSR Clock_in
-			MOV #%01001100, PTBD	; Write 'T'
+			MOV #%01001100, PTBD	; 'T'
 			JSR Clock_in
 			
 			JSR BF_check
@@ -115,7 +108,7 @@ kelvin_display:
 			BCLR 0, PTAD
 			MOV #%00101100, PTBD
 			JSR Clock_in
-			MOV #%11001100, PTBD	; Write ','
+			MOV #%11001100, PTBD	; ','
 			JSR Clock_in
 			
 			JSR BF_check
@@ -124,7 +117,7 @@ kelvin_display:
 			BCLR 0, PTAD
 			MOV #%01001100, PTBD
 			JSR Clock_in
-			MOV #%10111100, PTBD	; Write 'K'
+			MOV #%10111100, PTBD	; 'K'
 			JSR Clock_in
 			
 			JSR BF_check
@@ -133,11 +126,11 @@ kelvin_display:
 			BCLR 0, PTAD
 			MOV #%00111100, PTBD
 			JSR Clock_in
-			MOV #%10101100, PTBD	; Write ':'
+			MOV #%10101100, PTBD	; ':'
 			JSR Clock_in
 			
 			JSR BF_check
-; checks to see if the the conversion to kelvin causes on over flow if it does branch to write_3 else branch to to write_2.			
+;check overflow, to write 2 or 3		
 			LDA #73
 			ADD $88
 			STA $88
@@ -147,12 +140,12 @@ kelvin_display:
 			BRA write_2
 			
 write_3:
-; Writes '3' to the LCD display
+; print '3' 
 			BSET 1, PTAD
 			BCLR 0, PTAD
 			MOV #%00111100, PTBD
 			JSR Clock_in
-			MOV #%00111100, PTBD	; Write '3'
+			MOV #%00111100, PTBD	; '3'
 			JSR Clock_in
 			JSR BF_check
 ; convert the hex value of temperature into BCD and branch to DAA_decode				
@@ -166,25 +159,25 @@ write_3:
 			JSR DAA_decode
 			MOV $85, $86
 			JSR DAA_decode
-; Write ' ' to the LCD display.				
+; Print ' '			
 			BSET 1, PTAD
 			BCLR 0, PTAD
 			MOV #%00101100, PTBD
 			JSR Clock_in
-			MOV #%00001100, PTBD	; Write ' '
+			MOV #%00001100, PTBD	;  ' '
 			JSR Clock_in
 			JSR BF_check
 			
 			RTS
 write_2:
-; Writes '2' to the LCD display
+; Print '2' 
 			BSET 1, PTAD
 			BCLR 0, PTAD
 			MOV #%00111100, PTBD
 			JSR Clock_in
-			MOV #%00101100, PTBD	; Write '2'
+			MOV #%00101100, PTBD	;  '2'
 			JSR Clock_in
-; convert the hex value of temperature into BCD and branch to DAA_decode			
+;convert hex and decode			
 			JSR BF_check
 			LDA $88
 			CLRH
@@ -195,12 +188,12 @@ write_2:
 			JSR DAA_decode
 			MOV $85, $86
 			JSR DAA_decode
-; Write ' ' to the LCD display.					
+; print ' ' 			
 			BSET 1, PTAD
 			BCLR 0, PTAD
 			MOV #%00101100, PTBD
 			JSR Clock_in
-			MOV #%00001100, PTBD	; Write ' '
+			MOV #%00001100, PTBD	;  ' '
 			JSR Clock_in
 			JSR BF_check
 			

@@ -13,27 +13,20 @@
 
 ; export symbols
             XDEF _Startup, main, t, b, m, n
-            ; we export both '_Startup' and 'main' as symbols. Either can
-            ; be referenced in the linker .prm file or from C/C++ later on
-            
-            
-            
+                   
             XREF ADC_init, PTBDD_Upper_output, LCD_init, Clock_in, BF_check, Delay, keypad_write, clear_display, average_readings, one, two, three, four, five, six, seven, eight, nine   ; symbol defined by the linker for the end of the stack
 
-
-; variable/data section
-MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
+MY_ZEROPAGE: SECTION  SHORT 
 			n: EQU $83
 			t: EQU $71
 			m: EQU $72
 			b: EQU $73
 			XOR_Mask: EQU %00010000
 
-; code section
 MyCode:     SECTION
 main:
 _Startup:
-			BSET 0, PTADD            ; Enables Port A data direction as an output and the Port A bits used for the A to D converter
+			BSET 0, PTADD            ; enable port a and AtoD
 			BSET 1, PTADD
 			BCLR 2, PTADD
 			BCLR 2, PTAD
@@ -43,8 +36,8 @@ _Startup:
 			MOV #$FF, PTBDD
 			MOV #%00000001, $82
 			
-			LDA SOPT1				; Reset on, watchdog off
-			ORA #%00000001
+			LDA SOPT1				; Turn on reset
+			ORA #%00000001			; turn off watchdog too
 			AND #%01111111
 			STA SOPT1
 			
@@ -53,7 +46,7 @@ initializations:
 	JSR ADC_init
 			
 display_text:
-; Writes "Enter n:" onto the LCD display.			
+; print "Enter n:" 		
 			BSET 0, PTADD
 			BSET 1, PTADD
 			
@@ -62,7 +55,7 @@ display_text:
 			
 			MOV #%01001100, PTBD
 			JSR Clock_in
-			MOV #%01011100, PTBD	; Write 'E'
+			MOV #%01011100, PTBD	;  'E'
 			JSR Clock_in
 			
 			JSR BF_check
@@ -71,7 +64,7 @@ display_text:
 			BCLR 0, PTAD
 			MOV #%01101100, PTBD
 			JSR Clock_in
-			MOV #%11101100, PTBD	; Write 'n'
+			MOV #%11101100, PTBD	;  'n'
 			JSR Clock_in
 			
 			JSR BF_check
@@ -80,7 +73,7 @@ display_text:
 			BCLR 0, PTAD
 			MOV #%01111100, PTBD
 			JSR Clock_in
-			MOV #%01001100, PTBD	; Write 't'
+			MOV #%01001100, PTBD	;  't'
 			JSR Clock_in
 			
 			JSR BF_check
@@ -89,7 +82,7 @@ display_text:
 			BCLR 0, PTAD
 			MOV #%01101100, PTBD
 			JSR Clock_in
-			MOV #%01011100, PTBD	; Write 'e'
+			MOV #%01011100, PTBD	;  'e'
 			JSR Clock_in
 			
 			JSR BF_check
@@ -98,7 +91,7 @@ display_text:
 			BCLR 0, PTAD
 			MOV #%01111100, PTBD
 			JSR Clock_in
-			MOV #%00101100, PTBD	; Write 'r'
+			MOV #%00101100, PTBD	;  'r'
 			JSR Clock_in
 			
 			JSR BF_check
@@ -107,7 +100,7 @@ display_text:
 			BCLR 0, PTAD
 			MOV #%00101100, PTBD
 			JSR Clock_in
-			MOV #%00001100, PTBD	; Write ' '
+			MOV #%00001100, PTBD	;  ' '
 			JSR Clock_in
 			
 			JSR BF_check
@@ -116,7 +109,7 @@ display_text:
 			BCLR 0, PTAD
 			MOV #%01101100, PTBD
 			JSR Clock_in
-			MOV #%11101100, PTBD	; Write 'n'
+			MOV #%11101100, PTBD	;  'n'
 			JSR Clock_in
 			
 			JSR BF_check
@@ -125,7 +118,7 @@ display_text:
 			BCLR 0, PTAD
 			MOV #%00111100, PTBD
 			JSR Clock_in
-			MOV #%10101100, PTBD	; Write ':'
+			MOV #%10101100, PTBD	;  ':'
 			JSR Clock_in
 			
 			JSR BF_check
@@ -143,11 +136,11 @@ decode:
 			JMP decode1
 			
 E_write:
-; clears the display and writes "Enter n:" onto the LCD display.
+; clears the display, print "Enter n:" 
 			JSR clear_display
 			JMP display_text	
 decode1:			
-; load the pattern from memory and based on the pattern jump to one_write through nine_write and E_write.			
+;load pattern from memory and jump to proper subroutine.
 			LDA $70				
 			CMP #%01111110
 			BEQ E_write
@@ -171,64 +164,63 @@ decode1:
 			BEQ nine_write
 			JMP done
 
-; the following nine subroutines display a number onto the display, wait for 15ms, store the correct number of readings into memory, jump to average readings subroutine and jump to done subroutine.  			
 one_write:
 			JSR one
-			JSR Delay				; wait for 15 ms
+			JSR Delay				; wait 15 ms
 			MOV #1, n
 			JSR average_readings
 			JMP done
 two_write:
 			JSR two
-			JSR Delay				; wait for 15 ms
+			JSR Delay				; wait 15 ms
 			MOV #2, n
 			JSR average_readings
 			JMP done
 three_write:
 			JSR three
-			JSR Delay				; wait for 15 ms
+			JSR Delay				; wait 15 ms
 			MOV #3, n
 			JSR average_readings
 			JMP done
 four_write:
 			JSR four
-			JSR Delay				; wait for 15 ms
+			JSR Delay				; wait 15 ms
 			MOV #4, n
 			JSR average_readings
 			JMP done
 five_write:
 			JSR five
-			JSR Delay				; wait for 15 ms
+			JSR Delay				; wait 15 ms
 			MOV #5, n
 			JSR average_readings
 			JMP done
 six_write:
 			JSR six
-			JSR Delay				; wait for 15 ms
+			JSR Delay				; wait 15 ms
 			MOV #6, n
 			JSR average_readings
 			JMP done
 seven_write:
 			JSR seven
-			JSR Delay				; wait for 15 ms
+			JSR Delay				; wait 15 ms
 			MOV #7, n
 			JSR average_readings
 			JMP done
 eight_write:
 			JSR eight
-			JSR Delay				; wait for 15 ms
+			JSR Delay				; wait 15 ms
 			MOV #8, n
 			JSR average_readings
 			JMP done
 nine_write:
 			JSR nine
-			JSR Delay				; wait for 15 ms
+			JSR Delay				; wait 15 ms
 			MOV #9, n
 			JSR average_readings
 			JMP done
 			
 done:
-; move the first buttone of the kepad to be scanned into address $60 then jump to keypad_write and jump to decode which toggles the heartbeat LED. 
+;move to keypad write, then decode.
 			MOV #%11110111, $60
 			JSR keypad_write
 			JMP decode

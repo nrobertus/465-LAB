@@ -13,21 +13,16 @@
 
 ; export symbols
             XDEF DAA_decode
-            ; we export both '_Startup' and 'main' as symbols. Either can
-            ; be referenced in the linker .prm file or from C/C++ later on
-            
-            
-            
+                    
             XREF one, two, three, four, five, six, seven, eight, nine, zero   ; symbol defined by the linker for the end of the stack
 
 
 ; variable/data section
-MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
+MY_ZEROPAGE: SECTION  SHORT 
 
-; code section
 MyCode:     SECTION
 DAA_decode:
-; based on the binary number loaded into the accumulator. 0 - 9 is written to the LCD display			
+;Write in whatever the user typed		
 			LDA $86
 			CMP #%00000001
 			BEQ one_write

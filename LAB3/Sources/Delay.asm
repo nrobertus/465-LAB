@@ -13,28 +13,21 @@
 
 ; export symbols
             XDEF Delay
-            ; we export both '_Startup' and 'main' as symbols. Either can
-            ; be referenced in the linker .prm file or from C/C++ later on
-            
-            
-            
-            XREF t, b, m   ; symbol defined by the linker for the end of the stack
 
+            XREF t, b, m 
 
-; variable/data section
-MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
+MY_ZEROPAGE: SECTION  SHORT         
 
-; code section
 MyCode:     SECTION
-Delay:
+Delay: ; Yep, a straign up delay loop
 	MOV b, m
 	top:
 			DEC t
-			BEQ ass
+			BEQ last
 			MOV m, b
 	bottom:
 			DEC b
 			BEQ top
 			BRA bottom			
-	ass:			
+	last:			
 			RTS		

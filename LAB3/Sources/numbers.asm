@@ -13,8 +13,6 @@
 
 ; export symbols
             XDEF zero, one, two, three, four, five, six, seven, eight, nine
-            ; we export both '_Startup' and 'main' as symbols. Either can
-            ; be referenced in the linker .prm file or from C/C++ later on
             
             
             
@@ -22,56 +20,56 @@
 
 
 ; variable/data section
-MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
+MY_ZEROPAGE: SECTION  SHORT         
 
 ; code section
 MyCode:     SECTION
-zero:
-	MOV #%00000000, PTBD    ; Write 0000 to the LED's 
+zero: 
+	MOV #%00000000, PTBD    ; Write 0000 to LED
 	JSR partA
-	MOV #%00001100, PTBD	; zero
+	MOV #%00001100, PTBD	
 	JSR partB
 	RTS
 	
 one:
-	MOV #%00010000, PTBD	; Write 0001 to the LED's 
+	MOV #%00010000, PTBD	; Write 0001 to LED's 
 	JSR partA
-	MOV #%00011100, PTBD	; one
+	MOV #%00011100, PTBD	
 	JSR partB
 	RTS
 	
 two:
-	MOV #%00100000, PTBD	; Write 0010 to the LED's 
+	MOV #%00100000, PTBD	; Write 0010 to LED's 
 	JSR partA
-	MOV #%00101100, PTBD	; two
+	MOV #%00101100, PTBD	
 	JSR partB
 	RTS
 	
 three:
-	MOV #%00110000, PTBD	; Write 0011 to the LED's 
+	MOV #%00110000, PTBD	; Write 0011 to LED's 
 	JSR partA
-	MOV #%00111100, PTBD	; three
+	MOV #%00111100, PTBD	
 	JSR partB
 	RTS
 	
 four:
-	MOV #%01000000, PTBD	; Write 0100 to the LED's  
+	MOV #%01000000, PTBD	; Write 0100 to LED's  
 	JSR partA
-	MOV #%01001100, PTBD	; four
+	MOV #%01001100, PTBD	
 	JSR partB
 	RTS
 	
 five:
-	MOV #%01010000, PTBD	; Write 0101 to the LED's 
+	MOV #%01010000, PTBD	; Write 0101 to LED's 
 	JSR partA
-	MOV #%01011100, PTBD	; five
+	MOV #%01011100, PTBD	
 	JSR partB
 	RTS
 	
 six:
-	MOV #%01100000, PTBD	; Write 0110 to the LED's 
+	MOV #%01100000, PTBD	; Write 0110 to LED's 
 	JSR partA
-	MOV #%01101100, PTBD	; six
+	MOV #%01101100, PTBD	
 	JSR partB
 	RTS
 	
@@ -83,32 +81,32 @@ seven:
 	RTS
 	
 eight:
-	MOV #%10000000, PTBD	; Write 1000 to the LED's  
+	MOV #%10000000, PTBD	; Write 1000 to LED's  
 	JSR partA
-	MOV #%10001100, PTBD	; eight
+	MOV #%10001100, PTBD	
 	JSR partB
 	RTS
 	
 nine:
-	MOV #%10010000, PTBD	; Write 1001 to the LED's 
+	MOV #%10010000, PTBD	; Write 1001 to LED's 
 	JSR partA
-	MOV #%10011100, PTBD	; nine
+	MOV #%10011100, PTBD
 	JSR partB
 	RTS
 	
 partA:
-	BSET 3, PTBD            ; Set G2A for a rising edge of clock
-	MOV #0, $70             ; Reset the button press to zero
-	BSET 0, PTADD           ; Sets PTA Data Directions
+	BSET 3, PTBD            ; Set G2A clock edge
+	MOV #0, $70             ; Reset button press
+	BSET 0, PTADD           ; Sets directions of PTA
 	BSET 1, PTADD
-	BSET 1, PTAD            ; set RS = 1
-	BCLR 0, PTAD            ; set R/W = 0
-	MOV #%00111100, PTBD    ; Write to the LCD display
+	BSET 1, PTAD            
+	BCLR 0, PTAD            
+	MOV #%00111100, PTBD    ; Write data the LCD module
 	JSR Clock_in
 	RTS
 	
 partB:
 	MOV #%00001100, PTBD	
 	JSR Clock_in
-	JSR BF_check            ; Jump to BF_check
+	JSR BF_check            ; Jump to check subroutine
 	RTS

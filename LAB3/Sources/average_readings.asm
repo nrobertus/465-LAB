@@ -13,12 +13,9 @@
 
 ; export symbols
             XDEF average_readings
-            ; we export both '_Startup' and 'main' as symbols. Either can
-            ; be referenced in the linker .prm file or from C/C++ later on
             
             
-            
-            XREF n, convert_temp, displayx   ; symbol defined by the linker for the end of the stack
+            XREF n, convert_temp, displayx   
 
 
 ; variable/data section
@@ -26,18 +23,18 @@ MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
 
 ; code section
 MyCode:     SECTION
-; All math is done with counts 
 average_readings:
-; clears the accumulator, the following memory addresses listed below and moves the number of readings into address $84 in memory.
+; clear the accumulator, move readings into $84
 			CLRA
 			CLR $85
 			CLR $88
 			CLR $70
 			MOV n, $84
-			
+
+; BEGIN INTERNAL SENSOR		
 for_loop:
-; internal sensor
-; asks for a temperature reading from the internal temperature sensor.
+
+; Poll internal sensor for data
 			feed_watchdog
 			BCLR 6, ADCSC1
 			BCLR 5, ADCSC1
@@ -47,15 +44,11 @@ for_loop:
 			BSET 1, ADCSC1
 			BCLR 0, ADCSC1
 			
-check_coco:
-; internal sensor
-; checks the coco bit and if it is set branch to check_n else branch to check_coco again. 			
+check_coco: ; self-explanatory here		
 			BRSET 7, ADCSC1, check_n
 			BRA check_coco
 check_n:
-;internal sensor
-;averages each reading with the number of readings, averages the remainder of each reading with the number of readings,
-;combines the remainder with the reading and jump to convert_temp. Then reinitialize the memory address where the number of readings are stored in memory to zero.
+;Take averages here
 			LDA ADCRL
 			CLRX
 			CLRH
@@ -84,9 +77,11 @@ check_n:
 			CLR $89
 			MOV $84, n
 			
+;END INTERNAL SENSOR
+
+;BEGIN EXTERNAL SENSOR			
 for_loopx:
-; external sensor
-; asks for a temperature reading from the external temperature sensor.
+;Poll external sensor
 			feed_watchdog
 			BCLR 2, PTADD
 			BCLR 6, ADCSC1
@@ -96,15 +91,12 @@ for_loopx:
 			BCLR 2, ADCSC1
 			BSET 1, ADCSC1
 			BCLR 0, ADCSC1
-check_cocox:
-; external sensor
-; checks the coco bit and if it is set branch to check_nx else branch to check_cocox again.			
+check_cocox: ; again, self-explanatory	
 			BRSET 7, ADCSC1, check_nx
 			BRA check_cocox
 check_nx:
-;external sensor
-;averages each reading with the number of readings, averages the remainder of each reading with the number of readings,
-;combines the remainder with the reading. Converts the reading into a temperature then jumps to displayx.
+;take average
+;jump away when done.
 			LDA ADCRL
 			CLRX
 			CLRH
