@@ -1964,50 +1964,26 @@ Reserved20                               equ        VReserved4
 feed_watchdog: MACRO
             STA SRS              ; feed the watchdog
           ENDM
-PTBDD_Upper_output: MACRO
-			LDA #%11110000
-			ORA PTBDD
-			STA PTBDD
-		ENDM
-		
-PTBDD_Upper_input: MACRO
-			LDA #%00001111
-			AND PTBDD
-			STA PTBDD
-		ENDM
-Clock_in: MACRO
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-		ENDM
             
 
 ; export symbols
-            XDEF _Startup, main, t, b, m, n
-            ; we export both '_Startup' and 'main' as symbols. Either can
-            ; be referenced in the linker .prm file or from C/C++ later on
-            
-            
-            
-			XREF __SEG_END_SSTACK, BF_check, Delay, keypad_write, clear_display, average_readings, one, two, three, four, five, six, seven, eight, nine   ; symbol defined by the linker for the end of the stack
+            XDEF _Startup, main, t, b, m, n, char_1, char_2
+                   
+            XREF ADC_init, PTBDD_Upper_output, LCD_init, Clock_in, BF_check, Delay, keypad_write, clear_display, average_readings, one, two, three, four, five, six, seven, eight, nine, display_char   ; symbol defined by the linker for the end of the stack
 
-
-; variable/data section
-MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
-; equates used for the delay subroutine and storing how many times a temperature sensor is read from.
+MY_ZEROPAGE: SECTION  SHORT 
 			n: EQU $83
 			t: EQU $71
 			m: EQU $72
 			b: EQU $73
 			XOR_Mask: EQU %00010000
+			char_1: EQU $74
+			char_2: EQU $75
 
-; code section
 MyCode:     SECTION
 main:
 _Startup:
-			BSET 0, PTADD            ; Enables Port A data direction as an output and the Port A bits used for the A to D converter
+			BSET 0, PTADD            ; enable port a and AtoD
 			BSET 1, PTADD
 			BCLR 2, PTADD
 			BCLR 2, PTAD
@@ -2017,354 +1993,57 @@ _Startup:
 			MOV #$FF, PTBDD
 			MOV #%00000001, $82
 			
-			LDA SOPT1				; Enable the reset switch.
-			ORA #%00000001
+			LDA SOPT1				; Turn on reset
+			ORA #%00000001			; turn off watchdog too
+			AND #%01111111
 			STA SOPT1
 			
-LCD_initialization:
-			feed_watchdog
-            STA SRS              ; feed the watchdog
-			MOV #40, t
-			MOV #255, b
-			JSR Delay				; wait for 15 ms
-			
-			BCLR 0, PTAD			; function set command
-			BCLR 1, PTAD
-			MOV #%00111100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			
-			MOV #20, t
-			MOV #255, b
-			JSR Delay				; wait for 4.1 ms
-			
-			BCLR 0, PTAD			; function set command
-			BCLR 1, PTAD
-			MOV #%00111100, PTBD	; function set command
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			
-			MOV #10, t
-			MOV #40, b
-			JSR Delay				; wait for 100 us
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00111100, PTBD	; function set command
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			
-			JSR BF_check			; check BF
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00101100, PTBD	; function set
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			
-			JSR BF_check			; check BF
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00101100, PTBD	; function set
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%10101100, PTBD	; set N and F here
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-				
-			JSR BF_check			; check BF
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00001100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%10001100, PTBD	; Display off command
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			
-			JSR BF_check			; check BF
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00001100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00011100, PTBD	; Clear Display command
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			
-			JSR BF_check			; check BF
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00001100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%01101100, PTBD	; Entry Mode Set
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			
-			JSR BF_check			; check BF
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00001100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%11111100, PTBD	; Display On
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			
-			JSR BF_check
-			
-ADC_initialization:
-; initializes the analog to digital converter to use 8-bit mode
-			MOV #%00000000, ADCCFG
-			
-			BCLR 6, ADCSC2
-			BCLR 5, ADCSC2
-			BCLR 4, ADCSC2
-			
-			BCLR 6, ADCSC1
-			BCLR 5, ADCSC1
-			BSET 4, ADCSC1
-			BSET 3, ADCSC1
-			BCLR 2, ADCSC1
-			BSET 1, ADCSC1
-			BCLR 0, ADCSC1
+initializations:
+	JSR LCD_init
+	JSR ADC_init
 			
 display_text:
-; Writes "Enter n:" onto the LCD display.			
-			BSET 0, PTADD
-			BSET 1, PTADD
+; print "Enter n:" 		
+			;BSET 0, PTADD
+			;BSET 1, PTADD
 			
-			BSET 1, PTAD
-			BCLR 0, PTAD
 			
-			MOV #%01001100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%01011100, PTBD	; Write 'E'
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
+			MOV #%01001100, char_1
+			MOV #%01011100, char_2 ; 'E'
+			JSR display_char
+
+			MOV #%01101100, char_1
+			MOV #%11101100, char_2	;  'n'
+			JSR display_char
 			
-			JSR BF_check
+			MOV #%01111100, char_1
+			MOV #%01001100, char_2	;  't'
+			JSR display_char
 			
-			BSET 1, PTAD
-			BCLR 0, PTAD
-			MOV #%01101100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%11101100, PTBD	; Write 'n'
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
+			MOV #%01101100, char_1
+			MOV #%01011100, char_2	;  'e'
+			JSR display_char
 			
-			JSR BF_check
+			MOV #%01111100, char_1
+			MOV #%00101100, char_2	;  'r'
+			JSR display_char
 			
-			BSET 1, PTAD
-			BCLR 0, PTAD
-			MOV #%01111100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%01001100, PTBD	; Write 't'
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
+			MOV #%00101100, char_1
+			MOV #%00001100, char_2	;  ' '
+			JSR display_char
 			
-			JSR BF_check
-			
-			BSET 1, PTAD
-			BCLR 0, PTAD
-			MOV #%01101100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%01011100, PTBD	; Write 'e'
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			
-			JSR BF_check
-			
-			BSET 1, PTAD
-			BCLR 0, PTAD
-			MOV #%01111100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%00101100, PTBD	; Write 'r'
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			
-			JSR BF_check
-			
-			BSET 1, PTAD
-			BCLR 0, PTAD
-			MOV #%00101100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%00001100, PTBD	; Write ' '
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			
-			JSR BF_check
-			
-			BSET 1, PTAD
-			BCLR 0, PTAD
-			MOV #%01101100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%11101100, PTBD	; Write 'n'
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			
-			JSR BF_check
-			
-			BSET 1, PTAD
-			BCLR 0, PTAD
-			MOV #%00111100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%10101100, PTBD	; Write ':'
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			
-			JSR BF_check
+			MOV #%01101100, char_1
+			MOV #%11101100, char_2	;  'n'
+			JSR display_char
+
+			MOV #%00111100, char_1
+			MOV #%10101100, char_2	;  ':'
+			JSR display_char
+
 			JMP done
 decode:
 ; toggles the heartbeat LED on/off
-			PTBDD_Upper_output
-			LDA #%11110000
-			ORA PTBDD
-			STA PTBDD
+			JSR PTBDD_Upper_output
 			LDA $82
 			EOR #XOR_Mask
 			STA $82
@@ -2375,11 +2054,11 @@ decode:
 			JMP decode1
 			
 E_write:
-; clears the display and writes "Enter n:" onto the LCD display.
+; clears the display, print "Enter n:" 
 			JSR clear_display
 			JMP display_text	
 decode1:			
-; load the pattern from memory and based on the pattern jump to one_write through nine_write and E_write.			
+;load pattern from memory and jump to proper subroutine.
 			LDA $70				
 			CMP #%01111110
 			BEQ E_write
@@ -2403,65 +2082,65 @@ decode1:
 			BEQ nine_write
 			JMP done
 
-; the following nine subroutines display a number onto the display, wait for 15ms, store the correct number of readings into memory, jump to average readings subroutine and jump to done subroutine.  			
 one_write:
 			JSR one
-			JSR Delay				; wait for 15 ms
+			JSR Delay				; wait 15 ms
 			MOV #1, n
 			JSR average_readings
 			JMP done
 two_write:
 			JSR two
-			JSR Delay				; wait for 15 ms
+			JSR Delay				; wait 15 ms
 			MOV #2, n
 			JSR average_readings
 			JMP done
 three_write:
 			JSR three
-			JSR Delay				; wait for 15 ms
+			JSR Delay				; wait 15 ms
 			MOV #3, n
 			JSR average_readings
 			JMP done
 four_write:
 			JSR four
-			JSR Delay				; wait for 15 ms
+			JSR Delay				; wait 15 ms
 			MOV #4, n
 			JSR average_readings
 			JMP done
 five_write:
 			JSR five
-			JSR Delay				; wait for 15 ms
+			JSR Delay				; wait 15 ms
 			MOV #5, n
 			JSR average_readings
 			JMP done
 six_write:
 			JSR six
-			JSR Delay				; wait for 15 ms
+			JSR Delay				; wait 15 ms
 			MOV #6, n
 			JSR average_readings
 			JMP done
 seven_write:
 			JSR seven
-			JSR Delay				; wait for 15 ms
+			JSR Delay				; wait 15 ms
 			MOV #7, n
 			JSR average_readings
 			JMP done
 eight_write:
 			JSR eight
-			JSR Delay				; wait for 15 ms
+			JSR Delay				; wait 15 ms
 			MOV #8, n
 			JSR average_readings
 			JMP done
 nine_write:
 			JSR nine
-			JSR Delay				; wait for 15 ms
+			JSR Delay				; wait 15 ms
 			MOV #9, n
 			JSR average_readings
 			JMP done
 			
 done:
-; move the first buttone of the kepad to be scanned into address $60 then jump to keypad_write and jump to decode which toggles the heartbeat LED. 
+;move to keypad write, then decode.
 			MOV #%11110111, $60
 			JSR keypad_write
-			JMP decode	
-			
+			JMP decode
+
+

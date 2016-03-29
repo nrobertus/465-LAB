@@ -1,4 +1,5 @@
 
+
 ../Sources/average_readings.o: \
 	../Sources/average_readings.asm \
 	C:/Projects/School/465-LAB/LAB3/Project_Headers/derivative.inc \

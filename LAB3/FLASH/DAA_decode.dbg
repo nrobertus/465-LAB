@@ -1,3 +1,13 @@
+;*******************************************************************
+;* This stationery serves as the framework for a user application. *
+;* For a more comprehensive program that demonstrates the more     *
+;* advanced functionality of this processor, please see the        *
+;* demonstration applications, located in the examples             *
+;* subdirectory of the "Freescale CodeWarrior for HC08" program    *
+;* directory.                                                      *
+;*******************************************************************
+
+; Include derivative-specific definitions
             INCLUDE 'derivative.inc'
 ; Note: This file is recreated by the project wizard whenever the MCU is
 ;       changed and should not be edited by hand
@@ -1954,35 +1964,20 @@ Reserved20                               equ        VReserved4
 feed_watchdog: MACRO
             STA SRS              ; feed the watchdog
           ENDM
-PTBDD_Upper_output: MACRO
-			LDA #%11110000
-			ORA PTBDD
-			STA PTBDD
-		ENDM
-		
-PTBDD_Upper_input: MACRO
-			LDA #%00001111
-			AND PTBDD
-			STA PTBDD
-		ENDM
-Clock_in: MACRO
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-		ENDM
             
-            XDEF DAA_decode            
-            
-			XREF one, two, three, four, five, six, seven, eight, nine, zero   ; symbol defined by the linker for the end of the stack
+
+; export symbols
+            XDEF DAA_decode
+                    
+            XREF one, two, three, four, five, six, seven, eight, nine, zero   ; symbol defined by the linker for the end of the stack
 
 
 ; variable/data section
-MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
+MY_ZEROPAGE: SECTION  SHORT 
+
 MyCode:     SECTION
 DAA_decode:
-; based on the binary number loaded into the accumulator. 0 - 9 is written to the LCD display			
+;Write in whatever the user typed		
 			LDA $86
 			CMP #%00000001
 			BEQ one_write
@@ -2037,3 +2032,6 @@ zero_write:
 			JMP done
 done:
 			RTS
+
+
+
