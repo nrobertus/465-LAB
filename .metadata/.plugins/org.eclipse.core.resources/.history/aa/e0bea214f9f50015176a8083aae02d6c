@@ -105,7 +105,8 @@ partA:
 	JSR Clock_in
 	RTS
 	
-partB:	
+partB:
+	MOV #%00001100, PTBD	
 	JSR Clock_in
 	JSR BF_check            ; Jump to check subroutine
 	RTS

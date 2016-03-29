@@ -16,7 +16,7 @@
             
             
             
-            XREF char_1, char_2, display_char, BF_check, Clock_in   ; symbol defined by the linker for the end of the stack
+            XREF BF_check, Clock_in   ; symbol defined by the linker for the end of the stack
 
 
 ; variable/data section
@@ -105,7 +105,8 @@ partA:
 	JSR Clock_in
 	RTS
 	
-partB:	
+partB:
+	MOV #%00001100, PTBD	
 	JSR Clock_in
 	JSR BF_check            ; Jump to check subroutine
 	RTS

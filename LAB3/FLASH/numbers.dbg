@@ -1971,7 +1971,7 @@ feed_watchdog: MACRO
             
             
             
-            XREF BF_check, Clock_in   ; symbol defined by the linker for the end of the stack
+            XREF char_1, char_2, display_char, BF_check, Clock_in   ; symbol defined by the linker for the end of the stack
 
 
 ; variable/data section
@@ -2060,8 +2060,7 @@ partA:
 	JSR Clock_in
 	RTS
 	
-partB:
-	MOV #%00001100, PTBD	
+partB:	
 	JSR Clock_in
 	JSR BF_check            ; Jump to check subroutine
 	RTS
