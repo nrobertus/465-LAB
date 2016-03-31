@@ -2020,7 +2020,7 @@ initializations:
 	JSR ADC_init
 			
 display_request:
-			
+			JSR clear_display;
 			JSR request_print
 			JMP done
 			
@@ -2041,15 +2041,11 @@ decode:
 			MOV #255, b
 			JMP decode1
 			
-E_write:
-; clears the display, print "Enter n:" 
-			JSR clear_display;
-			JMP display_request;
 decode1:			
 ;load pattern from memory and jump to proper subroutine.
 			LDA $70				
 			CMP #%01111110
-			BEQ E_write
+			BEQ display_request
 			CMP #%01110111
 			BEQ one_write
 			CMP #%10110111
@@ -2091,30 +2087,35 @@ four_write:
 			MOV #4, n
 			JMP display_actual
 five_write:
-			JSR five
-			JSR Delay				; wait 15 ms
-			MOV #5, n
-			JMP display_actual
+			JMP display_request
+			;JSR five
+			;JSR Delay				; wait 15 ms
+			;MOV #5, n
+			;JMP display_actual
 six_write:
-			JSR six
-			JSR Delay				; wait 15 ms
-			MOV #6, n
-			JMP display_actual
+			JMP display_request
+			;JSR six
+			;JSR Delay				; wait 15 ms
+			;MOV #6, n
+			;JMP display_actual
 seven_write:
-			JSR seven
-			JSR Delay				; wait 15 ms
-			MOV #7, n
-			JMP display_actual
+			JMP display_request
+			;JSR seven
+			;JSR Delay				; wait 15 ms
+			;MOV #7, n
+			;JMP display_actual
 eight_write:
-			JSR eight
-			JSR Delay				; wait 15 ms
-			MOV #8, n
-			JMP display_actual
+			JMP display_request
+			;JSR eight
+			;JSR Delay				; wait 15 ms
+			;MOV #8, n
+			;JMP display_actual
 nine_write:
-			JSR nine
-			JSR Delay				; wait 15 ms
-			MOV #9, n
-			JMP display_actual
+			JMP display_request
+			;JSR nine
+			;JSR Delay				; wait 15 ms
+			;MOV #9, n
+			;JMP display_actual
 			
 done:
 ;move to keypad write, then decode.

@@ -114,35 +114,30 @@ four_write:
 			MOV #4, n
 			JMP display_actual
 five_write:
-			JMP display_request
-			;JSR five
-			;JSR Delay				; wait 15 ms
-			;MOV #5, n
-			;JMP display_actual
+			JSR five
+			JSR Delay				; wait 15 ms
+			MOV #5, n
+			JMP display_actual
 six_write:
-			JMP display_request
-			;JSR six
-			;JSR Delay				; wait 15 ms
-			;MOV #6, n
-			;JMP display_actual
+			JSR six
+			JSR Delay				; wait 15 ms
+			MOV #6, n
+			JMP display_actual
 seven_write:
-			JMP display_request
-			;JSR seven
-			;JSR Delay				; wait 15 ms
-			;MOV #7, n
-			;JMP display_actual
+			JSR seven
+			JSR Delay				; wait 15 ms
+			MOV #7, n
+			JMP display_actual
 eight_write:
-			JMP display_request
-			;JSR eight
-			;JSR Delay				; wait 15 ms
-			;MOV #8, n
-			;JMP display_actual
+			JSR eight
+			JSR Delay				; wait 15 ms
+			MOV #8, n
+			JMP display_actual
 nine_write:
-			JMP display_request
-			;JSR nine
-			;JSR Delay				; wait 15 ms
-			;MOV #9, n
-			;JMP display_actual
+			JSR nine
+			JSR Delay				; wait 15 ms
+			MOV #9, n
+			JMP display_actual
 			
 done:
 ;move to keypad write, then decode.
