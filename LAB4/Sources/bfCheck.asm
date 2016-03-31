@@ -20,8 +20,8 @@ MY_ZEROPAGE: SECTION  SHORT
 
 MyCode:     SECTION
 BF_check:
-			BSET 0, PTAD				; set read 
-			BCLR 1, PTAD
+			BSET 2, PTAD				; set read 
+			BCLR 3, PTAD
 			JSR PTBDD_Upper_input			; input direction
 			JSR Clock_in
 			MOV PTBD, $80				; move data to $80
@@ -59,8 +59,8 @@ done1:
 			RTS							; return
 new_address:
 			JSR PTBDD_Upper_output
-			BCLR 1, PTAD				; RS <= 0
-			BCLR 0, PTAD				; R/W <= 0
+			BCLR 3, PTAD				; RS <= 0
+			BCLR 2, PTAD				; R/W <= 0
 			MOV #%11001100, PTBD	
 			NOP	
 			NOP
@@ -75,8 +75,8 @@ new_address:
 			JMP BF_check
 clear_display:
 			JSR PTBDD_Upper_output
-			BCLR 1, PTAD				; RS <= 0
-			BCLR 0, PTAD				; R/W <= 0
+			BCLR 3, PTAD				; RS <= 0
+			BCLR 2, PTAD				; R/W <= 0
 			MOV #%00001100, PTBD
 			NOP
 			NOP

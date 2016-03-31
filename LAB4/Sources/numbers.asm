@@ -16,7 +16,7 @@
             
             
             
-            XREF BF_check, Clock_in   ; symbol defined by the linker for the end of the stack
+            XREF char_1, char_2, display_char, BF_check, Clock_in   ; symbol defined by the linker for the end of the stack
 
 
 ; variable/data section
@@ -97,16 +97,15 @@ nine:
 partA:
 	BSET 3, PTBD            ; Set G2A clock edge
 	MOV #0, $70             ; Reset button press
-	BSET 0, PTADD           ; Sets directions of PTA
-	BSET 1, PTADD
-	BSET 1, PTAD            
-	BCLR 0, PTAD            
+	BSET 2, PTADD           ; Sets directions of PTA
+	BSET 3, PTADD
+	BSET 3, PTAD            
+	BCLR 2, PTAD            
 	MOV #%00111100, PTBD    ; Write data the LCD module
 	JSR Clock_in
 	RTS
 	
-partB:
-	MOV #%00001100, PTBD	
+partB:	
 	JSR Clock_in
 	JSR BF_check            ; Jump to check subroutine
 	RTS

@@ -24,8 +24,8 @@ LCD_init:
 	MOV #255, b
 	JSR Delay				; wait 15 ms
 			
-	BCLR 0, PTAD			
-	BCLR 1, PTAD
+	BCLR 2, PTAD			
+	BCLR 3, PTAD
 	MOV #%00111100, PTBD
 	JSR Clock_in
 			
@@ -33,8 +33,8 @@ LCD_init:
 	MOV #255, b
 	JSR Delay				; wait 4.1 ms
 	
-	BCLR 0, PTAD			
-	BCLR 1, PTAD
+	BCLR 2, PTAD			
+	BCLR 3, PTAD
 	MOV #%00111100, PTBD	
 	JSR Clock_in
 	
@@ -42,70 +42,70 @@ LCD_init:
 	MOV #40, b
 	JSR Delay				; wait 100 us
 	
-	BCLR 0, PTAD			
-	BCLR 1, PTAD
+	BCLR 2, PTAD			
+	BCLR 3, PTAD
 	MOV #%00111100, PTBD	
 	JSR Clock_in
 	
 	JSR BF_check			; check the BF
 	
-	BCLR 0, PTAD			
-	BCLR 1, PTAD
+	BCLR 2, PTAD			
+	BCLR 3, PTAD
 	MOV #%00101100, PTBD	
 	JSR Clock_in
 			
 	JSR BF_check			; check the BF
 		
-	BCLR 0, PTAD			
-	BCLR 1, PTAD
+	BCLR 2, PTAD			
+	BCLR 3, PTAD
 	MOV #%00101100, PTBD	
 	JSR Clock_in
-	BCLR 0, PTAD			
-	BCLR 1, PTAD
+	BCLR 2, PTAD			
+	BCLR 3, PTAD
 	MOV #%10101100, PTBD	; set N and F 
 	JSR Clock_in
 				
 	JSR BF_check			; check the BF
 	
-	BCLR 0, PTAD			
-	BCLR 1, PTAD
+	BCLR 2, PTAD			
+	BCLR 3, PTAD
 	MOV #%00001100, PTBD
 	JSR Clock_in
-	BCLR 0, PTAD			
-	BCLR 1, PTAD
+	BCLR 2, PTAD			
+	BCLR 3, PTAD
 	MOV #%10001100, PTBD	; turn off display
 	JSR Clock_in
 			
 	JSR BF_check			; check the BF
 			
-	BCLR 0, PTAD			
-	BCLR 1, PTAD
+	BCLR 2, PTAD			
+	BCLR 3, PTAD
 	MOV #%00001100, PTBD
 	JSR Clock_in
-	BCLR 0, PTAD			
-	BCLR 1, PTAD
+	BCLR 2, PTAD			
+	BCLR 3, PTAD
 	MOV #%00011100, PTBD	; clear the display
 	JSR Clock_in
 			
 	JSR BF_check			; check the BF
 	
-	BCLR 0, PTAD			
-	BCLR 1, PTAD
+	BCLR 2, PTAD			
+	BCLR 3, PTAD
 	MOV #%00001100, PTBD
 	JSR Clock_in
-	BCLR 0, PTAD			
-	BCLR 1, PTAD
+	BCLR 2, PTAD			
+	BCLR 3, PTAD
 	MOV #%01101100, PTBD	; Set entry mode
 	JSR Clock_in
 	
 	JSR BF_check			; check the BF
 	
-	BCLR 0, PTAD			
-	BCLR 1, PTAD
+	BCLR 2, PTAD			
+	BCLR 3, PTAD
 	MOV #%00001100, PTBD
 	JSR Clock_in
-	BCLR 0, PTAD			
-	BCLR 1, PTAD
+	BCLR 2, PTAD			
+	BCLR 3, PTAD
 	MOV #%11111100, PTBD	; Turn on display
 	JSR Clock_in
 	

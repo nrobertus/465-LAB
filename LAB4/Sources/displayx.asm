@@ -23,11 +23,11 @@ MY_ZEROPAGE: SECTION  SHORT
 MyCode:     SECTION
 displayx:
 			MOV $85, $88
-			BSET 0, PTADD
-			BSET 1, PTADD
+			BSET 2, PTADD
+			BSET 3, PTADD
 			
-			BCLR 0, PTAD
-			BCLR 1, PTAD
+			BCLR 2, PTAD
+			BCLR 3, PTAD
 			
 			MOV #%00001100, PTBD
 			JSR Clock_in
@@ -72,13 +72,12 @@ celsius_display:
 
 kelvin_display:
 ; Print "T,K:" 
-			feed_watchdog
 			JSR PTBDD_Upper_output
-			BCLR 1, PTAD				; RS <= 0
-			BCLR 0, PTAD				; R/W <= 0
+			BCLR 3, PTAD				; RS <= 0
+			BCLR 2, PTAD				; R/W <= 0
 			
-			BSET 0, PTADD
-			BSET 1, PTADD
+			BSET 2, PTADD
+			BSET 3, PTADD
 
 			MOV #%01011100, char_1
 			MOV #%01001100, char_2	;  'T'
@@ -123,8 +122,8 @@ write_3:
 			MOV $85, $86
 			JSR DAA_decode
 ; Print ' ' 		
-			BSET 1, PTAD
-			BCLR 0, PTAD
+			BSET 3, PTAD
+			BCLR 2, PTAD
 			MOV #%00101100, PTBD
 			JSR Clock_in
 			MOV #%00001100, PTBD	;  ' '

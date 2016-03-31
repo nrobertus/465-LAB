@@ -21,8 +21,8 @@ MY_ZEROPAGE: SECTION  SHORT
 MyCode:     SECTION
 display_char:
 
-			BSET 1, PTAD
-			BCLR 0, PTAD
+			BSET 3, PTAD
+			BCLR 2, PTAD
 			MOV char_1, PTBD
 			JSR Clock_in
 			MOV char_2, PTBD

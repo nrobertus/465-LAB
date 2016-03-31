@@ -30,9 +30,8 @@ main:
 _Startup:
 			BSET 0, PTADD            ; enable port a and AtoD
 			BSET 1, PTADD
-			BCLR 2, PTADD
-			BCLR 2, PTAD
-			BCLR 3, PTAD
+			BSET 2, PTADD
+			BSET 3, PTADD
 			BCLR 4, PTAD
 			BCLR 5, PTAD
 			MOV #$FF, PTBDD
@@ -53,8 +52,8 @@ display_text:
 			;BSET 1, PTADD
 			
 			
-			MOV #%01001100, char_1
-			MOV #%01011100, char_2 ; 'E'
+			MOV #%01101100, char_1
+			MOV #%00001100, char_2 ; '`'
 			JSR display_char
 
 			MOV #%01101100, char_1
