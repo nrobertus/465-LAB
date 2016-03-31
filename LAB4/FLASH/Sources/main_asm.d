@@ -1,5 +1,4 @@
 
-
 ../Sources/main.o: \
 	../Sources/main.asm \
 	C:/Projects/School/465-LAB/LAB4/Project_Headers/derivative.inc \

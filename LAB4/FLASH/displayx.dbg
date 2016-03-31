@@ -1,3 +1,13 @@
+;*******************************************************************
+;* This stationery serves as the framework for a user application. *
+;* For a more comprehensive program that demonstrates the more     *
+;* advanced functionality of this processor, please see the        *
+;* demonstration applications, located in the examples             *
+;* subdirectory of the "Freescale CodeWarrior for HC08" program    *
+;* directory.                                                      *
+;*******************************************************************
+
+; Include derivative-specific definitions
             INCLUDE 'derivative.inc'
 ; Note: This file is recreated by the project wizard whenever the MCU is
 ;       changed and should not be edited by hand
@@ -1973,118 +1983,51 @@ Clock_in: MACRO
 			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
 		ENDM
             
-            XDEF displayx   
+
+; export symbols
+            XDEF displayx
             
-			XREF n, clear_display, BF_check, new_address, DAA_decode   ; symbol defined by the linker for the end of the stack
+            
+            XREF char_1, char_2, display_char, n, clear_display, BF_check, new_address, DAA_decode, PTBDD_Upper_output, Clock_in   ; symbol defined by the linker for the end of the stack
 
 
-; variable/data section
-MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
+MY_ZEROPAGE: SECTION  SHORT         
+
 MyCode:     SECTION
 displayx:
 			MOV $85, $88
-			BSET 0, PTADD
-			BSET 1, PTADD
+			BSET 2, PTADD
+			BSET 3, PTADD
 			
-			BCLR 0, PTAD
-			BCLR 1, PTAD
+			BCLR 2, PTAD
+			BCLR 3, PTAD
 			
 			MOV #%00001100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%00111100, PTBD	; Return Home
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
+			JSR Clock_in
+			MOV #%00111100, PTBD	;return 
+			JSR Clock_in
 			
 			JSR BF_check
 			
-			BSET 1, PTAD
-			BCLR 0, PTAD
-; Writes "T,C:" onto the LCD display.				
-			MOV #%01011100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%01001100, PTBD	; Write 'T'
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			
-			JSR BF_check
-			
-			BSET 1, PTAD
-			BCLR 0, PTAD
-			MOV #%00101100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%11001100, PTBD	; Write ','
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			
-			JSR BF_check
-			
-			BSET 1, PTAD
-			BCLR 0, PTAD
-			MOV #%01001100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%00111100, PTBD	; Write 'C'
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			
-			JSR BF_check
-			
-			BSET 1, PTAD
-			BCLR 0, PTAD
-			MOV #%00111100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%10101100, PTBD	; Write ':'
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			
-			JSR BF_check
+
+			MOV #%01011100, char_1
+			MOV #%01001100, char_2	; 'T'
+			JSR display_char
+
+			MOV #%00101100, char_1
+			MOV #%11001100, char_2	;  ','
+			JSR display_char
+
+			MOV #%01001100, char_1
+			MOV #%00111100, char_2	;  'C'
+			JSR display_char
+
+			MOV #%00111100, char_1
+			MOV #%10101100, char_2	;  ':'
+			JSR display_char
 			
 celsius_display:
-; convert the hex value of temperature into BCD and branch to DAA_decode			
+;convert hex, return		
 			LDA $85
 			CLRH
 			LDX #10
@@ -2094,115 +2037,38 @@ celsius_display:
 			JSR DAA_decode
 			MOV $85, $86
 			JSR DAA_decode
-; Write ' ' to the LCD display.					
-			BSET 1, PTAD
-			BCLR 0, PTAD
-			MOV #%00101100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%00001100, PTBD	; Write ' '
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			JSR BF_check
+; print ' '			
+
+			MOV #%00101100, char_1
+			MOV #%00001100, char_2	;  ' '
+			JSR display_char
 
 kelvin_display:
-; Writes "T,K:" onto the LCD display.
-			feed_watchdog
-            STA SRS              ; feed the watchdog
-			PTBDD_Upper_output
-			LDA #%11110000
-			ORA PTBDD
-			STA PTBDD
-			BCLR 1, PTAD				; set RS = 0
-			BCLR 0, PTAD				; set R/W = 0
+; Print "T,K:" 
+			JSR PTBDD_Upper_output
+			BCLR 3, PTAD				; RS <= 0
+			BCLR 2, PTAD				; R/W <= 0
 			
-			BSET 0, PTADD
-			BSET 1, PTADD
-			BSET 1, PTAD
-			BCLR 0, PTAD
+			BSET 2, PTADD
+			BSET 3, PTADD
+
+			MOV #%01011100, char_1
+			MOV #%01001100, char_2	;  'T'
+			JSR display_char
+
+			MOV #%00101100, char_1
+			MOV #%11001100, char_2	;  ','
+			JSR display_char
+
+			MOV #%01001100, char_1
+			MOV #%10111100, char_2	;  'K'
+			JSR display_char
 			
-			MOV #%01011100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%01001100, PTBD	; Write 'T'
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			
-			JSR BF_check
-			
-			BSET 1, PTAD
-			BCLR 0, PTAD
-			MOV #%00101100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%11001100, PTBD	; Write ','
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			
-			JSR BF_check
-			
-			BSET 1, PTAD
-			BCLR 0, PTAD
-			MOV #%01001100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%10111100, PTBD	; Write 'K'
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			
-			JSR BF_check
-			
-			BSET 1, PTAD
-			BCLR 0, PTAD
-			MOV #%00111100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%10101100, PTBD	; Write ':'
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			
-			JSR BF_check
-; checks to see if the the conversion to kelvin causes on over flow if it does branch to write_3 else branch to to write_2.			
+			MOV #%00111100, char_1
+			MOV #%10101100, char_2	;  ':'
+			JSR display_char
+
+;check for 2 or 3		
 			LDA #73
 			ADD $88
 			STA $88
@@ -2212,25 +2078,12 @@ kelvin_display:
 			BRA write_2
 			
 write_3:
-; Writes '3' to the LCD display
-			BSET 1, PTAD
-			BCLR 0, PTAD
-			MOV #%00111100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%00111100, PTBD	; Write '3'
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			JSR BF_check
-; convert the hex value of temperature into BCD and branch to DAA_decode				
+; Print '3'
+
+			MOV #%00111100, char_1
+			MOV #%00111100, char_2	;  '3'
+			JSR display_char
+;Convert hex and decode			
 			LDA $88
 			SUB #100
 			CLRH
@@ -2241,46 +2094,22 @@ write_3:
 			JSR DAA_decode
 			MOV $85, $86
 			JSR DAA_decode
-; Write ' ' to the LCD display.				
-			BSET 1, PTAD
-			BCLR 0, PTAD
+; Print ' ' 		
+			BSET 3, PTAD
+			BCLR 2, PTAD
 			MOV #%00101100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%00001100, PTBD	; Write ' '
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
+			JSR Clock_in
+			MOV #%00001100, PTBD	;  ' '
+			JSR Clock_in
 			JSR BF_check
 			
 			RTS
 write_2:
-; Writes '2' to the LCD display
-			BSET 1, PTAD
-			BCLR 0, PTAD
-			MOV #%00111100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%00101100, PTBD	; Write '2'
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-; convert the hex value of temperature into BCD and branch to DAA_decode				
-			JSR BF_check
+; Print '2'
+			MOV #%00111100, char_1
+			MOV #%00101100, char_2	;  '2'
+			JSR display_char
+;conver hex and decode		
 			LDA $88
 			CLRH
 			LDX #10
@@ -2290,23 +2119,10 @@ write_2:
 			JSR DAA_decode
 			MOV $85, $86
 			JSR DAA_decode
-; Write ' ' to the LCD display.				
-			BSET 1, PTAD
-			BCLR 0, PTAD
-			MOV #%00101100, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			MOV #%00001100, PTBD	; Write ' '
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
-			JSR BF_check
+; Print ' ' 		
+
+			MOV #%00101100, char_1
+			MOV #%00001100, char_2	;  ' '
+			JSR display_char
 			
 			RTS

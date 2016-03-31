@@ -14,7 +14,7 @@
 ; export symbols
             XDEF _Startup, main, t, b, m, n, char_1, char_2
                    
-            XREF ADC_init, PTBDD_Upper_output, LCD_init, Clock_in, BF_check, Delay, keypad_write, clear_display, average_readings, one, two, three, four, five, six, seven, eight, nine, display_char   ; symbol defined by the linker for the end of the stack
+            XREF new_address, actual_print, request_print, ADC_init, PTBDD_Upper_output, LCD_init, Clock_in, BF_check, Delay, keypad_write, clear_display, average_readings, one, two, three, four, five, six, seven, eight, nine, display_char   ; symbol defined by the linker for the end of the stack
 
 MY_ZEROPAGE: SECTION  SHORT 
 			n: EQU $83
@@ -46,41 +46,16 @@ initializations:
 	JSR LCD_init
 	JSR ADC_init
 			
-display_text:
-; print "Enter n:" 		
-			;BSET 0, PTADD
-			;BSET 1, PTADD
+display_request:
 			
-			
-			MOV #%01011100, char_1
-			MOV #%00101100, char_2 ; 'R'
-			JSR display_char
-
-			MOV #%01101100, char_1
-			MOV #%01011100, char_2	;  'e'
-			JSR display_char
-			
-			MOV #%01111100, char_1
-			MOV #%00011100, char_2	;  'q'
-			JSR display_char
-			
-			MOV #%00101100, char_1
-			MOV #%00001100, char_2	;  ' '
-			JSR display_char
-			
-			MOV #%01001100, char_1
-			MOV #%11111100, char_2	;  'O'
-			JSR display_char
-
-			MOV #%01111100, char_1
-			MOV #%01011100, char_2	;  'u'
-			JSR display_char
-			
-			MOV #%01111100, char_1
-			MOV #%01001100, char_2	;  't'
-			JSR display_char
-
+			JSR request_print
 			JMP done
+			
+display_actual:
+			JSR new_address
+			JSR actual_print
+			JMP done
+			
 decode:
 ; toggles the heartbeat LED on/off
 			JSR PTBDD_Upper_output
@@ -95,8 +70,8 @@ decode:
 			
 E_write:
 ; clears the display, print "Enter n:" 
-			JSR clear_display
-			JMP display_text	
+			JSR clear_display;
+			JMP display_request;
 decode1:			
 ;load pattern from memory and jump to proper subroutine.
 			LDA $70				
@@ -126,56 +101,47 @@ one_write:
 			JSR one
 			JSR Delay				; wait 15 ms
 			MOV #1, n
-			JSR average_readings
-			JMP done
+			JMP display_actual
 two_write:
 			JSR two
 			JSR Delay				; wait 15 ms
 			MOV #2, n
-			JSR average_readings
-			JMP done
+			JMP display_actual
 three_write:
 			JSR three
 			JSR Delay				; wait 15 ms
 			MOV #3, n
-			JSR average_readings
-			JMP done
+			JMP display_actual
 four_write:
 			JSR four
 			JSR Delay				; wait 15 ms
 			MOV #4, n
-			JSR average_readings
-			JMP done
+			JMP display_actual
 five_write:
 			JSR five
 			JSR Delay				; wait 15 ms
 			MOV #5, n
-			JSR average_readings
-			JMP done
+			JMP display_actual
 six_write:
 			JSR six
 			JSR Delay				; wait 15 ms
 			MOV #6, n
-			JSR average_readings
-			JMP done
+			JMP display_actual
 seven_write:
 			JSR seven
 			JSR Delay				; wait 15 ms
 			MOV #7, n
-			JSR average_readings
-			JMP done
+			JMP display_actual
 eight_write:
 			JSR eight
 			JSR Delay				; wait 15 ms
 			MOV #8, n
-			JSR average_readings
-			JMP done
+			JMP display_actual
 nine_write:
 			JSR nine
 			JSR Delay				; wait 15 ms
 			MOV #9, n
-			JSR average_readings
-			JMP done
+			JMP display_actual
 			
 done:
 ;move to keypad write, then decode.
