@@ -52,36 +52,32 @@ display_text:
 			;BSET 1, PTADD
 			
 			
-			MOV #%01101100, char_1
-			MOV #%00001100, char_2 ; '`'
+			MOV #%01011100, char_1
+			MOV #%00101100, char_2 ; 'R'
 			JSR display_char
 
-			MOV #%01101100, char_1
-			MOV #%11101100, char_2	;  'n'
-			JSR display_char
-			
-			MOV #%01111100, char_1
-			MOV #%01001100, char_2	;  't'
-			JSR display_char
-			
 			MOV #%01101100, char_1
 			MOV #%01011100, char_2	;  'e'
 			JSR display_char
 			
 			MOV #%01111100, char_1
-			MOV #%00101100, char_2	;  'r'
+			MOV #%00011100, char_2	;  'q'
 			JSR display_char
 			
 			MOV #%00101100, char_1
 			MOV #%00001100, char_2	;  ' '
 			JSR display_char
 			
-			MOV #%01101100, char_1
-			MOV #%11101100, char_2	;  'n'
+			MOV #%01001100, char_1
+			MOV #%11111100, char_2	;  'O'
 			JSR display_char
 
-			MOV #%00111100, char_1
-			MOV #%10101100, char_2	;  ':'
+			MOV #%01111100, char_1
+			MOV #%01011100, char_2	;  'u'
+			JSR display_char
+			
+			MOV #%01111100, char_1
+			MOV #%01001100, char_2	;  't'
 			JSR display_char
 
 			JMP done
