@@ -1,0 +1,328 @@
+*** EVALUATION ***
+PROGRAM "LAB4.abs"
+
+*********************************************************************************************
+TARGET SECTION
+---------------------------------------------------------------------------------------------
+Processor   : Freescale HC08
+Memory Model: SMALL
+File Format : ELF\DWARF 2.0
+Linker      : SmartLinker V-5.0.51 Build 14019, Jan 20 2014
+
+*********************************************************************************************
+FILE SECTION
+---------------------------------------------------------------------------------------------
+ADC_init_asm.obj                        Model: SMALL,         Lang: Assembler
+Delay_asm.obj                           Model: SMALL,         Lang: Assembler
+Keypad_RW_asm.obj                       Model: SMALL,         Lang: Assembler
+LCD_init_asm.obj                        Model: SMALL,         Lang: Assembler
+actual_print_asm.obj                    Model: SMALL,         Lang: Assembler
+bfCheck_asm.obj                         Model: SMALL,         Lang: Assembler
+display_char_asm.obj                    Model: SMALL,         Lang: Assembler
+functions_asm.obj                       Model: SMALL,         Lang: Assembler
+main_asm.obj                            Model: SMALL,         Lang: Assembler
+numbers_asm.obj                         Model: SMALL,         Lang: Assembler
+request_print_asm.obj                   Model: SMALL,         Lang: Assembler
+
+*********************************************************************************************
+STARTUP SECTION
+---------------------------------------------------------------------------------------------
+Entry point: 0xE000 (_Startup)
+
+*********************************************************************************************
+SECTION-ALLOCATION SECTION
+Section Name                    Size  Type     From       To       Segment
+---------------------------------------------------------------------------------------------
+.init                            192     R     0xE000     0xE0BF   ROM
+MyCode                           931     R     0xE0C0     0xE462   ROM
+.stack                            64   R/W      0x100      0x13F   RAM
+.vectSeg0_vect                     2     R     0xFFFE     0xFFFF   .vectSeg0
+
+Summary of section sizes per section type:
+READ_ONLY (R):         465 (dec:     1125)
+READ_WRITE (R/W):       40 (dec:       64)
+
+*********************************************************************************************
+VECTOR-ALLOCATION SECTION
+    Address     InitValue   InitFunction
+---------------------------------------------------------------------------------------------
+     0xFFFE        0xE000   _Startup
+
+*********************************************************************************************
+OBJECT-ALLOCATION SECTION
+     Name               Module                 Addr   hSize   dSize     Ref    Section   RLIB
+---------------------------------------------------------------------------------------------
+MODULE:                 -- ADC_init_asm.obj --
+- PROCEDURES:
+     ADC_init                                  E0C0      18      24       1   MyCode      
+- VARIABLES:
+MODULE:                 -- Delay_asm.obj --
+- PROCEDURES:
+     Delay                                     E0D8       3       3       7   MyCode      
+     top                                       E0DB       7       7       0   MyCode      
+     bottom                                    E0E2       6       6       0   MyCode      
+     ass                                       E0E8       1       1       0   MyCode      
+- VARIABLES:
+MODULE:                 -- Keypad_RW_asm.obj --
+- PROCEDURES:
+     keypad_write                              E0E9      47      71       1   MyCode      
+     Re_read                                   E130      25      37       0   MyCode      
+     done                                      E155       1       1       0   MyCode      
+     Delay_Loop                                E156       B      11       0   MyCode      
+     Top                                       E161       F      15       0   MyCode      
+     Middle                                    E170       F      15       0   MyCode      
+     bottom                                    E17F       C      12       0   MyCode      
+- VARIABLES:
+MODULE:                 -- LCD_init_asm.obj --
+- PROCEDURES:
+     LCD_init                                  E18B      BD     189       1   MyCode      
+- VARIABLES:
+MODULE:                 -- actual_print_asm.obj --
+- PROCEDURES:
+     actual_print                              E248      76     118       1   MyCode      
+- VARIABLES:
+MODULE:                 -- bfCheck_asm.obj --
+- PROCEDURES:
+     BF_check                                  E2BE      2D      45      11   MyCode      
+     done                                      E2EB      1C      28       0   MyCode      
+     new_address                               E307      1D      29       1   MyCode      
+     clear_display                             E324      1D      29       1   MyCode      
+- VARIABLES:
+MODULE:                 -- display_char_asm.obj --
+- PROCEDURES:
+     display_char                              E341      14      20      23   MyCode      
+- VARIABLES:
+MODULE:                 -- functions_asm.obj --
+- PROCEDURES:
+     PTBDD_Upper_output                        E355       7       7       5   MyCode      
+     PTBDD_Upper_input                         E35C       7       7       3   MyCode      
+     Clock_in                                  E363       8       8      24   MyCode      
+- VARIABLES:
+MODULE:                 -- main_asm.obj --
+- PROCEDURES:
+     _Startup                                  E000      22      34       0   .init       
+     main                                      E000       0       0       0   .init       
+     display_request                           E022       9       9       5   .init       
+     display_actual                            E02B       9       9       4   .init       
+     decode                                    E034      17      23       1   .init       
+     decode1                                   E04B      2D      45       1   .init       
+     one_write                                 E078       C      12       0   .init       
+     two_write                                 E084       C      12       0   .init       
+     three_write                               E090       C      12       0   .init       
+     four_write                                E09C       C      12       0   .init       
+     five_write                                E0A8       3       3       0   .init       
+     six_write                                 E0AB       3       3       0   .init       
+     seven_write                               E0AE       3       3       0   .init       
+     eight_write                               E0B1       3       3       0   .init       
+     nine_write                                E0B4       3       3       0   .init       
+     done                                      E0B7       9       9       3   .init       
+- VARIABLES:
+- LABELS:
+     t                                           71       0       0       7   .text       
+     m                                           72       0       0       6   .text       
+     b                                           73       0       0      10   .text       
+     char_1                                      74       0       0      24   .text       
+     char_2                                      75       0       0      24   .text       
+     n                                           83       0       0       0   .text       
+MODULE:                 -- numbers_asm.obj --
+- PROCEDURES:
+     zero                                      E36B       D      13       0   MyCode      
+     one                                       E378       D      13       1   MyCode      
+     two                                       E385       D      13       1   MyCode      
+     three                                     E392       D      13       1   MyCode      
+     four                                      E39F       D      13       1   MyCode      
+     five                                      E3AC       D      13       0   MyCode      
+     six                                       E3B9       D      13       0   MyCode      
+     seven                                     E3C6       D      13       0   MyCode      
+     eight                                     E3D3       D      13       0   MyCode      
+     nine                                      E3E0       D      13       0   MyCode      
+     partA                                     E3ED      14      20      10   MyCode      
+     partB                                     E401       7       7      10   MyCode      
+- VARIABLES:
+MODULE:                 -- request_print_asm.obj --
+- PROCEDURES:
+     request_print                             E408      5B      91       1   MyCode      
+- VARIABLES:
+
+*********************************************************************************************
+MODULE STATISTIC
+  Name                                      Data   Code  Const
+---------------------------------------------------------------------------------------------
+  ADC_init_asm.obj                             0     24      0
+  Delay_asm.obj                                0     17      0
+  Keypad_RW_asm.obj                            0    162      0
+  LCD_init_asm.obj                             0    189      0
+  actual_print_asm.obj                         0    118      0
+  bfCheck_asm.obj                              0    131      0
+  display_char_asm.obj                         0     20      0
+  functions_asm.obj                            0     22      0
+  main_asm.obj                                 0    192      0
+  numbers_asm.obj                              0    157      0
+  request_print_asm.obj                        0     91      0
+  other                                       64      2      0
+
+*********************************************************************************************
+SECTION USE IN OBJECT-ALLOCATION SECTION
+---------------------------------------------------------------------------------------------
+SECTION: ".text"
+  t m b char_1 char_2 n 
+SECTION: ".init"
+  main _Startup display_request display_actual decode decode1 one_write 
+  two_write three_write four_write five_write six_write seven_write eight_write 
+  nine_write done 
+SECTION: "MyCode"
+  ADC_init Delay top bottom ass keypad_write Re_read done Delay_Loop Top 
+  Middle bottom LCD_init actual_print BF_check done new_address clear_display 
+  display_char PTBDD_Upper_output PTBDD_Upper_input Clock_in zero one two three 
+  four five six seven eight nine partA partB request_print 
+
+*********************************************************************************************
+OBJECT LIST SORTED BY ADDRESS
+     Name                                      Addr   hSize   dSize     Ref    Section   RLIB
+---------------------------------------------------------------------------------------------
+     t                                           71       0       0       7   .text       
+     m                                           72       0       0       6   .text       
+     b                                           73       0       0      10   .text       
+     char_1                                      74       0       0      24   .text       
+     char_2                                      75       0       0      24   .text       
+     n                                           83       0       0       0   .text       
+     main                                      E000       0       0       0   .init       
+     _Startup                                  E000      22      34       0   .init       
+     display_request                           E022       9       9       5   .init       
+     display_actual                            E02B       9       9       4   .init       
+     decode                                    E034      17      23       1   .init       
+     decode1                                   E04B      2D      45       1   .init       
+     one_write                                 E078       C      12       0   .init       
+     two_write                                 E084       C      12       0   .init       
+     three_write                               E090       C      12       0   .init       
+     four_write                                E09C       C      12       0   .init       
+     five_write                                E0A8       3       3       0   .init       
+     six_write                                 E0AB       3       3       0   .init       
+     seven_write                               E0AE       3       3       0   .init       
+     eight_write                               E0B1       3       3       0   .init       
+     nine_write                                E0B4       3       3       0   .init       
+     done                                      E0B7       9       9       3   .init       
+     ADC_init                                  E0C0      18      24       1   MyCode      
+     Delay                                     E0D8       3       3       7   MyCode      
+     top                                       E0DB       7       7       0   MyCode      
+     bottom                                    E0E2       6       6       0   MyCode      
+     ass                                       E0E8       1       1       0   MyCode      
+     keypad_write                              E0E9      47      71       1   MyCode      
+     Re_read                                   E130      25      37       0   MyCode      
+     done                                      E155       1       1       0   MyCode      
+     Delay_Loop                                E156       B      11       0   MyCode      
+     Top                                       E161       F      15       0   MyCode      
+     Middle                                    E170       F      15       0   MyCode      
+     bottom                                    E17F       C      12       0   MyCode      
+     LCD_init                                  E18B      BD     189       1   MyCode      
+     actual_print                              E248      76     118       1   MyCode      
+     BF_check                                  E2BE      2D      45      11   MyCode      
+     done                                      E2EB      1C      28       0   MyCode      
+     new_address                               E307      1D      29       1   MyCode      
+     clear_display                             E324      1D      29       1   MyCode      
+     display_char                              E341      14      20      23   MyCode      
+     PTBDD_Upper_output                        E355       7       7       5   MyCode      
+     PTBDD_Upper_input                         E35C       7       7       3   MyCode      
+     Clock_in                                  E363       8       8      24   MyCode      
+     zero                                      E36B       D      13       0   MyCode      
+     one                                       E378       D      13       1   MyCode      
+     two                                       E385       D      13       1   MyCode      
+     three                                     E392       D      13       1   MyCode      
+     four                                      E39F       D      13       1   MyCode      
+     five                                      E3AC       D      13       0   MyCode      
+     six                                       E3B9       D      13       0   MyCode      
+     seven                                     E3C6       D      13       0   MyCode      
+     eight                                     E3D3       D      13       0   MyCode      
+     nine                                      E3E0       D      13       0   MyCode      
+     partA                                     E3ED      14      20      10   MyCode      
+     partB                                     E401       7       7      10   MyCode      
+     request_print                             E408      5B      91       1   MyCode      
+
+*********************************************************************************************
+UNUSED-OBJECTS SECTION
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+COPYDOWN SECTION
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+OBJECT-DEPENDENCIES SECTION
+---------------------------------------------------------------------------------------------
+_Startup                  USES LCD_init ADC_init 
+display_request           USES clear_display request_print done 
+display_actual            USES new_address actual_print done 
+decode                    USES PTBDD_Upper_output decode1 
+decode1                   USES done 
+one_write                 USES one Delay display_actual 
+two_write                 USES two Delay display_actual 
+three_write               USES three Delay display_actual 
+four_write                USES four Delay display_actual 
+five_write                USES display_request 
+six_write                 USES display_request 
+seven_write               USES display_request 
+eight_write               USES display_request 
+nine_write                USES display_request 
+done                      USES keypad_write decode 
+Delay                     USES b m 
+top                       USES t m b 
+bottom                    USES b 
+keypad_write              USES PTBDD_Upper_output PTBDD_Upper_input 
+Re_read                   USES PTBDD_Upper_input 
+Delay_Loop                USES t m b 
+Top                       USES t m 
+Middle                    USES m b 
+bottom                    USES b 
+LCD_init                  USES t b Delay Clock_in BF_check 
+actual_print              USES char_1 char_2 display_char 
+BF_check                  USES PTBDD_Upper_input Clock_in 
+done                      USES PTBDD_Upper_output 
+new_address               USES PTBDD_Upper_output Clock_in BF_check 
+clear_display             USES PTBDD_Upper_output Clock_in BF_check 
+display_char              USES char_1 Clock_in char_2 BF_check 
+zero                      USES partA partB 
+one                       USES partA partB 
+two                       USES partA partB 
+three                     USES partA partB 
+four                      USES partA partB 
+five                      USES partA partB 
+six                       USES partA partB 
+seven                     USES partA partB 
+eight                     USES partA partB 
+nine                      USES partA partB 
+partA                     USES Clock_in 
+partB                     USES Clock_in BF_check 
+request_print             USES char_1 char_2 display_char 
+
+*********************************************************************************************
+DEPENDENCY TREE
+*********************************************************************************************
+ main and _Startup Group
+ | 
+ +- main                
+ |    
+ +- _Startup            
+    | 
+    +- LCD_init            
+    |  | 
+    |  +- Delay               
+    |  |    
+    |  +- Clock_in            
+    |  |    
+    |  +- BF_check            
+    |     | 
+    |     +- PTBDD_Upper_input   
+    |     |    
+    |     +- Clock_in             (see above)
+    |        
+    +- ADC_init            
+         
+*********************************************************************************************
+STATISTIC SECTION
+---------------------------------------------------------------------------------------------
+
+ExeFile:
+--------
+Number of blocks to be downloaded: 2
+Total size of all blocks to be downloaded: 1125
+
