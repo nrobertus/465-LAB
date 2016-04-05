@@ -14,7 +14,7 @@
 ; export symbols
             XDEF _Startup, main, t, b, m, n, char_1, char_2
                    
-            XREF new_address, actual_print, request_print, ADC_init, PTBDD_Upper_output, LCD_init, Clock_in, BF_check, Delay, keypad_write, clear_display, average_readings, one, two, three, four, five, six, seven, eight, nine, display_char   ; symbol defined by the linker for the end of the stack
+            XREF readPWM, new_address, actual_print, request_print, ADC_init, PTBDD_Upper_output, LCD_init, Clock_in, BF_check, Delay, keypad_write, clear_display, average_readings, zero, one, two, three, four, five, six, seven, eight, nine, display_char   ; symbol defined by the linker for the end of the stack
 
 MY_ZEROPAGE: SECTION  SHORT 
 			n: EQU $83
@@ -54,6 +54,7 @@ display_request:
 display_actual:
 			JSR new_address
 			JSR actual_print
+			JSR readPWM
 			JMP done
 			
 decode:
@@ -73,6 +74,8 @@ decode1:
 			LDA $70				
 			CMP #%01111110
 			BEQ display_request
+			CMP #%10111110
+			BEQ zero_write
 			CMP #%01110111
 			BEQ one_write
 			CMP #%10110111
@@ -92,7 +95,11 @@ decode1:
 			CMP #%11011101
 			BEQ nine_write
 			JMP done
-
+zero_write:
+			JSR zero
+			JSR Delay				; wait 15 ms
+			MOV #0, n
+			JMP display_actual
 one_write:
 			JSR one
 			JSR Delay				; wait 15 ms
