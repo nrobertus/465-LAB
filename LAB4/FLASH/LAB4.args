@@ -17,4 +17,5 @@
 "$(ProjDirPath)/FLASH/Sources/functions_asm.obj"
 "$(ProjDirPath)/FLASH/Sources/main_asm.obj"
 "$(ProjDirPath)/FLASH/Sources/numbers_asm.obj"
+"$(ProjDirPath)/FLASH/Sources/pwm_asm.obj"
 "$(ProjDirPath)/FLASH/Sources/request_print_asm.obj" )

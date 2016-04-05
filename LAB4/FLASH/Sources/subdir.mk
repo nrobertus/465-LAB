@@ -21,6 +21,7 @@ ASM_SRCS += \
 ../Sources/functions.asm \
 ../Sources/main.asm \
 ../Sources/numbers.asm \
+../Sources/pwm.asm \
 ../Sources/request_print.asm \
 
 ASM_SRCS_QUOTED += \
@@ -39,6 +40,7 @@ ASM_SRCS_QUOTED += \
 "../Sources/functions.asm" \
 "../Sources/main.asm" \
 "../Sources/numbers.asm" \
+"../Sources/pwm.asm" \
 "../Sources/request_print.asm" \
 
 OBJS += \
@@ -57,6 +59,7 @@ OBJS += \
 ./Sources/functions_asm.obj \
 ./Sources/main_asm.obj \
 ./Sources/numbers_asm.obj \
+./Sources/pwm_asm.obj \
 ./Sources/request_print_asm.obj \
 
 ASM_DEPS += \
@@ -75,6 +78,7 @@ ASM_DEPS += \
 ./Sources/functions_asm.d \
 ./Sources/main_asm.d \
 ./Sources/numbers_asm.d \
+./Sources/pwm_asm.d \
 ./Sources/request_print_asm.d \
 
 OBJS_QUOTED += \
@@ -93,6 +97,7 @@ OBJS_QUOTED += \
 "./Sources/functions_asm.obj" \
 "./Sources/main_asm.obj" \
 "./Sources/numbers_asm.obj" \
+"./Sources/pwm_asm.obj" \
 "./Sources/request_print_asm.obj" \
 
 ASM_DEPS_QUOTED += \
@@ -111,6 +116,7 @@ ASM_DEPS_QUOTED += \
 "./Sources/functions_asm.d" \
 "./Sources/main_asm.d" \
 "./Sources/numbers_asm.d" \
+"./Sources/pwm_asm.d" \
 "./Sources/request_print_asm.d" \
 
 OBJS_OS_FORMAT += \
@@ -129,6 +135,7 @@ OBJS_OS_FORMAT += \
 ./Sources/functions_asm.obj \
 ./Sources/main_asm.obj \
 ./Sources/numbers_asm.obj \
+./Sources/pwm_asm.obj \
 ./Sources/request_print_asm.obj \
 
 
@@ -258,9 +265,17 @@ Sources/numbers_asm.obj: ../Sources/numbers.asm
 	@echo 'Finished building: $<'
 	@echo ' '
 
-Sources/request_print_asm.obj: ../Sources/request_print.asm
+Sources/pwm_asm.obj: ../Sources/pwm.asm
 	@echo 'Building file: $<'
 	@echo 'Executing target #16 $<'
+	@echo 'Invoking: HCS08 Assembler'
+	"$(HC08ToolsEnv)/ahc08" -ArgFile"Sources/pwm.args" -Objn"Sources/pwm_asm.obj" "$<" -Lm="$(@:%.obj=%.d)" -LmCfg=xilmou
+	@echo 'Finished building: $<'
+	@echo ' '
+
+Sources/request_print_asm.obj: ../Sources/request_print.asm
+	@echo 'Building file: $<'
+	@echo 'Executing target #17 $<'
 	@echo 'Invoking: HCS08 Assembler'
 	"$(HC08ToolsEnv)/ahc08" -ArgFile"Sources/request_print.args" -Objn"Sources/request_print_asm.obj" "$<" -Lm="$(@:%.obj=%.d)" -LmCfg=xilmou
 	@echo 'Finished building: $<'

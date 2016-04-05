@@ -2082,7 +2082,7 @@ Re_read:
 done:
 			RTS
 Delay_Loop:
-			LDA #50					; Load A with 65
+			LDA #40					; Load A with 65
 			STA t					; store A into t, m, and b
 			STA m
 			STA b
@@ -2094,7 +2094,7 @@ Delay_Loop:
 			SUB #1					; decrement A
 			BEQ Re_read				; go to reread if A equals 0
 			STA t					; store back into memory
-			LDA #50					
+			LDA #40					
 			STA m					; store 65 into middle if not equal to zero and go to middle
 		Middle:
 			feed_watchdog
@@ -2103,7 +2103,7 @@ Delay_Loop:
 			SUB #1					; decrement
 			STA m					; store back into m
 			BEQ Top					; if equal to 0 go to top
-			LDA #50
+			LDA #40
 			STA b					; store 65 into b and go to bottom
 		bottom: 
 			feed_watchdog	

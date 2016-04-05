@@ -1,0 +1,131 @@
+*** EVALUATION ************************************************************************************************
+*********************************************************************************************
+LINKING FAILED
+The linking process failed in some stage.
+Depending on the phase the linker failed, part of the information contained in this map file may be inaccurate or wrong.
+If the linking failed before the allocation phase finished, then the addresses might be inaccurate.
+Also summary information like the code size is likely to be misleading.
+---------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
+
+PROGRAM "LAB4.abs"
+
+*********************************************************************************************
+TARGET SECTION
+---------------------------------------------------------------------------------------------
+Processor   : Freescale HC08
+Memory Model: SMALL
+File Format : ELF (no debug info)
+Linker      : SmartLinker V-5.0.51 Build 14019, Jan 20 2014
+
+*********************************************************************************************
+FILE SECTION
+---------------------------------------------------------------------------------------------
+BF_check_asm.obj                        Model: SMALL,         Lang: Assembler
+Delay_asm.obj                           Model: SMALL,         Lang: Assembler
+Keypad_read_write_asm.obj               Model: SMALL,         Lang: Assembler
+LCD_write_asm.obj                       Model: SMALL,         Lang: Assembler
+main_asm.obj                            Model: SMALL,         Lang: Assembler
+
+*********************************************************************************************
+STARTUP SECTION
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+SECTION-ALLOCATION SECTION
+Section Name                    Size  Type     From       To       Segment
+---------------------------------------------------------------------------------------------
+
+Summary of section sizes per section type:
+
+*********************************************************************************************
+VECTOR-ALLOCATION SECTION
+    Address     InitValue   InitFunction
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+OBJECT-ALLOCATION SECTION
+     Name               Module                 Addr   hSize   dSize     Ref    Section   RLIB
+---------------------------------------------------------------------------------------------
+MODULE:                 -- BF_check_asm.obj --
+- PROCEDURES:
+     BF_check                                     0'Error      3B      59       0   MyCode      
+     done                                         0'Error      19      25       0   MyCode      
+     new_address                                  0'Error      28      40       0   MyCode      
+     clear_display                                0'Error      28      40       0   MyCode      
+- VARIABLES:
+MODULE:                 -- Delay_asm.obj --
+- PROCEDURES:
+     Delay                                        0'Error       3       3       0   MyCode      
+     top                                          0'Error       7       7       0   MyCode      
+     bottom                                       0'Error       6       6       0   MyCode      
+     ass                                          0'Error       1       1       0   MyCode      
+- VARIABLES:
+MODULE:                 -- Keypad_read_write_asm.obj --
+- PROCEDURES:
+     keypad_write                                 0'Error      55      85       0   MyCode      
+     Re_read                                      0'Error      28      40       0   MyCode      
+     done                                         0'Error       1       1       0   MyCode      
+     Delay_Loop                                   0'Error       B      11       0   MyCode      
+     Top                                          0'Error      12      18       0   MyCode      
+     Middle                                       0'Error      12      18       0   MyCode      
+     bottom                                       0'Error       F      15       0   MyCode      
+- VARIABLES:
+MODULE:                 -- LCD_write_asm.obj --
+- PROCEDURES:
+     LCD_write                                    0'Error      3B      59       0   MyCode      
+- VARIABLES:
+MODULE:                 -- main_asm.obj --
+- PROCEDURES:
+     _Startup                                     0'Error     12C     300       0   MyCode      
+     main                                         0'Error       0       0       0   MyCode      
+     ask_temp                                     0'Error      53      83       0   MyCode      
+     decode                                       0'Error       D      13       0   MyCode      
+     done                                         0'Error       9       9       0   MyCode      
+- VARIABLES:
+- LABELS:
+     XOR_Mask                                    10       0       0       0   .text       
+     t                                           71       0       0       0   .text       
+     m                                           72       0       0       0   .text       
+     b                                           73       0       0       0   .text       
+     i_temp                                      74       0       0       0   .text       
+     n                                           7C       0       0       0   .text       
+
+*********************************************************************************************
+MODULE STATISTIC
+  Name                                      Data   Code  Const
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+SECTION USE IN OBJECT-ALLOCATION SECTION
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+OBJECT LIST SORTED BY ADDRESS
+     Name                                      Addr   hSize   dSize     Ref    Section   RLIB
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+UNUSED-OBJECTS SECTION
+---------------------------------------------------------------------------------------------
+NOT USED PROCEDURES
+main_asm.obj:
+  Mode_A Mode_B 
+
+*********************************************************************************************
+COPYDOWN SECTION
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+OBJECT-DEPENDENCIES SECTION
+---------------------------------------------------------------------------------------------
+
+*********************************************************************************************
+STATISTIC SECTION
+---------------------------------------------------------------------------------------------
+
+ExeFile:
+--------
+Number of blocks to be downloaded: 0
+Total size of all blocks to be downloaded: 0
+
