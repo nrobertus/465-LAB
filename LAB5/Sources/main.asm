@@ -12,9 +12,9 @@
             
 
 ; export symbols
-            XDEF _Startup, main, t, b, m, n, Month, temp_num, Day, Year, Hour, Minutes, Seconds
+            XDEF _Startup, main, t, b, m, n, Month, temp_num, Day, Year, Hour, Minutes, Seconds, decode
 
-			XREF PTBDD_Upper_output, BF_check, Delay, keypad_write, clear_display, new_address, write_to_time, LCD_write  ; symbol defined by the linker for the end of the stack
+			XREF print_date, print_time, done, PTBDD_Upper_output, BF_check, Delay, keypad_write, clear_display, new_address, write_to_time, LCD_write  ; symbol defined by the linker for the end of the stack
 
 
 ; variable/data section
@@ -63,7 +63,7 @@ decode:
 			; determine which button was pressed.
 			TXA
 			CMP #3
-			BEQ ask_time
+			BEQ print_time
 			
 			JSR PTBDD_Upper_output
 			LDA $82

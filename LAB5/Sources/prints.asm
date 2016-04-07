@@ -1,13 +1,13 @@
 			INCLUDE 'derivative.inc'
             
-			XDEF ask_date, ask_time, done
+			XDEF print_date, print_time, done
 
 			XREF LCD_write, new_address, keypad_write, decode
             
 MY_ZEROPAGE: SECTION  SHORT
 			
 MyCode:     SECTION
-ask_date:			
+print_date:			
 			MOV #$45, $83			; Write 'E'
 			JSR LCD_write
 			
@@ -56,7 +56,7 @@ ask_date:
 			JSR new_address
 			CLRX
 			JMP done
-ask_time:
+print_time:
 			JSR clear_display
 			MOV #$45, $83			; Write 'E'
 			JSR LCD_write
