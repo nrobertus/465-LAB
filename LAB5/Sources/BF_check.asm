@@ -10,7 +10,7 @@ MyCode:     SECTION
 BF_check:
 			BSET 0, PTAD				; set as read from LCD
 			BCLR 1, PTAD
-			JSR PTBDD_Upper_input			; data direction as input
+			JSR JSR PTBDD_Upper_input			; data direction as input
 			JSR clock					; clock data in
 			MOV PTBD, $80				; move the data into address $80
 			JSR clock					; clock the second byte in

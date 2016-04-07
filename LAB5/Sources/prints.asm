@@ -1,8 +1,8 @@
 			INCLUDE 'derivative.inc'
             
-			XDEF LCD_write
+			XDEF ask_date, ask_time, done
 
-			XREF BF_check, clock
+			XREF LCD_write, new_address, keypad_write, decode
             
 MY_ZEROPAGE: SECTION  SHORT
 			

@@ -44,7 +44,7 @@ keypad_write:
 			BSET 3, PTBD			; Set bit three (G2A=1) for a rising edge of clock
 			
 			; Read from keypad.
-			JSR PTBDD_Upper_input		; Configure bits 4, 5, 6, 7 as inputs
+			JSR JSR PTBDD_Upper_input		; Configure bits 4, 5, 6, 7 as inputs
 			
 			BCLR 3, PTBD			; Bring the clock back down
 			BSET 0, PTBD			; Enable bus transceiver to pass data to bus
@@ -79,7 +79,7 @@ Re_read:
 									; which means that a button was pressed
 			BEQ done				; if key not pressed, go to done.
 			
-			JSR PTBDD_Upper_input		; Configure bits 4, 5, 6, 7 as inputs
+			JSR JSR PTBDD_Upper_input		; Configure bits 4, 5, 6, 7 as inputs
 			BCLR 3, PTBD			; Bring the clock back down
 			BSET 0, PTBD			; Enable bus transceiver to pass data to bus
 			MOV PTBD, $6A			; Move the data from bus to $6A

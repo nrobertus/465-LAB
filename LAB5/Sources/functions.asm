@@ -12,7 +12,7 @@
             
 
 ; export symbols
-            XDEF JSR PTBDD_Upper_output, PTBDD_Upper_input, clock
+            XDEF PTBDD_Upper_output, JSR PTBDD_Upper_input, clock
 
             XREF __SEG_END_SSTACK   
 
@@ -24,7 +24,7 @@ PTBDD_Upper_output:
 	ORA PTBDD
 	STA PTBDD
 	RTS
-PTBDD_Upper_input:
+JSR PTBDD_Upper_input:
 	LDA #%00001111
 	AND PTBDD
 	STA PTBDD
