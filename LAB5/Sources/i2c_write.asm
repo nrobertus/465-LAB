@@ -12,7 +12,6 @@ MY_ZEROPAGE: SECTION  SHORT
 			
 MyCode:     SECTION
 i2c_write:
-			feed_watchdog
 			BSET 2, PTADD
 			MOV #%11010000, device
 			CLR n					; clearing bit counter
@@ -54,7 +53,6 @@ Start:
 			MOV device, $9F
 			
 Write_address:
-			feed_watchdog
 			BSET 2, PTADD
 			LDA bit_mask			; load bit_mask
 			AND $9F					; and it with address
@@ -146,6 +144,5 @@ stop:
 			CLRH
 			
 I2C_read:
-			feed_watchdog
 			JSR read			 	; start to read from real time clock
 			JMP i2c_write

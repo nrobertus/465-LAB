@@ -2,7 +2,7 @@
             
 			XDEF LCD_write
 
-			XREF BF_check
+			XREF BF_check, clock
             
 MY_ZEROPAGE: SECTION  SHORT
 			
@@ -31,9 +31,9 @@ LCD_write:
 			BSET 2, $7F
 			
 			MOV $83, PTBD
-			Clock_in
+			JSR clock
 			MOV $7F, PTBD
-			Clock_in
+			JSR clock
 			
 			JSR BF_check
 			

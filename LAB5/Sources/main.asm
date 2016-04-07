@@ -14,7 +14,7 @@
 ; export symbols
             XDEF _Startup, main, t, b, m, n, Month, dummy, Day, Year, Hour, Minutes, Seconds
 
-			XREF __SEG_END_SSTACK, BF_check, Delay, keypad_write, clear_display, new_address, write_to_time, LCD_write  ; symbol defined by the linker for the end of the stack
+			XREF PTBDD_Upper_output, BF_check, Delay, keypad_write, clear_display, new_address, write_to_time, LCD_write  ; symbol defined by the linker for the end of the stack
 
 
 ; variable/data section
@@ -52,205 +52,12 @@ _Startup:							; literally... this happens on Startup. Nothing exciting...
 			LDA SOPT1				; Enable the reset switch.
 			ORA #%00000001
 			AND #%01111111			; disable watchdog
-			STA SOPT1
-			
-			
+			STA SOPT1			
 			
 			MOV #0, n
+			JSR LCD_init
 			
-LCD_initialization:
-			feed_watchdog
-			MOV #40, t
-			MOV #255, b
-			JSR Delay				; wait for 15 ms
-			
-			BCLR 0, PTAD			; function set command
-			BCLR 1, PTAD
-			MOV #%00111100, PTBD
-			Clock_in
-			
-			MOV #20, t
-			MOV #255, b
-			JSR Delay				; wait for 4.1 ms
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00111100, PTBD	; function set command
-			Clock_in
-			
-			MOV #10, t
-			MOV #40, b
-			JSR Delay				; wait for 100 us
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00111100, PTBD	; function set command
-			Clock_in
-			
-			JSR BF_check			; check BF
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00101100, PTBD	; function set
-			Clock_in
-			
-			JSR BF_check			; check BF
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00101100, PTBD	; function set
-			Clock_in
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%10101100, PTBD	; set N and F here
-			Clock_in
-				
-			JSR BF_check			; check BF
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00001100, PTBD
-			Clock_in
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%10001100, PTBD	; Display off command
-			Clock_in
-			
-			JSR BF_check			; check BF
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00001100, PTBD
-			Clock_in
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00011100, PTBD	; Clear Display command
-			Clock_in
-			
-			JSR BF_check			; check BF
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00001100, PTBD
-			Clock_in
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%01101100, PTBD	; Entry Mode Set
-			Clock_in
-			
-			JSR BF_check			; check BF
-			
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%00001100, PTBD
-			Clock_in
-			BCLR 0, PTAD			
-			BCLR 1, PTAD
-			MOV #%11111100, PTBD	; Display On
-			Clock_in
-			
-			JSR BF_check
-			
-ask_date:
-			
-			MOV #$45, $83			; Write 'E'
-			JSR LCD_write
-			
-			MOV #$6E, $83			; Write 'n'
-			JSR LCD_write
-			
-			MOV #$74, $83			; Write 't'
-			JSR LCD_write
-			
-			MOV #$65, $83			; Write 'e'
-			JSR LCD_write
-			
-			MOV #$72, $83			; Write 'r'
-			JSR LCD_write
-			
-			MOV #$20, $83			; Write ' '
-			JSR LCD_write
-			
-			MOV #$4D, $83			; Write 'M'
-			JSR LCD_write
-			
-			MOV #$4D, $83			; Write 'M'
-			JSR LCD_write
-			
-			MOV #$2F, $83			; Write '/'
-			JSR LCD_write
-			
-			MOV #$44, $83			; Write 'D'
-			JSR LCD_write
-			
-			MOV #$44, $83			; Write 'D'
-			JSR LCD_write
-			
-			MOV #$2F, $83			; Write '/'
-			JSR LCD_write
-			
-			MOV #$59, $83			; Write 'Y'
-			JSR LCD_write
-			
-			MOV #$59, $83			; Write 'Y'
-			JSR LCD_write
-			
-			MOV #$3A, $83			; Write ':'
-			JSR LCD_write
-			
-			JSR new_address
-			CLRX
-			JMP done
-ask_time:
-			JSR clear_display
-			MOV #$45, $83			; Write 'E'
-			JSR LCD_write
-			
-			MOV #$6E, $83			; Write 'n'
-			JSR LCD_write
-			
-			MOV #$74, $83			; Write 't'
-			JSR LCD_write
-			
-			MOV #$65, $83			; Write 'e'
-			JSR LCD_write
-			
-			MOV #$72, $83			; Write 'r'
-			JSR LCD_write
-			
-			MOV #$20, $83			; Write ' '
-			JSR LCD_write
-			
-			MOV #$68, $83			; Write 'h'
-			JSR LCD_write
-			
-			MOV #$68, $83			; Write 'h'
-			JSR LCD_write
-			
-			MOV #$2F, $83			; Write '/'
-			JSR LCD_write
-			
-			MOV #$6D, $83			; Write 'm'
-			JSR LCD_write
-			
-			MOV #$6D, $83			; Write 'm'
-			JSR LCD_write
-			
-			MOV #$2F, $83			; Write '/'
-			JSR LCD_write
-			
-			MOV #$73, $83			; Write 's'
-			JSR LCD_write
-			
-			MOV #$73, $83			; Write 's'
-			JSR LCD_write
-			
-			MOV #$3A, $83			; Write ':'
-			JSR LCD_write
-			
-			JSR new_address
-			INCX
-			JMP done
+
 decode:
 
 			; determine which button was pressed.
@@ -258,7 +65,7 @@ decode:
 			CMP #3
 			BEQ ask_time
 			
-			PTBDD_Upper_output
+			JSR PTBDD_Upper_output
 			LDA $82
 			EOR #XOR_Mask			; Toggle Heartbeat LED
 			STA $82
