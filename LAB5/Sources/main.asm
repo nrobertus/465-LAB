@@ -12,7 +12,7 @@
             
 
 ; export symbols
-            XDEF _Startup, main, t, b, m, n, Month, dummy, Day, Year, Hour, Minutes, Seconds
+            XDEF _Startup, main, t, b, m, n, Month, temp_num, Day, Year, Hour, Minutes, Seconds
 
 			XREF PTBDD_Upper_output, BF_check, Delay, keypad_write, clear_display, new_address, write_to_time, LCD_write  ; symbol defined by the linker for the end of the stack
 
@@ -21,7 +21,7 @@
 MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
 
 			n: EQU $8D
-			dummy: EQU $8C
+			temp_num: EQU $8C
 			Month: EQU $85
 			Day: EQU $86
 			Year: EQU $87
@@ -77,35 +77,35 @@ zero:
 			MOV #$30, $83
 			JSR LCD_write
 			
-			MOV #0, dummy
+			MOV #0, temp_num
 			JSR write_to_time
 			JMP done
 one:		
 			MOV #$31, $83
 			JSR LCD_write
 			
-			MOV #1, dummy
+			MOV #1, temp_num
 			JSR write_to_time
 			JMP done
 two:
 			MOV #$32, $83
 			JSR LCD_write
 			
-			MOV #2, dummy
+			MOV #2, temp_num
 			JSR write_to_time
 			JMP done
 three:
 			MOV #$33, $83
 			JSR LCD_write
 			
-			MOV #3, dummy
+			MOV #3, temp_num
 			JSR write_to_time
 			JMP done
 four:
 			MOV #$34, $83
 			JSR LCD_write
 			
-			MOV #4, dummy
+			MOV #4, temp_num
 			JSR write_to_time
 			JMP done
 			
@@ -137,35 +137,35 @@ five:
 			MOV #$35, $83
 			JSR LCD_write
 			
-			MOV #5, dummy
+			MOV #5, temp_num
 			JSR write_to_time
 			JMP done
 six:
 			MOV #$36, $83
 			JSR LCD_write
 			
-			MOV #6, dummy
+			MOV #6, temp_num
 			JSR write_to_time
 			JMP done
 seven:
 			MOV #$37, $83
 			JSR LCD_write
 			
-			MOV #7, dummy
+			MOV #7, temp_num
 			JSR write_to_time
 			JMP done
 eight:
 			MOV #$38, $83
 			JSR LCD_write
 			
-			MOV #8, dummy
+			MOV #8, temp_num
 			JSR write_to_time
 			JMP done
 nine:
 			MOV #$39, $83
 			JSR LCD_write
 			
-			MOV #9, dummy
+			MOV #9, temp_num
 			JSR write_to_time
 			JMP done
 

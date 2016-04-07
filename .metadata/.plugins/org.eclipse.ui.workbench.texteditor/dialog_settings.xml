@@ -2,27 +2,27 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="353" key="DIALOG_WIDTH"/>
-		<item value="309" key="DIALOG_Y_ORIGIN"/>
-		<item value="1485" key="DIALOG_X_ORIGIN"/>
+		<item value="526" key="DIALOG_Y_ORIGIN"/>
 		<item value="513" key="DIALOG_HEIGHT"/>
+		<item value="1144" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-18|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="display" key="selection"/>
+		<item value="Seconds" key="selection"/>
 		<list key="findhistory">
+			<item value="Seconds"/>
+			<item value="$8B"/>
+			<item value="n"/>
+			<item value="?"/>
+			<item value="mode_b"/>
+			<item value="off"/>
 			<item value="display"/>
 			<item value="E_write"/>
-			<item value="BSET 1, PTAD"/>
-			<item value="BSET 0, PTAD"/>
-			<item value="BCLR 1, PTAD"/>
-			<item value="BCLR 1"/>
-			<item value="BCLR 0"/>
-			<item value="done"/>
 		</list>
 		<list key="replacehistory">
 			<item value="BSET 3, PTAD"/>
