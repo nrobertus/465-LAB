@@ -1,4 +1,5 @@
 
+
 ../Sources/LCD_write.o: \
 	../Sources/LCD_write.asm \
 	C:/Projects/School/465-LAB/LAB5/Project_Headers/derivative.inc \

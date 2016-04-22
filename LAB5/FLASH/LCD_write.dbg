@@ -1975,7 +1975,7 @@ Clock_in: MACRO
             
 			XDEF LCD_write
 
-			XREF BF_check
+			XREF BF_check, clock
             
 MY_ZEROPAGE: SECTION  SHORT
 			
@@ -2004,19 +2004,9 @@ LCD_write:
 			BSET 2, $7F
 			
 			MOV $83, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
+			JSR clock
 			MOV $7F, PTBD
-			Clock_in
-			BCLR 3, PTBD        ; Bring the clock back down
-			NOP
-			NOP
-			NOP
-			BSET 3, PTBD        ; Set bit three (G2A=1) for a rising edge of clock
+			JSR clock
 			
 			JSR BF_check
 			

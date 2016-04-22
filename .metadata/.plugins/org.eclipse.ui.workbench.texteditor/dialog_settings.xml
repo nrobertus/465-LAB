@@ -13,23 +13,26 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="Seconds" key="selection"/>
+		<item value="Delay_Loop" key="selection"/>
 		<list key="findhistory">
-			<item value="Seconds"/>
-			<item value="$8B"/>
-			<item value="n"/>
-			<item value="?"/>
-			<item value="mode_b"/>
-			<item value="off"/>
-			<item value="display"/>
-			<item value="E_write"/>
+			<item value="Delay_loop"/>
+			<item value="SUB_delay_cnt"/>
+			<item value="print"/>
+			<item value="lcd_print_char"/>
+			<item value="lcd_new_line"/>
+			<item value="lcd_char"/>
+			<item value="lcd_goto_row1"/>
+			<item value="lcd_goto_row0"/>
 		</list>
 		<list key="replacehistory">
+			<item value="lcd_char"/>
+			<item value="lcd_goto_row1"/>
+			<item value="delay"/>
+			<item value="JSR toggle_clock"/>
 			<item value="BSET 3, PTAD"/>
 			<item value="BSET 2, PTAD"/>
 			<item value="BCLR 3, PTAD"/>
 			<item value="BCLR 2"/>
-			<item value="BSET 3, PTBD"/>
 		</list>
 	</section>
 </section>

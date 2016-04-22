@@ -1,0 +1,211 @@
+; Include derivative-specific definitions
+            INCLUDE 'derivative.inc'
+
+
+; export symbols
+            XDEF lcd_init, lcd_new_line, lcd_print_char, lcd_clear_display, lcd_num_to_char
+            ; we export both '_Startup' and 'main' as symbols. Either can
+            ; be referenced in the linker .prm file or from C/C++ later on
+
+
+
+            XREF __SEG_END_SSTACK, PTBDD_Upper_output, PTBDD_Upper_input, toggle_clock, delay, BF_check, n, t, m, b  ; symbol defined by the linker for the end of the stack
+
+
+; variable/data section
+MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
+
+; code section
+MyCode:     SECTION
+main:
+_Startup:
+            LDHX   #__SEG_END_SSTACK ; initialize the stack pointer
+            TXS
+			CLI			; enable interrupts
+
+lcd_init:
+			MOV #40, t
+			MOV #255, b
+			JSR delay				; wait for 15 ms
+
+			BCLR 0, PTAD			; function set command
+			BCLR 1, PTAD
+			MOV #%00111100, PTBD
+			JSR toggle_clock
+
+			MOV #20, t
+			MOV #255, b
+			JSR delay				; wait for 4.1 ms
+
+			BCLR 0, PTAD
+			BCLR 1, PTAD
+			MOV #%00111100, PTBD	; function set command
+			JSR toggle_clock
+
+			MOV #10, t
+			MOV #40, b
+			JSR delay				; wait for 100 us
+
+			BCLR 0, PTAD
+			BCLR 1, PTAD
+			MOV #%00111100, PTBD	; function set command
+			JSR toggle_clock
+
+			JSR BF_check			; check BF
+
+			BCLR 0, PTAD
+			BCLR 1, PTAD
+			MOV #%00101100, PTBD	; function set
+			JSR toggle_clock
+
+			JSR BF_check			; check BF
+
+			BCLR 0, PTAD
+			BCLR 1, PTAD
+			MOV #%00101100, PTBD	; function set
+			JSR toggle_clock
+			BCLR 0, PTAD
+			BCLR 1, PTAD
+			MOV #%10101100, PTBD	; set N and F here
+			JSR toggle_clock
+
+			JSR BF_check			; check BF
+
+			BCLR 0, PTAD
+			BCLR 1, PTAD
+			MOV #%00001100, PTBD
+			JSR toggle_clock
+			BCLR 0, PTAD
+			BCLR 1, PTAD
+			MOV #%10001100, PTBD	; Display off command
+			JSR toggle_clock
+
+			JSR BF_check			; check BF
+
+			BCLR 0, PTAD
+			BCLR 1, PTAD
+			MOV #%00001100, PTBD
+			JSR toggle_clock
+			BCLR 0, PTAD
+			BCLR 1, PTAD
+			MOV #%00011100, PTBD	; Clear Display command
+			JSR toggle_clock
+
+			JSR BF_check			; check BF
+
+			BCLR 0, PTAD
+			BCLR 1, PTAD
+			MOV #%00001100, PTBD
+			JSR toggle_clock
+			BCLR 0, PTAD
+			BCLR 1, PTAD
+			MOV #%01101100, PTBD	; Entry Mode Set
+			JSR toggle_clock
+
+			JSR BF_check			; check BF
+
+			BCLR 0, PTAD
+			BCLR 1, PTAD
+			MOV #%00001100, PTBD
+			JSR toggle_clock
+			BCLR 0, PTAD
+			BCLR 1, PTAD
+			MOV #%11111100, PTBD	; Display On
+			JSR toggle_clock
+
+			JSR BF_check
+	    RTS
+
+lcd_print_char:
+		BSET 0, PTADD			; set PTADD[0,1] as output.
+		BSET 1, PTADD
+		BSET 1, PTAD			; RS = 1
+		BCLR 0, PTAD			; R/W = 0 which means input.
+		
+		MOV $83, $7F
+		
+		LSL $7F
+		LSL $7F
+		LSL $7F
+		LSL $7F
+		
+		LDA $83
+		AND #11110000
+		STA $83
+		
+		BSET 3, $83
+		BSET 2, $83
+		
+		BSET 3, $7F
+		BSET 2, $7F
+		
+		MOV $83, PTBD
+		JSR toggle_clock
+		MOV $7F, PTBD
+		JSR toggle_clock
+		
+		JSR BF_check
+		
+		CLR $70
+		RTS
+
+lcd_new_line:
+	  JSR PTBDD_Upper_output
+	  BCLR 1, PTAD				; set RS = 0
+	  BCLR 0, PTAD				; set R/W = 0
+	  MOV #%11001100, PTBD
+	  NOP
+	  NOP
+	  JSR toggle_clock
+	  NOP
+	  NOP
+	  MOV #%00001100, PTBD
+	  JSR toggle_clock					; move address to $40
+	  NOP
+	  NOP
+	  NOP
+	  RTS
+
+lcd_clear_display:
+  						
+;*** Wait for 20 ms ***
+			LDHX #SUB_delay_cnt
+			
+			; configure loop delays: 0x001388 = 20 ms
+			LDA		#$00
+			STA		2,X
+			LDA		#$13
+			STA		1,X
+			LDA		#$88
+			STA		0,X
+			
+			; jump to the delay loop
+			JSR		SUB_delay
+								
+			; Send display clear command
+			LDA		#$00
+			JSR		lcd_write
+			LDA		#$01
+			JSR		lcd_write
+						
+;*** Wait for 20 ms ***
+			LDHX #SUB_delay_cnt
+			
+			; configure loop delays: 0x001388 = 20 ms
+			LDA		#$00
+			STA		2,X
+			LDA		#$13
+			STA		1,X
+			LDA		#$88
+			STA		0,X
+			
+			; jump to the delay loop
+			JSR		SUB_delay
+
+			; done
+			RTS
+
+lcd_num_to_char:
+			; Add 0x30
+			ADD		#$30
+			RTS

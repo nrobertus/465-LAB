@@ -11,15 +11,13 @@ Delay:
 	MOV b, m
 	top:
 			DEC t
-			BEQ ass
+			BEQ done
 			MOV m, b
 	bottom:
 			DEC b
 			BEQ top
-			BRA bottom
-			
-	ass:
-			
+			BRA bottom			
+	done:			
 			RTS
 			
 ; 20 ms delay $60 30, $61 255

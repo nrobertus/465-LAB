@@ -11,14 +11,14 @@ Delay:
 	MOV b, m
 	top:
 			DEC t
-			BEQ ass
+			BEQ last
 			MOV m, b
 	bottom:
 			DEC b
 			BEQ top
 			BRA bottom
 			
-	ass:
+	last:
 			
 			RTS
 			

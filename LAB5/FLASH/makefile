@@ -2,7 +2,7 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-#Progress monitor hint: 9
+#Progress monitor hint: 12
 first : all
 -include ../makefile.init
 
@@ -89,14 +89,14 @@ endif
 # Tool invocations
 LAB4.abs: $(OBJS) $(USER_OBJS) ../Project_Settings/Linker_Files/Project.prm
 	@echo 'Building target: $@'
-	@echo 'Executing target #10 $@'
+	@echo 'Executing target #13 $@'
 	@echo 'Invoking: S08 Linker'
 	"$(HC08ToolsEnv)/linker" -ArgFile"LAB4.args" -O"LAB4.abs"
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 LAB4.abs.s19: $(BBL_SRCS) $(EXECUTABLES)
-	@echo 'Executing target #11 $@'
+	@echo 'Executing target #14 $@'
 	@echo 'Invoking: S08 Burner'
 	"$(HC08ToolsEnv)/burner" -ArgFile"LAB4.abs.args" -f="$<" -env"ABS_FILE=$(strip $(EXECUTABLES_OS_FORMAT))"
 	@echo 'Finished building: $@'

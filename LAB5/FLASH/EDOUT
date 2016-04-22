@@ -1,0 +1,6 @@
+../Sources\Delay.asm:11:warning:A13003 Value is truncated to one byte
+../Sources\Delay.asm:11:warning:A13003 Value is truncated to one byte
+../Sources\Delay.asm:13:warning:A13003 Value is truncated to one byte
+../Sources\Delay.asm:15:warning:A13003 Value is truncated to one byte
+../Sources\Delay.asm:15:warning:A13003 Value is truncated to one byte
+../Sources\Delay.asm:17:warning:A13003 Value is truncated to one byte
