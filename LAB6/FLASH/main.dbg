@@ -1973,7 +1973,7 @@ feed_watchdog: MACRO
 
 
 
-            XREF __SEG_END_SSTACK, get_input, lm92_init, lm92_read_temp, lm92_write_lcd_C, lcd_init, lcd_clear, mode_0, mode_1, mode_2, i2c_init ; symbol defined by the linker for the end of the stack
+            XREF __SEG_END_SSTACK, keypad_get_keypress, lm92_init, lm92_read_temp, lm92_write_lcd_C, lcd_init, lcd_clear, lcd_write, lcd_char, mode_0, mode_1, mode_2, i2c_init, rtc_init, rtc_set_time_zero ; symbol defined by the linker for the end of the stack
 
 
 ; variable/data section
@@ -1983,6 +1983,7 @@ MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
             t: EQU $71
             m: EQU $72
             b: EQU $73
+            prev_input: EQU $89
             i_temp: EQU $74
             XOR_Mask: EQU %00010000
             SUB_delay_cnt:		DS.B	3
@@ -2029,7 +2030,7 @@ _Startup:
         	
 			JSR		i2c_init
 			
-			;JSR		rtc_init		
+			JSR		rtc_init		
 			
 			JSR		lm92_init
 			
@@ -2039,29 +2040,53 @@ _Startup:
 
 main_function:
 			
-			JSR get_input 
-			LDA $70 ; The result will be in the accumulator
-			CMP #%10111110			
-			BEQ goto_mode_0			
-			CMP #%01110111			
+			JSR keypad_get_keypress 
+			
+			;LDA $70 ; The result will be in the accumulator
+			CMP #$00		
+			BEQ goto_mode_0		
+			CMP #$01	
 			BEQ goto_mode_1
-			CMP #%10110111
+			CMP #$02
 			BEQ goto_mode_2
+			
+			LDA prev_input
+			CMP #$00		
+			BEQ continue_mode_0		
+			CMP #$01			
+			BEQ continue_mode_1
+			CMP #$02
+			BEQ continue_mode_2
 			
     		JMP main_function
     		
 goto_mode_0:
-
+		STA prev_input
+		JSR rtc_set_time_zero
 		JSR mode_0
 		JMP main_function
 
 goto_mode_1:
-		JSR lcd_clear
+		STA prev_input
+		JSR rtc_set_time_zero
 		JSR mode_1
 		JMP main_function
 
 goto_mode_2:
-		JSR lcd_clear
+		STA prev_input
+		JSR rtc_set_time_zero
+		JSR mode_2
+		JMP main_function
+		
+continue_mode_0:
+		JSR mode_0
+		JMP main_function
+
+continue_mode_1:
+		JSR mode_1
+		JMP main_function
+
+continue_mode_2:
 		JSR mode_2
 		JMP main_function
 		
@@ -2125,10 +2150,10 @@ SUB_delay_loop_2:
 			
 			;else
 			DECA							; decrement byte[2]
-			STA		2, X
+			STA		4, X
 			 
 			LDA		#$FF					; reset byte[1]
-			STA		1, X
+			STA		2, X
 			LDA		#$FF					; reset byte[0]
 			STA		0, X
 			

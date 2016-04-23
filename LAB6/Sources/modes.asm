@@ -9,11 +9,13 @@
 
 
 
-            XREF __SEG_END_SSTACK,SUB_delay, SUB_delay_cnt, PTBDD_Upper_output, lm92_write_lcd_C,lm92_read_temp, i2c_start, i2c_rx_byte, i2c_tx_byte, i2c_stop, PTBDD_Upper_input, toggle_clock, delay, BF_check,  n, t, m, b, lcd_clear, lcd_char, lcd_goto_row1, lcd_goto_row0  ; symbol defined by the linker for the end of the stack
+            XREF __SEG_END_SSTACK,SUB_delay, lcd_write, rtc_get_time,rtc_write_tod, rtc_display_data,SUB_delay_cnt, PTBDD_Upper_output, lm92_write_lcd_C, lm92_write_lcd_K, lm92_read_temp, i2c_start, i2c_rx_byte, i2c_tx_byte, i2c_stop, PTBDD_Upper_input, toggle_clock, delay, BF_check,  n, t, m, b, lcd_clear, lcd_char, lcd_goto_row1, lcd_goto_row0  ; symbol defined by the linker for the end of the stack
 
 
 ; variable/data section
 MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
+
+			old_time: EQU $98
 
 ; code section
 MyCode:     SECTION
@@ -22,9 +24,20 @@ _Startup:
             LDHX   #__SEG_END_SSTACK ; initialize the stack pointer
             TXS
 			CLI			; enable interrupts
+			
+			MOV #$FF, old_time
 
 mode_0:
+
 		
+		
+		JSR rtc_get_time
+		
+		CBEQ old_time, return
+		
+		STA old_time
+		
+		JSR lcd_clear
 		
 		JSR print_TEC_tag
 		
@@ -41,17 +54,45 @@ mode_0:
 		
 		JSR print_temp_tag
 		
+		LDA old_time
 		
-		JSR lm92_read_temp
+		LDX #$02
 		
-		JSR SUB_delay
+		DIV 
+		; move remainder from H to A
+		PSHH
+		PULA
 		
+		CMP #$00
+		BEQ print_temp
+		
+		
+
+mode_0_end:
+
 		JSR lm92_write_lcd_C
+		
+		JSR print_time_tag
+		
+		JSR rtc_display_data
+		
 		
     	RTS
 
-mode_1:
+return:
 
+		RTS
+		
+print_temp:
+
+	JSR lm92_read_temp
+	
+	JMP mode_0_end
+	
+
+mode_1:
+			JSR lcd_clear 
+			
     		JSR print_TEC_tag
     		
     		LDA #$48				; 'H'
@@ -72,12 +113,14 @@ mode_1:
 			
 			JSR lm92_read_temp
 			
-			JSR lm92_write_lcd_C
+			JSR lm92_write_lcd_K
 			
 			RTS
 
 mode_2:
-
+			
+			JSR lcd_clear
+			
       		JSR print_TEC_tag
       		
       		LDA #$43				; 'C'
@@ -95,6 +138,11 @@ mode_2:
 			JSR lcd_goto_row1
 			
 			JSR print_temp_tag
+			
+			JSR lm92_read_temp
+			
+			JSR lm92_write_lcd_K
+			
 			
 	  		RTS
 
@@ -148,7 +196,37 @@ print_temp_tag:
 		LDA #$3A				; ':'
 		JSR lcd_char
 		
-		LDA #$20				; ' '
+		RTS
+
+
+print_time_tag:
+		LDA #$4B				; 'K'
+		JSR lcd_char
+			
+		LDA #$40				; '@'
+		JSR lcd_char
+			
+		LDA #$54				; 'T'
+		JSR lcd_char
+			
+		LDA #$3D				; '='
 		JSR lcd_char
 		
 		RTS
+mode_delay:
+
+			LDHX #SUB_delay_cnt
+			
+			; configure loop delays: 0x001388 = 20 ms
+			LDA		#$00
+			STA		2,X
+			LDA		#$13
+			STA		1,X
+			LDA		#$88
+			STA		0,X
+			
+			; jump to the delay loop
+			JSR		SUB_delay
+			
+			RTS
+	

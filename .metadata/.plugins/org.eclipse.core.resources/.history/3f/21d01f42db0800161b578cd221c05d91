@@ -1,0 +1,14 @@
+"$(ProjDirPath)/Project_Settings/Linker_Files/Project.prm"
+-M
+-ViewHidden
+-WmsgFob"%f%e:%l:%k:%d %m\n" 
+-Add("$(ProjDirPath)/FLASH/Sources/BF_check_asm.obj"
+"$(ProjDirPath)/FLASH/Sources/bus_asm.obj"
+"$(ProjDirPath)/FLASH/Sources/functions_asm.obj"
+"$(ProjDirPath)/FLASH/Sources/i2c_driver_asm.obj"
+"$(ProjDirPath)/FLASH/Sources/keypad_asm.obj"
+"$(ProjDirPath)/FLASH/Sources/lcd_asm.obj"
+"$(ProjDirPath)/FLASH/Sources/led_asm.obj"
+"$(ProjDirPath)/FLASH/Sources/lm92_driver_asm.obj"
+"$(ProjDirPath)/FLASH/Sources/main_asm.obj"
+"$(ProjDirPath)/FLASH/Sources/modes_asm.obj" )
