@@ -70,7 +70,7 @@ mode_0:
 
 mode_0_end:
 
-		JSR lm92_write_lcd_K
+		JSR lm92_write_lcd_C
 		
 		JSR print_time_tag
 		

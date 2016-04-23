@@ -147,10 +147,10 @@ MODULE:                 -- lm92_driver_asm.obj --
 - PROCEDURES:
      lm92_init                                 E495       1       1       1   MyCode      
      lm92_read_temp                            E496      33      51       4   MyCode      
-     lm92_write_lcd_K                          E4C9      11      17       2   MyCode      
+     lm92_write_lcd_K                          E4C9      11      17       3   MyCode      
      k_small                                   E4DA       9       9       0   MyCode      
      cont                                      E4E3      15      21       0   MyCode      
-     lm92_write_lcd_C                          E4F8      15      21       1   MyCode      
+     lm92_write_lcd_C                          E4F8      15      21       0   MyCode      
 - VARIABLES:
      Temp_Data_Raw                               6F       2       2       4   MY_ZEROPAGE 
      Temp_c                                      71       1       1       3   MY_ZEROPAGE 
@@ -381,10 +381,10 @@ OBJECT LIST SORTED BY ADDRESS
      led_write                                 E471      24      36       1   MyCode      
      lm92_init                                 E495       1       1       1   MyCode      
      lm92_read_temp                            E496      33      51       4   MyCode      
-     lm92_write_lcd_K                          E4C9      11      17       2   MyCode      
+     lm92_write_lcd_K                          E4C9      11      17       3   MyCode      
      k_small                                   E4DA       9       9       0   MyCode      
      cont                                      E4E3      15      21       0   MyCode      
-     lm92_write_lcd_C                          E4F8      15      21       1   MyCode      
+     lm92_write_lcd_C                          E4F8      15      21       0   MyCode      
      mode_0                                    E515      2E      46       3   MyCode      
      mode_0_end                                E543       A      10       1   MyCode      
      return                                    E54D       1       1       0   MyCode      
@@ -490,7 +490,7 @@ cont                      USES temp_k lcd_num_to_char lcd_char
 lm92_write_lcd_C          USES Temp_c lcd_num_to_char lcd_char 
 mode_0                    USES rtc_get_time lcd_clear print_TEC_tag lcd_char 
                                 lcd_goto_row1 print_temp_tag 
-mode_0_end                USES lm92_write_lcd_C print_time_tag 
+mode_0_end                USES lm92_write_lcd_K print_time_tag 
                                 rtc_display_data 
 print_temp                USES lm92_read_temp mode_0_end 
 mode_1                    USES lcd_clear print_TEC_tag lcd_char lcd_goto_row1 
