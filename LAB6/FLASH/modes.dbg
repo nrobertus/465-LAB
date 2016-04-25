@@ -1964,7 +1964,7 @@ feed_watchdog: MACRO
 
 
 
-            XREF __SEG_END_SSTACK,SUB_delay, lcd_write, rtc_get_time,rtc_write_tod, rtc_display_data,SUB_delay_cnt, PTBDD_Upper_output, lm92_write_lcd_C, lm92_write_lcd_K, lm92_read_temp, i2c_start, i2c_rx_byte, i2c_tx_byte, i2c_stop, PTBDD_Upper_input, toggle_clock, delay, BF_check,  n, t, m, b, lcd_clear, lcd_char, lcd_goto_row1, lcd_goto_row0  ; symbol defined by the linker for the end of the stack
+            XREF __SEG_END_SSTACK,SUB_delay, lcd_write, rtc_get_time,rtc_write_tod, rtc_display_data,SUB_delay_cnt, PTBDD_Upper_output, lm92_write_lcd_C, lm92_write_lcd_K, lm92_read_temp, i2c_start, i2c_rx_byte, i2c_tx_byte, i2c_stop, PTBDD_Upper_input, toggle_clock, delay, BF_check,  n, t, m, b, lcd_clear, lcd_char, lcd_goto_row1, lcd_goto_row0, led_write, led_data  ; symbol defined by the linker for the end of the stack
 
 
 ; variable/data section
@@ -1981,10 +1981,25 @@ _Startup:
 			CLI			; enable interrupts
 			
 			MOV #$FF, old_time
+			
+return:
 
-mode_0:
-
-		
+		RTS
+			
+mode_start:
+		;Little delay, so as not to flood the clock
+		MOV #16, t				; 4 us delay
+		MOV #16, b
+		JSR Delay
+		MOV #16, t				; 4 us delay
+		MOV #16, b
+		JSR Delay
+		MOV #16, t				; 4 us delay
+		MOV #16, b
+		JSR Delay
+		MOV #16, t				; 4 us delay
+		MOV #16, b
+		JSR Delay
 		
 		JSR rtc_get_time
 		
@@ -1996,6 +2011,26 @@ mode_0:
 		
 		JSR print_TEC_tag
 		
+		RTS
+		
+print_temp_time:
+		JSR print_temp_tag
+		
+		JSR lm92_read_temp
+		
+		JSR lm92_write_lcd_K
+		
+		JSR print_time_tag
+		
+		JSR rtc_display_data
+			
+    	RTS
+		
+
+mode_0:
+
+		JSR mode_start
+		
 		LDA #$4F			; Write 'O'
 		JSR lcd_char
 		
@@ -2005,50 +2040,19 @@ mode_0:
 		LDA #$66			; Write 'f'
 		JSR lcd_char
 		
-		JSR lcd_goto_row1
+		JSR print_temp_time
 		
-		JSR print_temp_tag
+		MOV	#$00, led_data
 		
-		LDA old_time
-		
-		LDX #$02
-		
-		DIV 
-		; move remainder from H to A
-		PSHH
-		PULA
-		
-		CMP #$00
-		BEQ print_temp
-		
-		
-
-mode_0_end:
-
-		JSR lm92_write_lcd_K
-		
-		JSR print_time_tag
-		
-		JSR rtc_display_data
-		
-		
+		JSR led_write
+			
     	RTS
 
-return:
 
-		RTS
-		
-print_temp:
 
-	JSR lm92_read_temp
-	
-	JMP mode_0_end
-	
 
 mode_1:
-			JSR lcd_clear 
-			
-    		JSR print_TEC_tag
+			JSR mode_start
     		
     		LDA #$48				; 'H'
 	  		JSR lcd_char
@@ -2062,21 +2066,17 @@ mode_1:
 			LDA #$74				; 't'
 			JSR lcd_char
 			
-			JSR lcd_goto_row1
+			JSR print_temp_time
 			
-			JSR print_temp_tag
-			
-			JSR lm92_read_temp
-			
-			JSR lm92_write_lcd_K
+			MOV	#$02, led_data
+		
+			JSR led_write
 			
 			RTS
 
 mode_2:
 			
-			JSR lcd_clear
-			
-      		JSR print_TEC_tag
+			JSR mode_start
       		
       		LDA #$43				; 'C'
 			JSR lcd_char
@@ -2090,14 +2090,11 @@ mode_2:
 			LDA #$6C				; 'l'
 			JSR lcd_char
 			
-			JSR lcd_goto_row1
+			JSR print_temp_time
 			
-			JSR print_temp_tag
-			
-			JSR lm92_read_temp
-			
-			JSR lm92_write_lcd_K
-			
+			MOV	#$01, led_data
+		
+			JSR led_write
 			
 	  		RTS
 
@@ -2139,6 +2136,8 @@ print_TEC_tag:
 		RTS
 
 print_temp_tag:
+		JSR lcd_goto_row1
+		
 		LDA #$54				; 'T'
 		JSR lcd_char
 			
@@ -2183,5 +2182,18 @@ mode_delay:
 			; jump to the delay loop
 			JSR		SUB_delay
 			
+			RTS
+			
+Delay:
+	MOV b, m
+	top:
+			DEC t
+			BEQ done
+			MOV m, b
+	bottom:
+			DEC b
+			BEQ top
+			BRA bottom			
+	done:			
 			RTS
 	
