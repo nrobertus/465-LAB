@@ -39,13 +39,13 @@ Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
 .init                            205     R     0xE000     0xE0CC   ROM
 MY_ZEROPAGE                       48   R/W       0x60       0x8F   Z_RAM
-MyCode                          3012     R     0xE0CD     0xEC90   ROM
-MY_CONST                          52     R     0xEC91     0xECC4   ROM
+MyCode                          3019     R     0xE0CD     0xEC97   ROM
+MY_CONST                          52     R     0xEC98     0xECCB   ROM
 .stack                            64   R/W      0x100      0x13F   RAM
 .vectSeg0_vect                     2     R     0xFFFE     0xFFFF   .vectSeg0
 
 Summary of section sizes per section type:
-READ_ONLY (R):         CC7 (dec:     3271)
+READ_ONLY (R):         CCE (dec:     3278)
 READ_WRITE (R/W):       70 (dec:      112)
 
 *********************************************************************************************
@@ -193,57 +193,58 @@ MODULE:                 -- menu_A_asm.obj --
 - VARIABLES:
 MODULE:                 -- menu_B_asm.obj --
 - PROCEDURES:
-     menu_B                                    E59D      A6     166       2   MyCode      
-     menu_B_input                              E643      16      22       3   MyCode      
-     0_pressed                                 E659       6       6       0   MyCode      
-     1_pressed                                 E65F       6       6       0   MyCode      
-     goto_sub_b                                E665       6       6       0   MyCode      
-     return                                    E66B       1       1       0   MyCode      
+     menu_B                                    E59D      A9     169       2   MyCode      
+     menu_B_input                              E646      16      22       4   MyCode      
+     0_pressed                                 E65C       6       6       0   MyCode      
+     1_pressed                                 E662       6       6       0   MyCode      
+     check_sub_b                               E668       E      14       0   MyCode      
+     goto_sub_b                                E676       6       6       0   MyCode      
+     return                                    E67C       1       1       0   MyCode      
 - VARIABLES:
      input                                       76       1       1       0   MY_ZEROPAGE 
-     b_mode                                      77       1       1       2   MY_ZEROPAGE 
+     b_mode                                      77       1       1       4   MY_ZEROPAGE 
 MODULE:                 -- menu_C_asm.obj --
 - PROCEDURES:
-     menu_C                                    E671      92     146       1   MyCode      
-     menu_C_input                              E703       A      10       1   MyCode      
-     return                                    E70D       1       1       0   MyCode      
+     menu_C                                    E682      92     146       1   MyCode      
+     menu_C_input                              E714       A      10       1   MyCode      
+     return                                    E71E       1       1       0   MyCode      
 - VARIABLES:
 MODULE:                 -- menus_asm.obj --
 - PROCEDURES:
-     menu_1                                    E713      3F      63       4   MyCode      
-     menu_1_input                              E752      12      18       1   MyCode      
-     goto_menu_A                               E764       6       6       0   MyCode      
-     goto_menu_B                               E76A       6       6       0   MyCode      
-     goto_menu_C                               E770       7       7       0   MyCode      
+     menu_1                                    E724      3F      63       4   MyCode      
+     menu_1_input                              E763      12      18       1   MyCode      
+     goto_menu_A                               E775       6       6       0   MyCode      
+     goto_menu_B                               E77B       6       6       0   MyCode      
+     goto_menu_C                               E781       7       7       0   MyCode      
 - VARIABLES:
 MODULE:                 -- modes_asm.obj --
 - PROCEDURES:
-     return                                    E77F       1       1       0   MyCode      
-     mode_start                                E780      12      18       3   MyCode      
-     print_temp_time                           E792      10      16       3   MyCode      
-     mode_0                                    E7A2      1C      28       2   MyCode      
-     mode_1                                    E7BE      21      33       2   MyCode      
-     mode_2                                    E7DF      21      33       2   MyCode      
-     print_TEC_tag                             E800      38      56       1   MyCode      
-     print_temp_tag                            E838      18      24       1   MyCode      
-     print_time_tag                            E850      27      39       1   MyCode      
-     Delay                                     E877       3       3       4   MyCode      
-     top                                       E87A       7       7       0   MyCode      
-     bottom                                    E881       6       6       0   MyCode      
-     done                                      E887       1       1       0   MyCode      
-     Big_Delay                                 E888      25      37       1   MyCode      
+     return                                    E790       1       1       0   MyCode      
+     mode_start                                E791      12      18       3   MyCode      
+     print_temp_time                           E7A3      10      16       3   MyCode      
+     mode_0                                    E7B3      1C      28       2   MyCode      
+     mode_1                                    E7CF      21      33       2   MyCode      
+     mode_2                                    E7F0      21      33       2   MyCode      
+     print_TEC_tag                             E811      38      56       1   MyCode      
+     print_temp_tag                            E849      18      24       1   MyCode      
+     print_time_tag                            E861      27      39       1   MyCode      
+     Delay                                     E888       3       3       4   MyCode      
+     top                                       E88B       7       7       0   MyCode      
+     bottom                                    E892       6       6       0   MyCode      
+     done                                      E898       1       1       0   MyCode      
+     Big_Delay                                 E899      25      37       1   MyCode      
 - VARIABLES:
 MODULE:                 -- rtc_driver_asm.obj --
 - PROCEDURES:
-     rtc_init                                  E8AD       4       4       1   MyCode      
-     rtc_set_time_zero                         E8B1      28      40       4   MyCode      
-     rtc_calc_tod                              E8D9      2C      44       0   MyCode      
-     rtc_write_tod                             E905      22      34       0   MyCode      
-     rtc_set_time                              E927      5F      95       1   MyCode      
-     rtc_get_time                              E986      6F     111       1   MyCode      
-     rtc_display_data                          E9F5      2A      42       1   MyCode      
-     rtc_mask_data                             EA1F      64     100       1   MyCode      
-     rtc_prompt_time                           EA83      82     130       0   MyCode      
+     rtc_init                                  E8BE       4       4       1   MyCode      
+     rtc_set_time_zero                         E8C2      28      40       4   MyCode      
+     rtc_calc_tod                              E8EA      2C      44       0   MyCode      
+     rtc_write_tod                             E916      22      34       0   MyCode      
+     rtc_set_time                              E938      5F      95       1   MyCode      
+     rtc_get_time                              E997      6F     111       1   MyCode      
+     rtc_display_data                          EA06      2A      42       1   MyCode      
+     rtc_mask_data                             EA30      64     100       1   MyCode      
+     rtc_prompt_time                           EA94      82     130       0   MyCode      
 - VARIABLES:
      Sec                                         78       2       2      17   MY_ZEROPAGE 
      Min                                         7A       2       2      15   MY_ZEROPAGE 
@@ -254,42 +255,42 @@ MODULE:                 -- rtc_driver_asm.obj --
      TOD                                         84       2       2      13   MY_ZEROPAGE 
      rtc_epoch_delta                             86       2       2       0   MY_ZEROPAGE 
      Byte_counter                                88       1       1       1   MY_ZEROPAGE 
-     str_date                                  EC91       8       8       0   MY_CONST    
-     str_date_length                           EC99       1       1       0   MY_CONST    
-     str_time                                  EC9A       8       8       0   MY_CONST    
-     str_time_length                           ECA2       1       1       0   MY_CONST    
-     str_prompt_row0                           ECA3      10      16       1   MY_CONST    
-     str_prompt_row0_length                    ECB3       1       1       1   MY_CONST    
-     str_prompt_row1                           ECB4      10      16       1   MY_CONST    
-     str_prompt_row1_length                    ECC4       1       1       1   MY_CONST    
+     str_date                                  EC98       8       8       0   MY_CONST    
+     str_date_length                           ECA0       1       1       0   MY_CONST    
+     str_time                                  ECA1       8       8       0   MY_CONST    
+     str_time_length                           ECA9       1       1       0   MY_CONST    
+     str_prompt_row0                           ECAA      10      16       1   MY_CONST    
+     str_prompt_row0_length                    ECBA       1       1       1   MY_CONST    
+     str_prompt_row1                           ECBB      10      16       1   MY_CONST    
+     str_prompt_row1_length                    ECCB       1       1       1   MY_CONST    
 MODULE:                 -- sub_B_1_asm.obj --
 - PROCEDURES:
-     sub_B_1                                   EB16      92     146       1   MyCode      
-     sub_B_1_input                             EBA8      46      70       3   MyCode      
-     return                                    EBEE       1       1       0   MyCode      
-     input_done                                EBEF       1       1       0   MyCode      
-     0                                         EBF0       9       9       0   MyCode      
-     1                                         EBF9       9       9       0   MyCode      
-     2                                         EC02       9       9       0   MyCode      
-     3                                         EC0B       9       9       0   MyCode      
-     4                                         EC14       9       9       0   MyCode      
-     5                                         EC1D       9       9       0   MyCode      
-     6                                         EC26       9       9       0   MyCode      
-     7                                         EC2F       9       9       0   MyCode      
-     8                                         EC38       9       9       0   MyCode      
-     9                                         EC41       9       9       0   MyCode      
-     set_digits                                EC4A      28      40      10   MyCode      
-     set_digit_1                               EC72       9       9       0   MyCode      
-     set_digit_2                               EC7B       9       9       0   MyCode      
-     roll_digits                               EC84       D      13       1   MyCode      
+     sub_B_1                                   EB27      92     146       1   MyCode      
+     sub_B_1_input                             EBB9      46      70       3   MyCode      
+     return                                    EBFF       1       1       0   MyCode      
+     input_done                                EC00       1       1       0   MyCode      
+     0                                         EC01       9       9       0   MyCode      
+     1                                         EC0A       9       9       0   MyCode      
+     2                                         EC13       9       9       0   MyCode      
+     3                                         EC1C       9       9       0   MyCode      
+     4                                         EC25       9       9       0   MyCode      
+     5                                         EC2E       9       9       0   MyCode      
+     6                                         EC37       9       9       0   MyCode      
+     7                                         EC40       9       9       0   MyCode      
+     8                                         EC49       9       9       0   MyCode      
+     9                                         EC52       9       9       0   MyCode      
+     set_digits                                EC5B      1E      30      10   MyCode      
+     set_digit_1                               EC79       9       9       0   MyCode      
+     set_digit_2                               EC82       9       9       0   MyCode      
+     roll_digits                               EC8B       D      13       1   MyCode      
 - VARIABLES:
      input                                       89       1       1      13   MY_ZEROPAGE 
      char_in                                     8A       1       1      13   MY_ZEROPAGE 
-     digit1                                      8B       1       1       6   MY_ZEROPAGE 
-     digit2                                      8C       1       1       5   MY_ZEROPAGE 
+     digit1                                      8B       1       1       5   MY_ZEROPAGE 
+     digit2                                      8C       1       1       4   MY_ZEROPAGE 
      char1                                       8D       1       1       5   MY_ZEROPAGE 
      char2                                       8E       1       1       4   MY_ZEROPAGE 
-     output                                      8F       1       1       1   MY_ZEROPAGE 
+     output                                      8F       1       1       0   MY_ZEROPAGE 
 
 *********************************************************************************************
 MODULE STATISTIC
@@ -303,12 +304,12 @@ MODULE STATISTIC
   lm92_driver_asm.obj                          4    120      0
   main_asm.obj                                 3    205      0
   menu_A_asm.obj                               0    142      0
-  menu_B_asm.obj                               2    212      0
+  menu_B_asm.obj                               2    229      0
   menu_C_asm.obj                               0    162      0
   menus_asm.obj                                0    105      0
   modes_asm.obj                                0    310      0
   rtc_driver_asm.obj                          17    600     52
-  sub_B_1_asm.obj                              7    396      0
+  sub_B_1_asm.obj                              7    386      0
   other                                       64      2      0
 
 *********************************************************************************************
@@ -340,8 +341,8 @@ SECTION: "MyCode"
   lcd_str lcd_str_loop lcd_num_to_char lcd_clear lcd_goto_addr lcd_goto_row0 
   lcd_goto_row1 led_write lm92_init lm92_read_temp lm92_write_lcd_K k_small 
   cont lm92_write_lcd_C menu_A menu_A_input return menu_B menu_B_input 
-  0_pressed 1_pressed goto_sub_b return menu_C menu_C_input return menu_1 
-  menu_1_input goto_menu_A goto_menu_B goto_menu_C return mode_start 
+  0_pressed 1_pressed check_sub_b goto_sub_b return menu_C menu_C_input return 
+  menu_1 menu_1_input goto_menu_A goto_menu_B goto_menu_C return mode_start 
   print_temp_time mode_0 mode_1 mode_2 print_TEC_tag print_temp_tag 
   print_time_tag Delay top bottom done Big_Delay rtc_init rtc_set_time_zero 
   rtc_calc_tod rtc_write_tod rtc_set_time rtc_get_time rtc_display_data 
@@ -380,7 +381,7 @@ OBJECT LIST SORTED BY ADDRESS
      b                                           73       0       0       7   .text       
      i_temp                                      74       0       0       0   .text       
      input                                       76       1       1       0   MY_ZEROPAGE 
-     b_mode                                      77       1       1       2   MY_ZEROPAGE 
+     b_mode                                      77       1       1       4   MY_ZEROPAGE 
      Sec                                         78       2       2      17   MY_ZEROPAGE 
      Min                                         7A       2       2      15   MY_ZEROPAGE 
      Hour                                        7C       2       2      12   MY_ZEROPAGE 
@@ -393,11 +394,11 @@ OBJECT LIST SORTED BY ADDRESS
      Byte_counter                                88       1       1       1   MY_ZEROPAGE 
      input                                       89       1       1      13   MY_ZEROPAGE 
      char_in                                     8A       1       1      13   MY_ZEROPAGE 
-     digit1                                      8B       1       1       6   MY_ZEROPAGE 
-     digit2                                      8C       1       1       5   MY_ZEROPAGE 
+     digit1                                      8B       1       1       5   MY_ZEROPAGE 
+     digit2                                      8C       1       1       4   MY_ZEROPAGE 
      char1                                       8D       1       1       5   MY_ZEROPAGE 
      char2                                       8E       1       1       4   MY_ZEROPAGE 
-     output                                      8F       1       1       1   MY_ZEROPAGE 
+     output                                      8F       1       1       0   MY_ZEROPAGE 
      main                                      E000       0       0       0   .init       
      _Startup                                  E000      4A      74       0   .init       
      main_function                             E04A      20      32       7   .init       
@@ -476,69 +477,70 @@ OBJECT LIST SORTED BY ADDRESS
      menu_A                                    E50F      7E     126       1   MyCode      
      menu_A_input                              E58D       A      10       1   MyCode      
      return                                    E597       1       1       0   MyCode      
-     menu_B                                    E59D      A6     166       2   MyCode      
-     menu_B_input                              E643      16      22       3   MyCode      
-     0_pressed                                 E659       6       6       0   MyCode      
-     1_pressed                                 E65F       6       6       0   MyCode      
-     goto_sub_b                                E665       6       6       0   MyCode      
-     return                                    E66B       1       1       0   MyCode      
-     menu_C                                    E671      92     146       1   MyCode      
-     menu_C_input                              E703       A      10       1   MyCode      
-     return                                    E70D       1       1       0   MyCode      
-     menu_1                                    E713      3F      63       4   MyCode      
-     menu_1_input                              E752      12      18       1   MyCode      
-     goto_menu_A                               E764       6       6       0   MyCode      
-     goto_menu_B                               E76A       6       6       0   MyCode      
-     goto_menu_C                               E770       7       7       0   MyCode      
-     return                                    E77F       1       1       0   MyCode      
-     mode_start                                E780      12      18       3   MyCode      
-     print_temp_time                           E792      10      16       3   MyCode      
-     mode_0                                    E7A2      1C      28       2   MyCode      
-     mode_1                                    E7BE      21      33       2   MyCode      
-     mode_2                                    E7DF      21      33       2   MyCode      
-     print_TEC_tag                             E800      38      56       1   MyCode      
-     print_temp_tag                            E838      18      24       1   MyCode      
-     print_time_tag                            E850      27      39       1   MyCode      
-     Delay                                     E877       3       3       4   MyCode      
-     top                                       E87A       7       7       0   MyCode      
-     bottom                                    E881       6       6       0   MyCode      
-     done                                      E887       1       1       0   MyCode      
-     Big_Delay                                 E888      25      37       1   MyCode      
-     rtc_init                                  E8AD       4       4       1   MyCode      
-     rtc_set_time_zero                         E8B1      28      40       4   MyCode      
-     rtc_calc_tod                              E8D9      2C      44       0   MyCode      
-     rtc_write_tod                             E905      22      34       0   MyCode      
-     rtc_set_time                              E927      5F      95       1   MyCode      
-     rtc_get_time                              E986      6F     111       1   MyCode      
-     rtc_display_data                          E9F5      2A      42       1   MyCode      
-     rtc_mask_data                             EA1F      64     100       1   MyCode      
-     rtc_prompt_time                           EA83      82     130       0   MyCode      
-     sub_B_1                                   EB16      92     146       1   MyCode      
-     sub_B_1_input                             EBA8      46      70       3   MyCode      
-     return                                    EBEE       1       1       0   MyCode      
-     input_done                                EBEF       1       1       0   MyCode      
-     0                                         EBF0       9       9       0   MyCode      
-     1                                         EBF9       9       9       0   MyCode      
-     2                                         EC02       9       9       0   MyCode      
-     3                                         EC0B       9       9       0   MyCode      
-     4                                         EC14       9       9       0   MyCode      
-     5                                         EC1D       9       9       0   MyCode      
-     6                                         EC26       9       9       0   MyCode      
-     7                                         EC2F       9       9       0   MyCode      
-     8                                         EC38       9       9       0   MyCode      
-     9                                         EC41       9       9       0   MyCode      
-     set_digits                                EC4A      28      40      10   MyCode      
-     set_digit_1                               EC72       9       9       0   MyCode      
-     set_digit_2                               EC7B       9       9       0   MyCode      
-     roll_digits                               EC84       D      13       1   MyCode      
-     str_date                                  EC91       8       8       0   MY_CONST    
-     str_date_length                           EC99       1       1       0   MY_CONST    
-     str_time                                  EC9A       8       8       0   MY_CONST    
-     str_time_length                           ECA2       1       1       0   MY_CONST    
-     str_prompt_row0                           ECA3      10      16       1   MY_CONST    
-     str_prompt_row0_length                    ECB3       1       1       1   MY_CONST    
-     str_prompt_row1                           ECB4      10      16       1   MY_CONST    
-     str_prompt_row1_length                    ECC4       1       1       1   MY_CONST    
+     menu_B                                    E59D      A9     169       2   MyCode      
+     menu_B_input                              E646      16      22       4   MyCode      
+     0_pressed                                 E65C       6       6       0   MyCode      
+     1_pressed                                 E662       6       6       0   MyCode      
+     check_sub_b                               E668       E      14       0   MyCode      
+     goto_sub_b                                E676       6       6       0   MyCode      
+     return                                    E67C       1       1       0   MyCode      
+     menu_C                                    E682      92     146       1   MyCode      
+     menu_C_input                              E714       A      10       1   MyCode      
+     return                                    E71E       1       1       0   MyCode      
+     menu_1                                    E724      3F      63       4   MyCode      
+     menu_1_input                              E763      12      18       1   MyCode      
+     goto_menu_A                               E775       6       6       0   MyCode      
+     goto_menu_B                               E77B       6       6       0   MyCode      
+     goto_menu_C                               E781       7       7       0   MyCode      
+     return                                    E790       1       1       0   MyCode      
+     mode_start                                E791      12      18       3   MyCode      
+     print_temp_time                           E7A3      10      16       3   MyCode      
+     mode_0                                    E7B3      1C      28       2   MyCode      
+     mode_1                                    E7CF      21      33       2   MyCode      
+     mode_2                                    E7F0      21      33       2   MyCode      
+     print_TEC_tag                             E811      38      56       1   MyCode      
+     print_temp_tag                            E849      18      24       1   MyCode      
+     print_time_tag                            E861      27      39       1   MyCode      
+     Delay                                     E888       3       3       4   MyCode      
+     top                                       E88B       7       7       0   MyCode      
+     bottom                                    E892       6       6       0   MyCode      
+     done                                      E898       1       1       0   MyCode      
+     Big_Delay                                 E899      25      37       1   MyCode      
+     rtc_init                                  E8BE       4       4       1   MyCode      
+     rtc_set_time_zero                         E8C2      28      40       4   MyCode      
+     rtc_calc_tod                              E8EA      2C      44       0   MyCode      
+     rtc_write_tod                             E916      22      34       0   MyCode      
+     rtc_set_time                              E938      5F      95       1   MyCode      
+     rtc_get_time                              E997      6F     111       1   MyCode      
+     rtc_display_data                          EA06      2A      42       1   MyCode      
+     rtc_mask_data                             EA30      64     100       1   MyCode      
+     rtc_prompt_time                           EA94      82     130       0   MyCode      
+     sub_B_1                                   EB27      92     146       1   MyCode      
+     sub_B_1_input                             EBB9      46      70       3   MyCode      
+     return                                    EBFF       1       1       0   MyCode      
+     input_done                                EC00       1       1       0   MyCode      
+     0                                         EC01       9       9       0   MyCode      
+     1                                         EC0A       9       9       0   MyCode      
+     2                                         EC13       9       9       0   MyCode      
+     3                                         EC1C       9       9       0   MyCode      
+     4                                         EC25       9       9       0   MyCode      
+     5                                         EC2E       9       9       0   MyCode      
+     6                                         EC37       9       9       0   MyCode      
+     7                                         EC40       9       9       0   MyCode      
+     8                                         EC49       9       9       0   MyCode      
+     9                                         EC52       9       9       0   MyCode      
+     set_digits                                EC5B      1E      30      10   MyCode      
+     set_digit_1                               EC79       9       9       0   MyCode      
+     set_digit_2                               EC82       9       9       0   MyCode      
+     roll_digits                               EC8B       D      13       1   MyCode      
+     str_date                                  EC98       8       8       0   MY_CONST    
+     str_date_length                           ECA0       1       1       0   MY_CONST    
+     str_time                                  ECA1       8       8       0   MY_CONST    
+     str_time_length                           ECA9       1       1       0   MY_CONST    
+     str_prompt_row0                           ECAA      10      16       1   MY_CONST    
+     str_prompt_row0_length                    ECBA       1       1       1   MY_CONST    
+     str_prompt_row1                           ECBB      10      16       1   MY_CONST    
+     str_prompt_row1_length                    ECCB       1       1       1   MY_CONST    
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -618,10 +620,11 @@ cont                      USES temp_k lcd_num_to_char lcd_char
 lm92_write_lcd_C          USES Temp_c lcd_num_to_char lcd_char 
 menu_A                    USES lcd_clear lcd_char lcd_goto_row1 
 menu_A_input              USES keypad_get_keypress menu_A_input 
-menu_B                    USES lcd_clear lcd_char lcd_goto_row1 
+menu_B                    USES b_mode lcd_clear lcd_char lcd_goto_row1 
 menu_B_input              USES keypad_get_keypress menu_B_input 
 0_pressed                 USES b_mode menu_B_input 
 1_pressed                 USES b_mode menu_B_input 
+check_sub_b               USES b_mode menu_B_input 
 goto_sub_b                USES sub_B_1 menu_B 
 menu_C                    USES lcd_clear lcd_char lcd_goto_row1 
 menu_C_input              USES keypad_get_keypress menu_C_input 
@@ -672,8 +675,8 @@ sub_B_1_input             USES keypad_get_keypress sub_B_1_input
 7                         USES input char_in set_digits 
 8                         USES input char_in set_digits 
 9                         USES input char_in set_digits 
-set_digits                USES digit1 digit2 roll_digits output lcd_goto_addr 
-                                char2 lcd_char char1 
+set_digits                USES digit1 digit2 roll_digits lcd_goto_addr char2 
+                                lcd_char char1 
 set_digit_1               USES input digit1 char_in char1 sub_B_1_input 
 set_digit_2               USES input digit2 char_in char2 sub_B_1_input 
 roll_digits               USES digit1 digit2 char1 char2 input char_in 
@@ -739,6 +742,6 @@ STATISTIC SECTION
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 3
-Total size of all blocks to be downloaded: 3271
+Number of blocks to be downloaded: 4
+Total size of all blocks to be downloaded: 3278
 

@@ -29,6 +29,8 @@ _Startup:
 			CLI			; enable interrupts
 
 menu_B:
+		MOV #$FF, b_mode
+		
 		JSR lcd_clear
 		LDA #'B'				
 		JSR lcd_char

@@ -1984,6 +1984,8 @@ _Startup:
 			CLI			; enable interrupts
 
 menu_B:
+		MOV #$FF, b_mode
+		
 		JSR lcd_clear
 		LDA #'B'				
 		JSR lcd_char
@@ -2090,7 +2092,7 @@ menu_B_input:
 		BEQ return
 		
 		CMP #$0F
-		BEQ goto_sub_b
+		BEQ check_sub_b
 		
 		;If it gets to here, it has to be numerical or the # symbol
 		
@@ -2117,9 +2119,20 @@ _1_pressed:
 		
 		JMP menu_B_input
 
+
+check_sub_b:
+		LDA b_mode
+		
+		CMP #$01
+		BEQ goto_sub_b
+		
+		CMP #$00
+		BEQ goto_sub_b
+		
+		JMP menu_B_input
 		
 goto_sub_b:
-
+		
 		JSR sub_B_1
 		
 		JMP menu_B

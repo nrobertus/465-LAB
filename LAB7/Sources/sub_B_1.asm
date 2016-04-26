@@ -42,13 +42,15 @@ _Startup:
 			
 			MOV #$FF, digit2
 			
-			MOV #' ', char1
+			MOV #$20, char1
 			
-			MOV #' ', char2
+			MOV #$20, char2
 			
 			
 
 sub_B_1:
+
+		
 		
 		JSR lcd_clear
 			
@@ -205,47 +207,47 @@ return:
 		RTS
 		
 input_done:
-		RTS
 
+		RTS
 _0:
 	MOV #$00, input
-	MOV #'0', char_in
+	MOV #$30, char_in
 	JMP set_digits
 _1:
 	MOV #$01, input
-	MOV #'1', char_in
+	MOV #$31, char_in
 	JMP set_digits
 _2:
 	MOV #$02, input
-	MOV #'2', char_in
+	MOV #$32, char_in
 	JMP set_digits
 _3:
 	MOV #$03, input
-	MOV #'3', char_in
+	MOV #$33, char_in
 	JMP set_digits
 _4:
 	MOV #$04, input
-	MOV #'4', char_in
+	MOV #$34, char_in
 	JMP set_digits
 _5:	
 	MOV #$05, input
-	MOV #'5', char_in
+	MOV #$35, char_in
 	JMP set_digits
 _6:
 	MOV #$06, input
-	MOV #'6', char_in
+	MOV #$36, char_in
 	JMP set_digits
 _7:
 	MOV #$07, input
-	MOV #'7', char_in
+	MOV #$37, char_in
 	JMP set_digits
 _8:
 	MOV #$08, input
-	MOV #'8', char_in
+	MOV #$38, char_in
 	JMP set_digits
 _9:
 	MOV #$09, input
-	MOV #'9', char_in
+	MOV #$39, char_in
 	JMP set_digits
 	
 set_digits:
@@ -257,16 +259,7 @@ set_digits:
 		BEQ set_digit_2
 		JSR roll_digits
 		
-		LDA digit2
-		LSLA
-		LSLA
-		LSLA
-		LSLA
-		ORA digit1
-		STA output
-		
 		LDA #$CD
-		
 		JSR lcd_goto_addr
 		LDA char2
 		JSR lcd_char
@@ -291,5 +284,3 @@ roll_digits:
 		RTS
 
 		
-
-
