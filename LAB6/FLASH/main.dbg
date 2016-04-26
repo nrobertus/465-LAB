@@ -1993,6 +1993,7 @@ MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
 MyCode:     SECTION
 main:
 _Startup:
+
             LDHX   #__SEG_END_SSTACK ; initialize the stack pointer
             TXS
 			CLI			; enable interrupts

@@ -1,0 +1,65 @@
+; Include derivative-specific definitions
+            INCLUDE 'derivative.inc'
+
+
+; export symbols
+            XDEF menu_1
+            ; we export both '_Startup' and 'main' as symbols. Either can
+            ; be referenced in the linker .prm file or from C/C++ later on
+
+
+
+            XREF __SEG_END_SSTACK,SUB_delay, lcd_write, rtc_get_time,rtc_write_tod, rtc_display_data,SUB_delay_cnt, PTBDD_Upper_output, lm92_write_lcd_C, lm92_write_lcd_K, lm92_read_temp, i2c_start, i2c_rx_byte, i2c_tx_byte, i2c_stop, PTBDD_Upper_input, toggle_clock, delay, BF_check,  n, t, m, b, lcd_clear, lcd_char, lcd_goto_row1, lcd_goto_row0, led_write, led_data  ; symbol defined by the linker for the end of the stack
+
+
+; variable/data section
+MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
+
+			old_time: EQU $98
+
+; code section
+MyCode:     SECTION
+main:
+_Startup:
+            LDHX   #__SEG_END_SSTACK ; initialize the stack pointer
+            TXS
+			CLI			; enable interrupts
+			
+menu_1:
+		LDA #'M'				
+		JSR lcd_char
+
+		LDA #'o'				
+		JSR lcd_char
+
+		LDA #'d'
+		JSR lcd_char
+
+		LDA #'e'
+		JSR lcd_char
+
+		LDA #':'
+		JSR lcd_char
+
+		LDA #' '
+		JSR lcd_char
+
+		LDA #'A'
+		JSR lcd_char
+
+		LDA #','
+		JSR lcd_char
+
+		LDA #'B'
+		JSR lcd_char
+
+		LDA #','
+		JSR lcd_char
+
+		LDA #'C'
+		JSR lcd_char
+		
+		LDA #'?'
+		JSR lcd_char
+		RTS
+	
