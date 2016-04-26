@@ -131,32 +131,51 @@ menu_B:
 menu_B_input:
 		JSR keypad_get_keypress
 		
-		STA b_mode
-		
 		CMP #$0E
 		BEQ return
 		
 		CMP #$0F
-		BEQ goto_sub_b
+		BEQ check_sub_b
 		
 		;If it gets to here, it has to be numerical or the # symbol
 		
 		CMP #$00 ; User entered a 0
-		BEQ store_digit
+		BEQ _0_pressed
 		
 		CMP #$01 ; User entered a 1
-		BEQ store_digit
+		BEQ _1_pressed
 
 		
 		JMP menu_B_input
 
-store_digit:
+_0_pressed:
 
-		STA input
+		MOV #$00, b_mode
+		
+		JMP menu_B_input
+		
+		
+
+_1_pressed:
+
+		MOV #$01, b_mode
+		
+		JMP menu_B_input
+
+
+check_sub_b:
+		LDA b_mode
+		
+		CMP #$01
+		BEQ goto_sub_b
+		
+		CMP #$00
+		BEQ goto_sub_b
+		
 		JMP menu_B_input
 		
 goto_sub_b:
-
+		
 		JSR sub_B_1
 		
 		JMP menu_B
