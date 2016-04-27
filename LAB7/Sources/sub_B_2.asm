@@ -9,275 +9,205 @@
 
 
 
-            XREF __SEG_END_SSTACK,SUB_delay, b_mode, lcd_write, rtc_get_time,rtc_write_tod, rtc_display_data,SUB_delay_cnt, PTBDD_Upper_output, lm92_write_lcd_C, lm92_write_lcd_K, lm92_read_temp, i2c_start, i2c_rx_byte, i2c_tx_byte, i2c_stop, PTBDD_Upper_input, toggle_clock, delay, BF_check,  n, t, m, b, lcd_clear, lcd_char, lcd_goto_row1, lcd_goto_row0, led_write, led_data, keypad_get_keypress, lcd_goto_addr  ; symbol defined by the linker for the end of the stack
-
+            XREF __SEG_END_SSTACK, SUB_delay, b_mode, lcd_write, rtc_get_time,rtc_write_tod
+			
+			XREF  rtc_display_data,SUB_delay_cnt, PTBDD_Upper_output, lm92_write_lcd_C
+			
+			XREF lm92_write_lcd_K, lm92_read_temp, i2c_start, i2c_rx_byte, i2c_tx_byte, i2c_stop, i2c_init
+			
+			XREF PTBDD_Upper_input, toggle_clock, delay, BF_check,  n, t, m, b, lcd_clear, lcd_char, rtc_init
+			
+			XREF lcd_goto_row1, lcd_goto_row0, led_write, led_data, keypad_get_keypress, lcd_goto_addr, B_1_output
 
 ; variable/data section
 MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
-
 			
-			input: DS.B 1 ; input value
-			
-			char_in: DS.B 1
-			
-			digit1: DS.B 1;
-			
-			digit2: DS.B 1;
-			
-			char1: DS.B 1;
-			
-			char2: DS.B 1;
+			old_time: DS.B 1
 
 ; code section
 MyCode:     SECTION
-main:
-_Startup:
-            LDHX   #__SEG_END_SSTACK ; initialize the stack pointer
-            TXS
-			CLI			; enable interrupts
-			
-			MOV #$FF, digit1
-			
-			MOV #$FF, digit2
-			
 
-sub_B_2:
-
-		MOV #$20, char1
-			
-		MOV #$20, char2
-		
-		JSR lcd_clear
-			
-		LDA #'T'				
-		JSR lcd_char
-
-		LDA #'i'				
-		JSR lcd_char
-
-		LDA #'m'
+print_heating:
+		LDA #'H'
 		JSR lcd_char
 
 		LDA #'e'
 		JSR lcd_char
 
-		LDA #' '
-		JSR lcd_char
-
-		LDA #'i'
-		JSR lcd_char
-
-		LDA #'n'
-		JSR lcd_char
-
-		LDA #' '
-		JSR lcd_char
-
-		LDA #'s'
-		JSR lcd_char
-
-		LDA #'e'
-		JSR lcd_char
-		
-		LDA #'c'
-		JSR lcd_char
-		
-		LDA #'o'
-		JSR lcd_char
-		
-		LDA #'n'
-		JSR lcd_char
-		
-		LDA #'d'
-		JSR lcd_char
-		
-		LDA #'s'
-		JSR lcd_char
-		
-		LDA #'?'
-		JSR lcd_char
-		
-		JSR lcd_goto_row1
-		
-		LDA #'E'				
-		JSR lcd_char
-
-		LDA #'n'				
+		LDA #'a'
 		JSR lcd_char
 
 		LDA #'t'
 		JSR lcd_char
-
-		LDA #'e'
+		
+		LDA #'i'
+		JSR lcd_char
+		
+		LDA #'n'
+		JSR lcd_char
+		
+		LDA #'g'
 		JSR lcd_char
 
-		LDA #'r'
+		JMP sub_B_2_mid
+
+print_cooling:
+
+		LDA #'C'
+		JSR lcd_char
+
+		LDA #'o'
+		JSR lcd_char
+
+		LDA #'o'
+		JSR lcd_char
+
+		LDA #'l'
+		JSR lcd_char
+		
+		LDA #'i'
+		JSR lcd_char
+		
+		LDA #'n'
+		JSR lcd_char
+		
+		LDA #'g'
+		JSR lcd_char
+
+		JMP sub_B_2_mid
+			
+
+sub_B_2:
+
+		JSR	rtc_init
+		
+		JSR lcd_clear
+		
+		LDA #'B'				
+		JSR lcd_char
+
+		LDA #':'				
 		JSR lcd_char
 
 		LDA #' '
 		JSR lcd_char
+		
+		LDA b_mode
+		CMP #$00
+		BEQ print_cooling
+		
+		CMP #$01
+		BEQ print_heating
 
-		LDA #'0'
+sub_B_2_mid:
+
+		
+
+		LDA #' '
 		JSR lcd_char
 
-		LDA #'-'
+		LDA #'T'
 		JSR lcd_char
 
-		LDA #'1'
-		JSR lcd_char
-
-		LDA #'8'
+		LDA #'='
 		JSR lcd_char
 		
-		LDA #'0'
+		LDA #'5'
+		JSR lcd_char
+		
+		LDA #'5'
+		JSR lcd_char
+		
+		JSR lcd_goto_row1
+		
+		
+		LDA #'T'
+		JSR lcd_char
+		
+		LDA #'9'
+		JSR lcd_char
+		
+		LDA #'2'
 		JSR lcd_char
 		
 		LDA #':'
 		JSR lcd_char
 		
+		LDA #' '
+		JSR lcd_char
+		
+update_temp:
 
-		
-		
-		
-		
-sub_B_1_input:
-		
 		JSR keypad_get_keypress
 		
 		CMP #$0E
 		BEQ return
 		
-		CMP #$0F
-		BEQ input_done
+		;JSR mode_start
 		
-		CMP #$0A
-		BEQ sub_B_1_input
+		JSR print_temp
 		
-		CMP #$0B
-		BEQ sub_B_1_input
+		JMP update_temp
 		
-		CMP #$0C
-		BEQ sub_B_1_input
+mode_start:
+		JSR Big_Delay
 		
-		CMP #$0D
-		BEQ sub_B_1_input
+		;JSR rtc_get_time
 		
-		; At this point, it has to be numeric input. 
+		;CBEQ old_time, return
 		
-		CMP #$00
-		BEQ _0
+		;STA old_time
 		
-		CMP #$01
-		BEQ _1
+		RTS
 		
-		CMP #$02
-		BEQ _2
+print_temp:
 		
-		CMP #$03
-		BEQ _3
+		LDA #$C6
+		JSR lcd_goto_addr
 		
-		CMP #$04
-		BEQ _4
+		JSR i2c_init
 		
-		CMP #$05
-		BEQ _5
+		JSR lm92_read_temp
+					
+		JSR lm92_write_lcd_C
 		
-		CMP #$06
-		BEQ _6
+		LDA #'C'
+		JSR lcd_char
 		
-		CMP #$07
-		BEQ _7
+		RTS
 		
-		CMP #$08
-		BEQ _8
-		
-		CMP #$09
-		BEQ _9
-		
-		JMP sub_B_1_input
 
 
 		
 return:
 		RTS
 		
-input_done:
-		RTS
+Delay:
+	MOV b, m
+	top:
+			DEC t
+			BEQ done
+			MOV m, b
+	bottom:
+			DEC b
+			BEQ top
+			BRA bottom			
+	done:			
+			RTS
 
-_0:
-	MOV #$00, input
-	MOV #$30, char_in
-	JMP set_digits
-_1:
-	MOV #$01, input
-	MOV #$31, char_in
-	JMP set_digits
-_2:
-	MOV #$02, input
-	MOV #$32, char_in
-	JMP set_digits
-_3:
-	MOV #$03, input
-	MOV #$33, char_in
-	JMP set_digits
-_4:
-	MOV #$04, input
-	MOV #$34, char_in
-	JMP set_digits
-_5:	
-	MOV #$05, input
-	MOV #$35, char_in
-	JMP set_digits
-_6:
-	MOV #$06, input
-	MOV #$36, char_in
-	JMP set_digits
-_7:
-	MOV #$07, input
-	MOV #$37, char_in
-	JMP set_digits
-_8:
-	MOV #$08, input
-	MOV #$38, char_in
-	JMP set_digits
-_9:
-	MOV #$09, input
-	MOV #$39, char_in
-	JMP set_digits
-	
-set_digits:
-		LDA digit1
-		CMP #$20
-		BEQ set_digit_1
-		LDA digit2
-		CMP #$20
-		BEQ set_digit_2
-		JSR roll_digits
+Big_Delay:
+	;Little delay, so as not to flood the clock
+		MOV #16, t				; 4 us delay
+		MOV #16, b
+		JSR Delay
+		MOV #16, t				; 4 us delay
+		MOV #16, b
+		JSR Delay
+		MOV #16, t				; 4 us delay
+		MOV #16, b
+		JSR Delay
+		MOV #16, t				; 4 us delay
+		MOV #16, b
+		JSR Delay
+		RTS 
 		
-		LDA #$CD
-		JSR lcd_goto_addr
-		LDA char2
-		JSR lcd_write
-		LDA char1
-		JSR lcd_write
-	
-set_digit_1:
-		MOV input, digit1
-		MOV char_in, char1
-		JMP sub_B_1_input
-
-set_digit_2:
-		MOV input, digit2
-		MOV char_in, char2
-		JMP sub_B_1_input
-		
-roll_digits:
-		MOV digit1, digit2
-		MOV char1, char2
-		MOV input, digit1
-		MOV char_in, char1
-		RTS
-
-		
-
-

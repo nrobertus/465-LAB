@@ -2031,62 +2031,11 @@ _Startup:
         	
 			JSR		i2c_init
 			
-			JSR		rtc_init		
-			
-			JSR		lm92_init
-			
 			JSR menu_1
 
 main_function:
 			
-			JSR keypad_get_keypress ; the result is in the accumulator 
-			
-			CMP #$00		
-			BEQ goto_mode_0		
-			CMP #$01	
-			BEQ goto_mode_1
-			CMP #$02
-			BEQ goto_mode_2
-			
-			LDA prev_input
-			CMP #$00		
-			BEQ continue_mode_0		
-			CMP #$01			
-			BEQ continue_mode_1
-			CMP #$02
-			BEQ continue_mode_2
-			
     		JMP main_function
-    		
-goto_mode_0:
-		STA prev_input
-		JSR rtc_set_time_zero
-		JSR mode_0
-		JMP main_function
-
-goto_mode_1:
-		STA prev_input
-		JSR rtc_set_time_zero
-		JSR mode_1
-		JMP main_function
-
-goto_mode_2:
-		STA prev_input
-		JSR rtc_set_time_zero
-		JSR mode_2
-		JMP main_function
-		
-continue_mode_0:
-		JSR mode_0
-		JMP main_function
-
-continue_mode_1:
-		JSR mode_1
-		JMP main_function
-
-continue_mode_2:
-		JSR mode_2
-		JMP main_function
 		
 		
 ;************************************************************** 
@@ -2109,9 +2058,6 @@ SUB_delay:
 			LDHX #SUB_delay_cnt
 			
 SUB_delay_loop_0:
-
-			feed_watchdog
-            STA SRS              ; feed the watchdog
 			
 			; if byte[0] == 0
 			LDA 	0, X

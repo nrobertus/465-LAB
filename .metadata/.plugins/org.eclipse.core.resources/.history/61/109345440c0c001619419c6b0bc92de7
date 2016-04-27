@@ -1,0 +1,218 @@
+; Include derivative-specific definitions
+            INCLUDE 'derivative.inc'
+
+
+; export symbols
+            XDEF sub_B_2
+            ; we export both '_Startup' and 'main' as symbols. Either can
+            ; be referenced in the linker .prm file or from C/C++ later on
+
+
+
+            XREF __SEG_END_SSTACK, SUB_delay, b_mode, lcd_write, rtc_get_time,rtc_write_tod
+			
+			XREF  rtc_display_data,SUB_delay_cnt, PTBDD_Upper_output, lm92_write_lcd_C
+			
+			XREF lm92_write_lcd_K, lm92_read_temp, i2c_start, i2c_rx_byte, i2c_tx_byte, i2c_stop
+			
+			XREF PTBDD_Upper_input, toggle_clock, delay, BF_check,  n, t, m, b, lcd_clear, lcd_char, rtc_init
+			
+			XREF lcd_goto_row1, lcd_goto_row0, led_write, led_data, keypad_get_keypress, lcd_goto_addr, B_1_output
+
+; variable/data section
+MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
+			
+			old_time: DS.B 1
+
+; code section
+MyCode:     SECTION
+main:
+_Startup:
+            LDHX   #__SEG_END_SSTACK ; initialize the stack pointer
+            TXS
+			CLI			; enable interrupts
+			
+			MOV #$FF, old_time
+
+print_heating:
+		LDA #'H'
+		JSR lcd_char
+
+		LDA #'e'
+		JSR lcd_char
+
+		LDA #'a'
+		JSR lcd_char
+
+		LDA #'t'
+		JSR lcd_char
+		
+		LDA #'i'
+		JSR lcd_char
+		
+		LDA #'n'
+		JSR lcd_char
+		
+		LDA #'g'
+		JSR lcd_char
+
+		JMP sub_B_2_mid
+
+print_cooling:
+
+		LDA #'C'
+		JSR lcd_char
+
+		LDA #'o'
+		JSR lcd_char
+
+		LDA #'o'
+		JSR lcd_char
+
+		LDA #'l'
+		JSR lcd_char
+		
+		LDA #'i'
+		JSR lcd_char
+		
+		LDA #'n'
+		JSR lcd_char
+		
+		LDA #'g'
+		JSR lcd_char
+
+		JMP sub_B_2_mid
+			
+
+sub_B_2:
+
+		JSR	rtc_init
+		
+		JSR lcd_clear
+		
+		LDA #'B'				
+		JSR lcd_char
+
+		LDA #':'				
+		JSR lcd_char
+
+		LDA #' '
+		JSR lcd_char
+		
+		LDA b_mode
+		CMP #$00
+		BEQ print_cooling
+		
+		CMP #$01
+		BEQ print_heating
+
+sub_B_2_mid:
+
+		
+
+		LDA #' '
+		JSR lcd_char
+
+		LDA #'T'
+		JSR lcd_char
+
+		LDA #'='
+		JSR lcd_char
+		
+		LDA #'5'
+		JSR lcd_char
+		
+		LDA #'5'
+		JSR lcd_char
+		
+		JSR lcd_goto_row1
+		
+		
+		LDA #'T'
+		JSR lcd_char
+		
+		LDA #'9'
+		JSR lcd_char
+		
+		LDA #'2'
+		JSR lcd_char
+		
+		LDA #':'
+		JSR lcd_char
+		
+		LDA #' '
+		JSR lcd_char
+		
+update_temp:
+
+		JSR keypad_get_keypress
+		
+		CMP #$0E
+		BEQ return
+		
+		;JSR mode_start
+		
+		JSR print_temp
+		
+		JMP update_temp
+		
+mode_start:
+		JSR Big_Delay
+		
+		JSR rtc_get_time
+		
+		;CBEQ old_time, return
+		
+		STA old_time
+		
+		RTS
+		
+print_temp:
+		
+		LDA #$C6
+		JSR lcd_goto_addr
+		
+		JSR lm92_read_temp
+					
+		JSR lm92_write_lcd_C
+		
+		LDA #'C'
+		JSR lcd_char
+		
+		RTS
+		
+
+
+		
+return:
+		RTS
+		
+Delay:
+	MOV b, m
+	top:
+			DEC t
+			BEQ done
+			MOV m, b
+	bottom:
+			DEC b
+			BEQ top
+			BRA bottom			
+	done:			
+			RTS
+
+Big_Delay:
+	;Little delay, so as not to flood the clock
+		MOV #16, t				; 4 us delay
+		MOV #16, b
+		JSR Delay
+		MOV #16, t				; 4 us delay
+		MOV #16, b
+		JSR Delay
+		MOV #16, t				; 4 us delay
+		MOV #16, b
+		JSR Delay
+		MOV #16, t				; 4 us delay
+		MOV #16, b
+		JSR Delay
+		RTS 
+		

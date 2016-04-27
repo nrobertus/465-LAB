@@ -15,7 +15,7 @@ SDA 		EQU 2 		;Serial data bit number
             INCLUDE 'MC9S08QG8.inc'
             
 ; export symbols
-            XDEF i2c_init, i2c_start, i2c_stop, i2c_tx_byte, i2c_rx_byte
+            XDEF i2c_init, i2c_start, i2c_stop, i2c_tx_byte, i2c_rx_byte, i2c_rx_byte_nack
             ;XDEF 
             
 ; import symbols
@@ -66,7 +66,7 @@ i2c_init:
 ;* Exit Variables: None
 ;**************************************************************
 i2c_start: 
-			; crate falling edge on SDA while SCL high
+			; create falling edge on SDA while SCL high
 			BCLR 	SDA, PTAD
 			JSR 	i2c_bit_delay
 			BCLR 	SCL, PTAD
@@ -83,7 +83,7 @@ i2c_start:
 ;* Exit Variables: None
 ;**************************************************************
 i2c_stop: 
-			; crate rising edge on SDA while SCL high
+			; create rising edge on SDA while SCL high
 			BCLR 	SDA, PTAD
 			BSET 	SCL, PTAD
 			BSET 	SDA, PTAD
@@ -235,6 +235,79 @@ rx_done:
 			LDA		Value
 			
 			RTS
+			
+;;; Nack hack here
+
+i2c_rx_byte_nack:
+
+			; clear output var
+			CLR		Value
+			
+			; set BitCounter
+			LDX 	#$08
+			STX 	BitCounter
+			
+			; set SDA to input and pull clock low
+			BCLR	SDA, PTADD
+			BCLR	SCL, PTAD
+			
+rx_nextbit_nack:
+			; wait for a bit
+			JSR		i2c_bit_delay
+
+			; shift the last bit recieved left (and fill LSB with zero)
+			LSL		Value
+			
+			; clock the line and wait
+			BSET	SCL, PTAD
+			JSR		i2c_setup_delay
+
+			; grab bit from bus
+			BRCLR	SDA, PTAD, rx_low
+			
+rx_high_nack:
+			; store a 1 to Value
+			BSET	0, Value
+			BRA		rx_continue
+
+rx_low_nack:
+			; do nothing since LSL fills with 0
+
+rx_continue_nack:
+			BCLR	SCL, PTAD			; Restore clock to low state
+			DEC		BitCounter			; Decrement the bit counter
+			BNE		rx_nextbit			; More bits?
+			
+			
+			; set SDA back to output
+			BSET	SDA, PTADD
+
+rx_nack_nack:
+			; set data bit to not acknowledge
+			BSET	SDA, PTAD			
+
+rx_done_nack:
+			; let ack/nack settle
+			JSR		i2c_setup_delay
+			
+			;clock the ack/nack 
+			BSET	SCL, PTAD
+			JSR		i2c_bit_delay
+			
+			; retun clock to low
+			BCLR	SCL, PTAD
+			
+			; load Value into Accu A
+			LDA		Value
+			
+			RTS
+
+
+
+
+
+
+
 
 
 ;**************************************************************

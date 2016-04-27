@@ -3,26 +3,26 @@
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="353" key="DIALOG_WIDTH"/>
 		<item value="526" key="DIALOG_Y_ORIGIN"/>
-		<item value="1144" key="DIALOG_X_ORIGIN"/>
 		<item value="513" key="DIALOG_HEIGHT"/>
+		<item value="1144" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-18|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="goto_sub_b" key="selection"/>
+		<item value="i2c_rx_byte" key="selection"/>
 		<list key="findhistory">
+			<item value="i2c_rx_byte"/>
+			<item value="FF"/>
+			<item value="addr"/>
+			<item value="sub"/>
+			<item value="temp_k"/>
 			<item value="goto_sub_b"/>
 			<item value="goto_row"/>
 			<item value="menu_A"/>
-			<item value="keypad_get_keypress"/>
-			<item value="print_temp"/>
-			<item value="print_time"/>
-			<item value="prit"/>
-			<item value="Delay"/>
 		</list>
 		<list key="replacehistory">
 			<item value="lcd_char"/>

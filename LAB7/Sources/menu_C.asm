@@ -9,7 +9,15 @@
 
 
 
-            XREF __SEG_END_SSTACK,SUB_delay, lcd_write, rtc_get_time,rtc_write_tod, rtc_display_data,SUB_delay_cnt, PTBDD_Upper_output, lm92_write_lcd_C, lm92_write_lcd_K, lm92_read_temp, i2c_start, i2c_rx_byte, i2c_tx_byte, i2c_stop, PTBDD_Upper_input, toggle_clock, delay, BF_check,  n, t, m, b, lcd_clear, lcd_char, lcd_goto_row1, lcd_goto_row0, led_write, led_data, keypad_get_keypress  ; symbol defined by the linker for the end of the stack
+            XREF __SEG_END_SSTACK, SUB_delay, b_mode, lcd_write, rtc_get_time,rtc_write_tod
+			
+			XREF  rtc_display_data,SUB_delay_cnt, PTBDD_Upper_output, lm92_write_lcd_C
+			
+			XREF lm92_write_lcd_K, lm92_read_temp, i2c_start, i2c_rx_byte, i2c_tx_byte, i2c_stop
+			
+			XREF PTBDD_Upper_input, toggle_clock, delay, BF_check,  n, t, m, b, lcd_clear, lcd_char
+			
+			XREF lcd_goto_row1, lcd_goto_row0, led_write, led_data, keypad_get_keypress, lcd_goto_addr
 
 
 ; variable/data section
@@ -17,14 +25,6 @@ MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
 
 ; code section
 MyCode:     SECTION
-main:
-_Startup:
-            LDHX   #__SEG_END_SSTACK ; initialize the stack pointer
-            TXS
-			CLI			; enable interrupts
-			
-			
-
 			
 menu_C:
 		JSR lcd_clear

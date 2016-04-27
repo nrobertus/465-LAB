@@ -1962,7 +1962,7 @@ Reserved20                               equ        VReserved4
             XDEF lm92_init, lm92_read_temp, lm92_write_lcd_K, lm92_write_lcd_C
             
 ; import symbols
-			XREF i2c_init, i2c_start, i2c_stop, i2c_tx_byte, i2c_rx_byte
+			XREF i2c_init, i2c_start, i2c_stop, i2c_tx_byte, i2c_rx_byte, i2c_rx_byte_nack
 			
 			XREF lcd_init, lcd_write, lcd_char, lcd_str, lcd_num_to_char, lcd_clear, lcd_goto_addr, lcd_goto_row0, lcd_goto_row1
 			            
@@ -2044,10 +2044,12 @@ lm92_read_temp:
 			JSR		i2c_rx_byte	
 			STA		Temp_Data_Raw+1
 			
+			
+			
 			; stop condition
+			
 			JSR		i2c_stop
 			
-
 			; divide by 16 to convert to degrees C
 			LDHX	Temp_Data_Raw+0
 			LDX		#$80

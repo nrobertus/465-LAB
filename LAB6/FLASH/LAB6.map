@@ -34,13 +34,13 @@ Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
 .init                            208     R     0xE000     0xE0CF   ROM
 MY_ZEROPAGE                       39   R/W       0x60       0x86   Z_RAM
-MyCode                          1995     R     0xE0D0     0xE89A   ROM
-MY_CONST                          52     R     0xE89B     0xE8CE   ROM
+MyCode                          2001     R     0xE0D0     0xE8A0   ROM
+MY_CONST                          52     R     0xE8A1     0xE8D4   ROM
 .stack                            64   R/W      0x100      0x13F   RAM
 .vectSeg0_vect                     2     R     0xFFFE     0xFFFF   .vectSeg0
 
 Summary of section sizes per section type:
-READ_ONLY (R):         8D1 (dec:     2257)
+READ_ONLY (R):         8D7 (dec:     2263)
 READ_WRITE (R/W):       67 (dec:      103)
 
 *********************************************************************************************
@@ -68,7 +68,7 @@ MODULE:                 -- functions_asm.obj --
      __SEG_END_SSTACK                           140       0       0       2               
 MODULE:                 -- i2c_driver_asm.obj --
 - PROCEDURES:
-     i2c_init                                  E10A       D      13       1   MyCode      
+     i2c_init                                  E10A       D      13       2   MyCode      
      i2c_start                                 E117       8       8       5   MyCode      
      i2c_stop                                  E11F       A      10       5   MyCode      
      i2c_tx_byte                               E129       4       4      15   MyCode      
@@ -145,7 +145,7 @@ MODULE:                 -- led_asm.obj --
      led_data                                    6E       1       1       5   MY_ZEROPAGE 
 MODULE:                 -- lm92_driver_asm.obj --
 - PROCEDURES:
-     lm92_init                                 E495       1       1       1   MyCode      
+     lm92_init                                 E495       1       1       2   MyCode      
      lm92_read_temp                            E496      33      51       2   MyCode      
      lm92_write_lcd_K                          E4C9      11      17       1   MyCode      
      k_small                                   E4DA       9       9       0   MyCode      
@@ -184,30 +184,30 @@ MODULE:                 -- modes_asm.obj --
 - PROCEDURES:
      return                                    E515       1       1       0   MyCode      
      mode_start                                E516      12      18       3   MyCode      
-     print_temp_time                           E528      10      16       3   MyCode      
-     mode_0                                    E538      1C      28       3   MyCode      
-     mode_1                                    E554      21      33       2   MyCode      
-     mode_2                                    E575      21      33       2   MyCode      
-     print_TEC_tag                             E596      38      56       1   MyCode      
-     print_temp_tag                            E5CE      18      24       1   MyCode      
-     print_time_tag                            E5E6      27      39       1   MyCode      
-     Delay                                     E60D       3       3       4   MyCode      
-     top                                       E610       7       7       0   MyCode      
-     bottom                                    E617       6       6       0   MyCode      
-     done                                      E61D       1       1       0   MyCode      
-     Big_Delay                                 E61E      25      37       1   MyCode      
+     print_temp_time                           E528      16      22       3   MyCode      
+     mode_0                                    E53E      1C      28       3   MyCode      
+     mode_1                                    E55A      21      33       2   MyCode      
+     mode_2                                    E57B      21      33       2   MyCode      
+     print_TEC_tag                             E59C      38      56       1   MyCode      
+     print_temp_tag                            E5D4      18      24       1   MyCode      
+     print_time_tag                            E5EC      27      39       1   MyCode      
+     Delay                                     E613       3       3       4   MyCode      
+     top                                       E616       7       7       0   MyCode      
+     bottom                                    E61D       6       6       0   MyCode      
+     done                                      E623       1       1       0   MyCode      
+     Big_Delay                                 E624      25      37       1   MyCode      
 - VARIABLES:
 MODULE:                 -- rtc_driver_asm.obj --
 - PROCEDURES:
-     rtc_init                                  E643       4       4       1   MyCode      
-     rtc_set_time_zero                         E647      28      40       4   MyCode      
-     rtc_calc_tod                              E66F      2C      44       0   MyCode      
-     rtc_write_tod                             E69B      22      34       0   MyCode      
-     rtc_set_time                              E6BD      5F      95       1   MyCode      
-     rtc_get_time                              E71C      6F     111       1   MyCode      
-     rtc_display_data                          E78B      2A      42       1   MyCode      
-     rtc_mask_data                             E7B5      64     100       1   MyCode      
-     rtc_prompt_time                           E819      82     130       0   MyCode      
+     rtc_init                                  E649       4       4       1   MyCode      
+     rtc_set_time_zero                         E64D      28      40       4   MyCode      
+     rtc_calc_tod                              E675      2C      44       0   MyCode      
+     rtc_write_tod                             E6A1      22      34       0   MyCode      
+     rtc_set_time                              E6C3      5F      95       1   MyCode      
+     rtc_get_time                              E722      6F     111       1   MyCode      
+     rtc_display_data                          E791      2A      42       1   MyCode      
+     rtc_mask_data                             E7BB      64     100       1   MyCode      
+     rtc_prompt_time                           E81F      82     130       0   MyCode      
 - VARIABLES:
      Sec                                         76       2       2      17   MY_ZEROPAGE 
      Min                                         78       2       2      15   MY_ZEROPAGE 
@@ -218,14 +218,14 @@ MODULE:                 -- rtc_driver_asm.obj --
      TOD                                         82       2       2      13   MY_ZEROPAGE 
      rtc_epoch_delta                             84       2       2       0   MY_ZEROPAGE 
      Byte_counter                                86       1       1       1   MY_ZEROPAGE 
-     str_date                                  E89B       8       8       0   MY_CONST    
-     str_date_length                           E8A3       1       1       0   MY_CONST    
-     str_time                                  E8A4       8       8       0   MY_CONST    
-     str_time_length                           E8AC       1       1       0   MY_CONST    
-     str_prompt_row0                           E8AD      10      16       1   MY_CONST    
-     str_prompt_row0_length                    E8BD       1       1       1   MY_CONST    
-     str_prompt_row1                           E8BE      10      16       1   MY_CONST    
-     str_prompt_row1_length                    E8CE       1       1       1   MY_CONST    
+     str_date                                  E8A1       8       8       0   MY_CONST    
+     str_date_length                           E8A9       1       1       0   MY_CONST    
+     str_time                                  E8AA       8       8       0   MY_CONST    
+     str_time_length                           E8B2       1       1       0   MY_CONST    
+     str_prompt_row0                           E8B3      10      16       1   MY_CONST    
+     str_prompt_row0_length                    E8C3       1       1       1   MY_CONST    
+     str_prompt_row1                           E8C4      10      16       1   MY_CONST    
+     str_prompt_row1_length                    E8D4       1       1       1   MY_CONST    
 
 *********************************************************************************************
 MODULE STATISTIC
@@ -238,7 +238,7 @@ MODULE STATISTIC
   led_asm.obj                                  1     36      0
   lm92_driver_asm.obj                          4    120      0
   main_asm.obj                                 3    208      0
-  modes_asm.obj                                0    310      0
+  modes_asm.obj                                0    316      0
   rtc_driver_asm.obj                          17    600     52
   other                                       64      2      0
 
@@ -332,7 +332,7 @@ OBJECT LIST SORTED BY ADDRESS
      bus_init                                  E0D0       A      10       0   MyCode      
      bus_read                                  E0DA      1A      26       4   MyCode      
      bus_write                                 E0F4      16      22       7   MyCode      
-     i2c_init                                  E10A       D      13       1   MyCode      
+     i2c_init                                  E10A       D      13       2   MyCode      
      i2c_start                                 E117       8       8       5   MyCode      
      i2c_stop                                  E11F       A      10       5   MyCode      
      i2c_tx_byte                               E129       4       4      15   MyCode      
@@ -384,7 +384,7 @@ OBJECT LIST SORTED BY ADDRESS
      lcd_goto_row0                             E45B       B      11       1   MyCode      
      lcd_goto_row1                             E466       B      11       2   MyCode      
      led_write                                 E471      24      36       4   MyCode      
-     lm92_init                                 E495       1       1       1   MyCode      
+     lm92_init                                 E495       1       1       2   MyCode      
      lm92_read_temp                            E496      33      51       2   MyCode      
      lm92_write_lcd_K                          E4C9      11      17       1   MyCode      
      k_small                                   E4DA       9       9       0   MyCode      
@@ -392,35 +392,35 @@ OBJECT LIST SORTED BY ADDRESS
      lm92_write_lcd_C                          E4F8      15      21       0   MyCode      
      return                                    E515       1       1       0   MyCode      
      mode_start                                E516      12      18       3   MyCode      
-     print_temp_time                           E528      10      16       3   MyCode      
-     mode_0                                    E538      1C      28       3   MyCode      
-     mode_1                                    E554      21      33       2   MyCode      
-     mode_2                                    E575      21      33       2   MyCode      
-     print_TEC_tag                             E596      38      56       1   MyCode      
-     print_temp_tag                            E5CE      18      24       1   MyCode      
-     print_time_tag                            E5E6      27      39       1   MyCode      
-     Delay                                     E60D       3       3       4   MyCode      
-     top                                       E610       7       7       0   MyCode      
-     bottom                                    E617       6       6       0   MyCode      
-     done                                      E61D       1       1       0   MyCode      
-     Big_Delay                                 E61E      25      37       1   MyCode      
-     rtc_init                                  E643       4       4       1   MyCode      
-     rtc_set_time_zero                         E647      28      40       4   MyCode      
-     rtc_calc_tod                              E66F      2C      44       0   MyCode      
-     rtc_write_tod                             E69B      22      34       0   MyCode      
-     rtc_set_time                              E6BD      5F      95       1   MyCode      
-     rtc_get_time                              E71C      6F     111       1   MyCode      
-     rtc_display_data                          E78B      2A      42       1   MyCode      
-     rtc_mask_data                             E7B5      64     100       1   MyCode      
-     rtc_prompt_time                           E819      82     130       0   MyCode      
-     str_date                                  E89B       8       8       0   MY_CONST    
-     str_date_length                           E8A3       1       1       0   MY_CONST    
-     str_time                                  E8A4       8       8       0   MY_CONST    
-     str_time_length                           E8AC       1       1       0   MY_CONST    
-     str_prompt_row0                           E8AD      10      16       1   MY_CONST    
-     str_prompt_row0_length                    E8BD       1       1       1   MY_CONST    
-     str_prompt_row1                           E8BE      10      16       1   MY_CONST    
-     str_prompt_row1_length                    E8CE       1       1       1   MY_CONST    
+     print_temp_time                           E528      16      22       3   MyCode      
+     mode_0                                    E53E      1C      28       3   MyCode      
+     mode_1                                    E55A      21      33       2   MyCode      
+     mode_2                                    E57B      21      33       2   MyCode      
+     print_TEC_tag                             E59C      38      56       1   MyCode      
+     print_temp_tag                            E5D4      18      24       1   MyCode      
+     print_time_tag                            E5EC      27      39       1   MyCode      
+     Delay                                     E613       3       3       4   MyCode      
+     top                                       E616       7       7       0   MyCode      
+     bottom                                    E61D       6       6       0   MyCode      
+     done                                      E623       1       1       0   MyCode      
+     Big_Delay                                 E624      25      37       1   MyCode      
+     rtc_init                                  E649       4       4       1   MyCode      
+     rtc_set_time_zero                         E64D      28      40       4   MyCode      
+     rtc_calc_tod                              E675      2C      44       0   MyCode      
+     rtc_write_tod                             E6A1      22      34       0   MyCode      
+     rtc_set_time                              E6C3      5F      95       1   MyCode      
+     rtc_get_time                              E722      6F     111       1   MyCode      
+     rtc_display_data                          E791      2A      42       1   MyCode      
+     rtc_mask_data                             E7BB      64     100       1   MyCode      
+     rtc_prompt_time                           E81F      82     130       0   MyCode      
+     str_date                                  E8A1       8       8       0   MY_CONST    
+     str_date_length                           E8A9       1       1       0   MY_CONST    
+     str_time                                  E8AA       8       8       0   MY_CONST    
+     str_time_length                           E8B2       1       1       0   MY_CONST    
+     str_prompt_row0                           E8B3      10      16       1   MY_CONST    
+     str_prompt_row0_length                    E8C3       1       1       1   MY_CONST    
+     str_prompt_row1                           E8C4      10      16       1   MY_CONST    
+     str_prompt_row1_length                    E8D4       1       1       1   MY_CONST    
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -499,8 +499,9 @@ k_small                   USES temp_k lcd_char
 cont                      USES temp_k lcd_num_to_char lcd_char 
 lm92_write_lcd_C          USES Temp_c lcd_num_to_char lcd_char 
 mode_start                USES Big_Delay rtc_get_time lcd_clear print_TEC_tag 
-print_temp_time           USES print_temp_tag lm92_read_temp lm92_write_lcd_K 
-                                print_time_tag rtc_display_data 
+print_temp_time           USES print_temp_tag i2c_init lm92_init 
+                                lm92_read_temp lm92_write_lcd_K print_time_tag 
+                                rtc_display_data 
 mode_0                    USES mode_start lcd_char print_temp_time led_data 
                                 led_write 
 mode_1                    USES mode_start lcd_char print_temp_time led_data 
@@ -626,6 +627,10 @@ DEPENDENCY TREE
        |  |  |     
        |  |  +- lcd_char             (see above)
        |  |     
+       |  +- i2c_init             (see above)
+       |  |  
+       |  +- lm92_init            (see above)
+       |  |  
        |  +- lm92_read_temp       (see above)
        |  |  
        |  +- lm92_write_lcd_K    
@@ -655,5 +660,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 3
-Total size of all blocks to be downloaded: 2257
+Total size of all blocks to be downloaded: 2263
 

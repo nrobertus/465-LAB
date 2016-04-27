@@ -21,7 +21,7 @@ LM92_REG_TEMP		EQU	$00		; register address of the seconds register
             XDEF lm92_init, lm92_read_temp, lm92_write_lcd_K, lm92_write_lcd_C
             
 ; import symbols
-			XREF i2c_init, i2c_start, i2c_stop, i2c_tx_byte, i2c_rx_byte
+			XREF i2c_init, i2c_start, i2c_stop, i2c_tx_byte, i2c_rx_byte, i2c_rx_byte_nack
 			
 			XREF lcd_init, lcd_write, lcd_char, lcd_str, lcd_num_to_char, lcd_clear, lcd_goto_addr, lcd_goto_row0, lcd_goto_row1
 			            
@@ -94,19 +94,19 @@ lm92_read_temp:
 			JSR 	i2c_tx_byte
 			
 			; read byte
-			LDA		#$01			; ack the byte			
+			LDA		#$00			; ack the byte			
 			JSR		i2c_rx_byte	
 			STA		Temp_Data_Raw+0
 			
 			; read byte
-			LDA		#$00			; nack the byte			
+			LDA		#$01			; nack the byte			
 			JSR		i2c_rx_byte	
 			STA		Temp_Data_Raw+1
 			
 			; stop condition
+			
 			JSR		i2c_stop
 			
-
 			; divide by 16 to convert to degrees C
 			LDHX	Temp_Data_Raw+0
 			LDX		#$80

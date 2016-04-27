@@ -3,13 +3,21 @@
 
 
 ; export symbols
-            XDEF sub_B_1
+            XDEF sub_B_1, B_1_output
             ; we export both '_Startup' and 'main' as symbols. Either can
             ; be referenced in the linker .prm file or from C/C++ later on
 
 
 
-            XREF __SEG_END_SSTACK,SUB_delay, b_mode, lcd_write, rtc_get_time,rtc_write_tod, rtc_display_data,SUB_delay_cnt, PTBDD_Upper_output, lm92_write_lcd_C, lm92_write_lcd_K, lm92_read_temp, i2c_start, i2c_rx_byte, i2c_tx_byte, i2c_stop, PTBDD_Upper_input, toggle_clock, delay, BF_check,  n, t, m, b, lcd_clear, lcd_char, lcd_goto_row1, lcd_goto_row0, led_write, led_data, keypad_get_keypress, lcd_goto_addr  ; symbol defined by the linker for the end of the stack
+            XREF __SEG_END_SSTACK, SUB_delay, b_mode, lcd_write, rtc_get_time,rtc_write_tod
+			
+			XREF  rtc_display_data,SUB_delay_cnt, PTBDD_Upper_output, lm92_write_lcd_C
+			
+			XREF lm92_write_lcd_K, lm92_read_temp, i2c_start, i2c_rx_byte, i2c_tx_byte, i2c_stop
+			
+			XREF PTBDD_Upper_input, toggle_clock, delay, BF_check,  n, t, m, b, lcd_clear, lcd_char
+			
+			XREF lcd_goto_row1, lcd_goto_row0, led_write, led_data, keypad_get_keypress, lcd_goto_addr, sub_B_2
 
 
 ; variable/data section
@@ -28,29 +36,20 @@ MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
 			
 			char2: DS.B 1;
 			
-			output: DS.B 1;
+			B_1_output: DS.B 1;
 
 ; code section
 MyCode:     SECTION
-main:
-_Startup:
-            LDHX   #__SEG_END_SSTACK ; initialize the stack pointer
-            TXS
-			CLI			; enable interrupts
-			
-			MOV #$FF, digit1
-			
-			MOV #$FF, digit2
-			
-			MOV #$20, char1
-			
-			MOV #$20, char2
-			
-			
 
 sub_B_1:
 
+		MOV #$FF, digit1
+			
+		MOV #$FF, digit2
 		
+		MOV #$20, char1
+		
+		MOV #$20, char2
 		
 		JSR lcd_clear
 			
@@ -128,12 +127,9 @@ sub_B_1:
 		LDA #'-'
 		JSR lcd_char
 
-		LDA #'1'
+		LDA #'6'
 		JSR lcd_char
 
-		LDA #'8'
-		JSR lcd_char
-		
 		LDA #'0'
 		JSR lcd_char
 		
@@ -207,8 +203,8 @@ return:
 		RTS
 		
 input_done:
-
-		RTS
+		JSR sub_B_2
+		JMP sub_B_1
 _0:
 	MOV #$00, input
 	MOV #$30, char_in
@@ -258,6 +254,14 @@ set_digits:
 		CMP #$FF
 		BEQ set_digit_2
 		JSR roll_digits
+		
+		LDA digit2
+		LDX #$0A
+		MUL
+		
+		ADD digit1
+		
+		STA B_1_output
 		
 		LDA #$CD
 		JSR lcd_goto_addr
