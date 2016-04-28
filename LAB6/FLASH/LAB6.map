@@ -32,15 +32,15 @@ Entry point: 0xE000 (_Startup)
 SECTION-ALLOCATION SECTION
 Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
-.init                            208     R     0xE000     0xE0CF   ROM
+.init                            205     R     0xE000     0xE0CC   ROM
 MY_ZEROPAGE                       39   R/W       0x60       0x86   Z_RAM
-MyCode                          2001     R     0xE0D0     0xE8A0   ROM
-MY_CONST                          52     R     0xE8A1     0xE8D4   ROM
+MyCode                          2074     R     0xE0CD     0xE8E6   ROM
+MY_CONST                          52     R     0xE8E7     0xE91A   ROM
 .stack                            64   R/W      0x100      0x13F   RAM
 .vectSeg0_vect                     2     R     0xFFFE     0xFFFF   .vectSeg0
 
 Summary of section sizes per section type:
-READ_ONLY (R):         8D7 (dec:     2263)
+READ_ONLY (R):         91D (dec:     2333)
 READ_WRITE (R/W):       67 (dec:      103)
 
 *********************************************************************************************
@@ -55,9 +55,9 @@ OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 MODULE:                 -- bus_asm.obj --
 - PROCEDURES:
-     bus_init                                  E0D0       A      10       0   MyCode      
-     bus_read                                  E0DA      1A      26       4   MyCode      
-     bus_write                                 E0F4      16      22       7   MyCode      
+     bus_init                                  E0CD       A      10       0   MyCode      
+     bus_read                                  E0D7      1A      26       4   MyCode      
+     bus_write                                 E0F1      16      22       7   MyCode      
 - VARIABLES:
      bus_addr                                    60       1       1      13   MY_ZEROPAGE 
      bus_data                                    61       1       1      13   MY_ZEROPAGE 
@@ -68,52 +68,52 @@ MODULE:                 -- functions_asm.obj --
      __SEG_END_SSTACK                           140       0       0       2               
 MODULE:                 -- i2c_driver_asm.obj --
 - PROCEDURES:
-     i2c_init                                  E10A       D      13       2   MyCode      
-     i2c_start                                 E117       8       8       5   MyCode      
-     i2c_stop                                  E11F       A      10       5   MyCode      
-     i2c_tx_byte                               E129       4       4      15   MyCode      
-     tx_nextbit                                E12D       8       8       0   MyCode      
-     tx_setup                                  E135       7       7       0   MyCode      
-     tx_send_low                               E13C       7       7       0   MyCode      
-     tx_continue                               E143       8       8       0   MyCode      
-     tx_ack_poll                               E14B       F      15       0   MyCode      
-     tx_done                                   E15A       5       5       0   MyCode      
-     i2c_rx_byte                               E15F       A      10       9   MyCode      
-     rx_nextbit                                E169      11      17       0   MyCode      
-     rx_low                                    E17A       D      13       0   MyCode      
-     rx_continue                               E17A       0       0       0   MyCode      
-     rx_ack                                    E187       4       4       0   MyCode      
-     rx_nack                                   E18B       2       2       0   MyCode      
-     rx_done                                   E18D       D      13       0   MyCode      
-     i2c_setup_delay                           E19A       3       3       5   MyCode      
-     i2c_bit_delay                             E19D       6       6       6   MyCode      
+     i2c_init                                  E107       D      13       1   MyCode      
+     i2c_start                                 E114       8       8       5   MyCode      
+     i2c_stop                                  E11C       A      10       5   MyCode      
+     i2c_tx_byte                               E126       4       4      15   MyCode      
+     tx_nextbit                                E12A       8       8       0   MyCode      
+     tx_setup                                  E132       7       7       0   MyCode      
+     tx_send_low                               E139       7       7       0   MyCode      
+     tx_continue                               E140       8       8       0   MyCode      
+     tx_ack_poll                               E148       F      15       0   MyCode      
+     tx_done                                   E157       5       5       0   MyCode      
+     i2c_rx_byte                               E15C       A      10       9   MyCode      
+     rx_nextbit                                E166      11      17       0   MyCode      
+     rx_low                                    E177       D      13       0   MyCode      
+     rx_continue                               E177       0       0       0   MyCode      
+     rx_ack                                    E184       4       4       0   MyCode      
+     rx_nack                                   E188       2       2       0   MyCode      
+     rx_done                                   E18A       D      13       0   MyCode      
+     i2c_setup_delay                           E197       3       3       5   MyCode      
+     i2c_bit_delay                             E19A       6       6       6   MyCode      
 - VARIABLES:
      BitCounter                                  62       1       1       5   MY_ZEROPAGE 
      Value                                       63       1       1       5   MY_ZEROPAGE 
 MODULE:                 -- keypad_asm.obj --
 - PROCEDURES:
-     keypad_scan                               E1A3      8E     142       1   MyCode      
-     keypad_interpret                          E231      17      23       1   MyCode      
-     keypad_interpret_2                        E248       A      10       0   MyCode      
-     keypad_interpret_3                        E252       A      10       0   MyCode      
-     keypad_interpret_A                        E25C       C      12       0   MyCode      
-     keypad_interpret_lower_rows_jump          E268       2       2       0   MyCode      
-     keypad_interpret_4                        E26A       A      10       0   MyCode      
-     keypad_interpret_5                        E274       A      10       0   MyCode      
-     keypad_interpret_6                        E27E       A      10       0   MyCode      
-     keypad_interpret_B                        E288       A      10       0   MyCode      
-     keypad_interpret_lower_rows               E292      16      22       0   MyCode      
-     keypad_interpret_8                        E2A8       A      10       0   MyCode      
-     keypad_interpret_9                        E2B2       A      10       0   MyCode      
-     keypad_interpret_C                        E2BC       C      12       0   MyCode      
-     keypad_interpret_done_jump                E2C8       2       2       0   MyCode      
-     keypad_interpret_E                        E2CA       A      10       0   MyCode      
-     keypad_interpret_0                        E2D4       A      10       0   MyCode      
-     keypad_interpret_F                        E2DE       A      10       0   MyCode      
-     keypad_interpret_D                        E2E8       A      10       0   MyCode      
-     keypad_interpret_done                     E2F2       3       3       0   MyCode      
-     keypad_get_keypress                       E2F5       D      13      13   MyCode      
-     done                                      E302       1       1       0   MyCode      
+     keypad_scan                               E1A0      8E     142       1   MyCode      
+     keypad_interpret                          E22E      17      23       1   MyCode      
+     keypad_interpret_2                        E245       A      10       0   MyCode      
+     keypad_interpret_3                        E24F       A      10       0   MyCode      
+     keypad_interpret_A                        E259       C      12       0   MyCode      
+     keypad_interpret_lower_rows_jump          E265       2       2       0   MyCode      
+     keypad_interpret_4                        E267       A      10       0   MyCode      
+     keypad_interpret_5                        E271       A      10       0   MyCode      
+     keypad_interpret_6                        E27B       A      10       0   MyCode      
+     keypad_interpret_B                        E285       A      10       0   MyCode      
+     keypad_interpret_lower_rows               E28F      16      22       0   MyCode      
+     keypad_interpret_8                        E2A5       A      10       0   MyCode      
+     keypad_interpret_9                        E2AF       A      10       0   MyCode      
+     keypad_interpret_C                        E2B9       C      12       0   MyCode      
+     keypad_interpret_done_jump                E2C5       2       2       0   MyCode      
+     keypad_interpret_E                        E2C7       A      10       0   MyCode      
+     keypad_interpret_0                        E2D1       A      10       0   MyCode      
+     keypad_interpret_F                        E2DB       A      10       0   MyCode      
+     keypad_interpret_D                        E2E5       A      10       0   MyCode      
+     keypad_interpret_done                     E2EF       3       3       0   MyCode      
+     keypad_get_keypress                       E2F2       D      13      13   MyCode      
+     done                                      E2FF       1       1       0   MyCode      
 - VARIABLES:
      keypad_data_0                               64       1       1       5   MY_ZEROPAGE 
      keypad_data_1                               65       1       1       5   MY_ZEROPAGE 
@@ -122,16 +122,16 @@ MODULE:                 -- keypad_asm.obj --
      keypad_data_cmp                             68       1       1      18   MY_ZEROPAGE 
 MODULE:                 -- lcd_asm.obj --
 - PROCEDURES:
-     lcd_init                                  E303      9A     154       1   MyCode      
-     lcd_write                                 E39D      39      57      22   MyCode      
-     lcd_char                                  E3D6      2B      43      45   MyCode      
-     lcd_str                                   E401       2       2       2   MyCode      
-     lcd_str_loop                              E403      18      24       0   MyCode      
-     lcd_num_to_char                           E41B       3       3      11   MyCode      
-     lcd_clear                                 E41E      2D      45       3   MyCode      
-     lcd_goto_addr                             E44B      10      16       6   MyCode      
-     lcd_goto_row0                             E45B       B      11       1   MyCode      
-     lcd_goto_row1                             E466       B      11       2   MyCode      
+     lcd_init                                  E300      9A     154       1   MyCode      
+     lcd_write                                 E39A      39      57      22   MyCode      
+     lcd_char                                  E3D3      2B      43      45   MyCode      
+     lcd_str                                   E3FE       2       2       2   MyCode      
+     lcd_str_loop                              E400      18      24       0   MyCode      
+     lcd_num_to_char                           E418       3       3      11   MyCode      
+     lcd_clear                                 E41B      2D      45       3   MyCode      
+     lcd_goto_addr                             E448      10      16       8   MyCode      
+     lcd_goto_row0                             E458       B      11       1   MyCode      
+     lcd_goto_row1                             E463       B      11       2   MyCode      
 - VARIABLES:
      lcd_data                                    69       1       1       3   MY_ZEROPAGE 
      lcd_char_data                               6A       1       1       2   MY_ZEROPAGE 
@@ -140,37 +140,37 @@ MODULE:                 -- lcd_asm.obj --
      str_length                                  6D       1       1       3   MY_ZEROPAGE 
 MODULE:                 -- led_asm.obj --
 - PROCEDURES:
-     led_write                                 E471      24      36       4   MyCode      
+     led_write                                 E46E      24      36       4   MyCode      
 - VARIABLES:
      led_data                                    6E       1       1       5   MY_ZEROPAGE 
 MODULE:                 -- lm92_driver_asm.obj --
 - PROCEDURES:
-     lm92_init                                 E495       1       1       2   MyCode      
-     lm92_read_temp                            E496      33      51       2   MyCode      
-     lm92_write_lcd_K                          E4C9      11      17       1   MyCode      
-     k_small                                   E4DA       9       9       0   MyCode      
-     cont                                      E4E3      15      21       0   MyCode      
-     lm92_write_lcd_C                          E4F8      15      21       0   MyCode      
+     lm92_init                                 E492       1       1       1   MyCode      
+     lm92_read_temp                            E493      33      51       2   MyCode      
+     lm92_write_lcd_K                          E4C6      11      17       2   MyCode      
+     k_small                                   E4D7       9       9       0   MyCode      
+     cont                                      E4E0      15      21       0   MyCode      
+     lm92_write_lcd_C                          E4F5      15      21       0   MyCode      
 - VARIABLES:
      Temp_Data_Raw                               6F       2       2       4   MY_ZEROPAGE 
      Temp_c                                      71       1       1       3   MY_ZEROPAGE 
      temp_k                                      72       1       1       3   MY_ZEROPAGE 
 MODULE:                 -- main_asm.obj --
 - PROCEDURES:
-     _Startup                                  E000      4D      77       0   .init       
+     _Startup                                  E000      4A      74       0   .init       
      main                                      E000       0       0       0   .init       
-     main_function                             E04D      20      32       7   .init       
-     goto_mode_0                               E06D       B      11       0   .init       
-     goto_mode_1                               E078       B      11       0   .init       
-     goto_mode_2                               E083       B      11       0   .init       
-     continue_mode_0                           E08E       6       6       0   .init       
-     continue_mode_1                           E094       6       6       0   .init       
-     continue_mode_2                           E09A       6       6       0   .init       
-     SUB_delay                                 E0A0       6       6      10   .init       
-     SUB_delay_loop_0                          E0A6       A      10       0   .init       
-     SUB_delay_loop_1                          E0B0       C      12       0   .init       
-     SUB_delay_loop_2                          E0BC      10      16       0   .init       
-     SUB_delay_done                            E0CC       4       4       0   .init       
+     main_function                             E04A      20      32       7   .init       
+     goto_mode_0                               E06A       B      11       0   .init       
+     goto_mode_1                               E075       B      11       0   .init       
+     goto_mode_2                               E080       B      11       0   .init       
+     continue_mode_0                           E08B       6       6       0   .init       
+     continue_mode_1                           E091       6       6       0   .init       
+     continue_mode_2                           E097       6       6       0   .init       
+     SUB_delay                                 E09D       6       6      10   .init       
+     SUB_delay_loop_0                          E0A3       A      10       0   .init       
+     SUB_delay_loop_1                          E0AD       C      12       0   .init       
+     SUB_delay_loop_2                          E0B9      10      16       0   .init       
+     SUB_delay_done                            E0C9       4       4       0   .init       
 - VARIABLES:
      SUB_delay_cnt                               73       3       3      11   MY_ZEROPAGE 
 - LABELS:
@@ -182,32 +182,38 @@ MODULE:                 -- main_asm.obj --
      n                                           7C       0       0       0   .text       
 MODULE:                 -- modes_asm.obj --
 - PROCEDURES:
-     return                                    E515       1       1       0   MyCode      
-     mode_start                                E516      12      18       3   MyCode      
-     print_temp_time                           E528      16      22       3   MyCode      
-     mode_0                                    E53E      1C      28       3   MyCode      
-     mode_1                                    E55A      21      33       2   MyCode      
-     mode_2                                    E57B      21      33       2   MyCode      
-     print_TEC_tag                             E59C      38      56       1   MyCode      
-     print_temp_tag                            E5D4      18      24       1   MyCode      
-     print_time_tag                            E5EC      27      39       1   MyCode      
-     Delay                                     E613       3       3       4   MyCode      
-     top                                       E616       7       7       0   MyCode      
-     bottom                                    E61D       6       6       0   MyCode      
-     done                                      E623       1       1       0   MyCode      
-     Big_Delay                                 E624      25      37       1   MyCode      
+     return                                    E512       1       1       0   MyCode      
+     mode_start                                E513      15      21       3   MyCode      
+     print_temp_time                           E528       D      13       3   MyCode      
+     mode_0                                    E535      1C      28       2   MyCode      
+     mode_1                                    E551      21      33       1   MyCode      
+     mode_2                                    E572      21      33       1   MyCode      
+     print_TEC_tag                             E593      38      56       1   MyCode      
+     print_temp_tag                            E5CB      18      24       1   MyCode      
+     print_time_tag                            E5E3      27      39       1   MyCode      
+     return_2                                  E60A       1       1       0   MyCode      
+     cont_mode_0                               E60B      13      19       1   MyCode      
+     cont_mode_1                               E61E      13      19       1   MyCode      
+     cont_mode_2                               E631      13      19       1   MyCode      
+     update_temp                               E644       C      12       3   MyCode      
+     update_time                               E650       9       9       3   MyCode      
+     Delay                                     E659       3       3       4   MyCode      
+     top                                       E65C       7       7       0   MyCode      
+     bottom                                    E663       6       6       0   MyCode      
+     done                                      E669       1       1       0   MyCode      
+     Big_Delay                                 E66A      25      37       4   MyCode      
 - VARIABLES:
 MODULE:                 -- rtc_driver_asm.obj --
 - PROCEDURES:
-     rtc_init                                  E649       4       4       1   MyCode      
-     rtc_set_time_zero                         E64D      28      40       4   MyCode      
-     rtc_calc_tod                              E675      2C      44       0   MyCode      
-     rtc_write_tod                             E6A1      22      34       0   MyCode      
-     rtc_set_time                              E6C3      5F      95       1   MyCode      
-     rtc_get_time                              E722      6F     111       1   MyCode      
-     rtc_display_data                          E791      2A      42       1   MyCode      
-     rtc_mask_data                             E7BB      64     100       1   MyCode      
-     rtc_prompt_time                           E81F      82     130       0   MyCode      
+     rtc_init                                  E68F       4       4       1   MyCode      
+     rtc_set_time_zero                         E693      28      40       4   MyCode      
+     rtc_calc_tod                              E6BB      2C      44       0   MyCode      
+     rtc_write_tod                             E6E7      22      34       0   MyCode      
+     rtc_set_time                              E709      5F      95       1   MyCode      
+     rtc_get_time                              E768      6F     111       4   MyCode      
+     rtc_display_data                          E7D7      2A      42       2   MyCode      
+     rtc_mask_data                             E801      64     100       1   MyCode      
+     rtc_prompt_time                           E865      82     130       0   MyCode      
 - VARIABLES:
      Sec                                         76       2       2      17   MY_ZEROPAGE 
      Min                                         78       2       2      15   MY_ZEROPAGE 
@@ -218,14 +224,14 @@ MODULE:                 -- rtc_driver_asm.obj --
      TOD                                         82       2       2      13   MY_ZEROPAGE 
      rtc_epoch_delta                             84       2       2       0   MY_ZEROPAGE 
      Byte_counter                                86       1       1       1   MY_ZEROPAGE 
-     str_date                                  E8A1       8       8       0   MY_CONST    
-     str_date_length                           E8A9       1       1       0   MY_CONST    
-     str_time                                  E8AA       8       8       0   MY_CONST    
-     str_time_length                           E8B2       1       1       0   MY_CONST    
-     str_prompt_row0                           E8B3      10      16       1   MY_CONST    
-     str_prompt_row0_length                    E8C3       1       1       1   MY_CONST    
-     str_prompt_row1                           E8C4      10      16       1   MY_CONST    
-     str_prompt_row1_length                    E8D4       1       1       1   MY_CONST    
+     str_date                                  E8E7       8       8       0   MY_CONST    
+     str_date_length                           E8EF       1       1       0   MY_CONST    
+     str_time                                  E8F0       8       8       0   MY_CONST    
+     str_time_length                           E8F8       1       1       0   MY_CONST    
+     str_prompt_row0                           E8F9      10      16       1   MY_CONST    
+     str_prompt_row0_length                    E909       1       1       1   MY_CONST    
+     str_prompt_row1                           E90A      10      16       1   MY_CONST    
+     str_prompt_row1_length                    E91A       1       1       1   MY_CONST    
 
 *********************************************************************************************
 MODULE STATISTIC
@@ -237,8 +243,8 @@ MODULE STATISTIC
   lcd_asm.obj                                  5    366      0
   led_asm.obj                                  1     36      0
   lm92_driver_asm.obj                          4    120      0
-  main_asm.obj                                 3    208      0
-  modes_asm.obj                                0    316      0
+  main_asm.obj                                 3    205      0
+  modes_asm.obj                                0    389      0
   rtc_driver_asm.obj                          17    600     52
   other                                       64      2      0
 
@@ -270,9 +276,10 @@ SECTION: "MyCode"
   lcd_str lcd_str_loop lcd_num_to_char lcd_clear lcd_goto_addr lcd_goto_row0 
   lcd_goto_row1 led_write lm92_init lm92_read_temp lm92_write_lcd_K k_small 
   cont lm92_write_lcd_C return mode_start print_temp_time mode_0 mode_1 mode_2 
-  print_TEC_tag print_temp_tag print_time_tag Delay top bottom done Big_Delay 
-  rtc_init rtc_set_time_zero rtc_calc_tod rtc_write_tod rtc_set_time 
-  rtc_get_time rtc_display_data rtc_mask_data rtc_prompt_time 
+  print_TEC_tag print_temp_tag print_time_tag return_2 cont_mode_0 cont_mode_1 
+  cont_mode_2 update_temp update_time Delay top bottom done Big_Delay rtc_init 
+  rtc_set_time_zero rtc_calc_tod rtc_write_tod rtc_set_time rtc_get_time 
+  rtc_display_data rtc_mask_data rtc_prompt_time 
 SECTION: "MY_CONST"
   str_date str_date_length str_time str_time_length str_prompt_row0 
   str_prompt_row0_length str_prompt_row1 str_prompt_row1_length 
@@ -316,111 +323,117 @@ OBJECT LIST SORTED BY ADDRESS
      rtc_epoch_delta                             84       2       2       0   MY_ZEROPAGE 
      Byte_counter                                86       1       1       1   MY_ZEROPAGE 
      main                                      E000       0       0       0   .init       
-     _Startup                                  E000      4D      77       0   .init       
-     main_function                             E04D      20      32       7   .init       
-     goto_mode_0                               E06D       B      11       0   .init       
-     goto_mode_1                               E078       B      11       0   .init       
-     goto_mode_2                               E083       B      11       0   .init       
-     continue_mode_0                           E08E       6       6       0   .init       
-     continue_mode_1                           E094       6       6       0   .init       
-     continue_mode_2                           E09A       6       6       0   .init       
-     SUB_delay                                 E0A0       6       6      10   .init       
-     SUB_delay_loop_0                          E0A6       A      10       0   .init       
-     SUB_delay_loop_1                          E0B0       C      12       0   .init       
-     SUB_delay_loop_2                          E0BC      10      16       0   .init       
-     SUB_delay_done                            E0CC       4       4       0   .init       
-     bus_init                                  E0D0       A      10       0   MyCode      
-     bus_read                                  E0DA      1A      26       4   MyCode      
-     bus_write                                 E0F4      16      22       7   MyCode      
-     i2c_init                                  E10A       D      13       2   MyCode      
-     i2c_start                                 E117       8       8       5   MyCode      
-     i2c_stop                                  E11F       A      10       5   MyCode      
-     i2c_tx_byte                               E129       4       4      15   MyCode      
-     tx_nextbit                                E12D       8       8       0   MyCode      
-     tx_setup                                  E135       7       7       0   MyCode      
-     tx_send_low                               E13C       7       7       0   MyCode      
-     tx_continue                               E143       8       8       0   MyCode      
-     tx_ack_poll                               E14B       F      15       0   MyCode      
-     tx_done                                   E15A       5       5       0   MyCode      
-     i2c_rx_byte                               E15F       A      10       9   MyCode      
-     rx_nextbit                                E169      11      17       0   MyCode      
-     rx_continue                               E17A       0       0       0   MyCode      
-     rx_low                                    E17A       D      13       0   MyCode      
-     rx_ack                                    E187       4       4       0   MyCode      
-     rx_nack                                   E18B       2       2       0   MyCode      
-     rx_done                                   E18D       D      13       0   MyCode      
-     i2c_setup_delay                           E19A       3       3       5   MyCode      
-     i2c_bit_delay                             E19D       6       6       6   MyCode      
-     keypad_scan                               E1A3      8E     142       1   MyCode      
-     keypad_interpret                          E231      17      23       1   MyCode      
-     keypad_interpret_2                        E248       A      10       0   MyCode      
-     keypad_interpret_3                        E252       A      10       0   MyCode      
-     keypad_interpret_A                        E25C       C      12       0   MyCode      
-     keypad_interpret_lower_rows_jump          E268       2       2       0   MyCode      
-     keypad_interpret_4                        E26A       A      10       0   MyCode      
-     keypad_interpret_5                        E274       A      10       0   MyCode      
-     keypad_interpret_6                        E27E       A      10       0   MyCode      
-     keypad_interpret_B                        E288       A      10       0   MyCode      
-     keypad_interpret_lower_rows               E292      16      22       0   MyCode      
-     keypad_interpret_8                        E2A8       A      10       0   MyCode      
-     keypad_interpret_9                        E2B2       A      10       0   MyCode      
-     keypad_interpret_C                        E2BC       C      12       0   MyCode      
-     keypad_interpret_done_jump                E2C8       2       2       0   MyCode      
-     keypad_interpret_E                        E2CA       A      10       0   MyCode      
-     keypad_interpret_0                        E2D4       A      10       0   MyCode      
-     keypad_interpret_F                        E2DE       A      10       0   MyCode      
-     keypad_interpret_D                        E2E8       A      10       0   MyCode      
-     keypad_interpret_done                     E2F2       3       3       0   MyCode      
-     keypad_get_keypress                       E2F5       D      13      13   MyCode      
-     done                                      E302       1       1       0   MyCode      
-     lcd_init                                  E303      9A     154       1   MyCode      
-     lcd_write                                 E39D      39      57      22   MyCode      
-     lcd_char                                  E3D6      2B      43      45   MyCode      
-     lcd_str                                   E401       2       2       2   MyCode      
-     lcd_str_loop                              E403      18      24       0   MyCode      
-     lcd_num_to_char                           E41B       3       3      11   MyCode      
-     lcd_clear                                 E41E      2D      45       3   MyCode      
-     lcd_goto_addr                             E44B      10      16       6   MyCode      
-     lcd_goto_row0                             E45B       B      11       1   MyCode      
-     lcd_goto_row1                             E466       B      11       2   MyCode      
-     led_write                                 E471      24      36       4   MyCode      
-     lm92_init                                 E495       1       1       2   MyCode      
-     lm92_read_temp                            E496      33      51       2   MyCode      
-     lm92_write_lcd_K                          E4C9      11      17       1   MyCode      
-     k_small                                   E4DA       9       9       0   MyCode      
-     cont                                      E4E3      15      21       0   MyCode      
-     lm92_write_lcd_C                          E4F8      15      21       0   MyCode      
-     return                                    E515       1       1       0   MyCode      
-     mode_start                                E516      12      18       3   MyCode      
-     print_temp_time                           E528      16      22       3   MyCode      
-     mode_0                                    E53E      1C      28       3   MyCode      
-     mode_1                                    E55A      21      33       2   MyCode      
-     mode_2                                    E57B      21      33       2   MyCode      
-     print_TEC_tag                             E59C      38      56       1   MyCode      
-     print_temp_tag                            E5D4      18      24       1   MyCode      
-     print_time_tag                            E5EC      27      39       1   MyCode      
-     Delay                                     E613       3       3       4   MyCode      
-     top                                       E616       7       7       0   MyCode      
-     bottom                                    E61D       6       6       0   MyCode      
-     done                                      E623       1       1       0   MyCode      
-     Big_Delay                                 E624      25      37       1   MyCode      
-     rtc_init                                  E649       4       4       1   MyCode      
-     rtc_set_time_zero                         E64D      28      40       4   MyCode      
-     rtc_calc_tod                              E675      2C      44       0   MyCode      
-     rtc_write_tod                             E6A1      22      34       0   MyCode      
-     rtc_set_time                              E6C3      5F      95       1   MyCode      
-     rtc_get_time                              E722      6F     111       1   MyCode      
-     rtc_display_data                          E791      2A      42       1   MyCode      
-     rtc_mask_data                             E7BB      64     100       1   MyCode      
-     rtc_prompt_time                           E81F      82     130       0   MyCode      
-     str_date                                  E8A1       8       8       0   MY_CONST    
-     str_date_length                           E8A9       1       1       0   MY_CONST    
-     str_time                                  E8AA       8       8       0   MY_CONST    
-     str_time_length                           E8B2       1       1       0   MY_CONST    
-     str_prompt_row0                           E8B3      10      16       1   MY_CONST    
-     str_prompt_row0_length                    E8C3       1       1       1   MY_CONST    
-     str_prompt_row1                           E8C4      10      16       1   MY_CONST    
-     str_prompt_row1_length                    E8D4       1       1       1   MY_CONST    
+     _Startup                                  E000      4A      74       0   .init       
+     main_function                             E04A      20      32       7   .init       
+     goto_mode_0                               E06A       B      11       0   .init       
+     goto_mode_1                               E075       B      11       0   .init       
+     goto_mode_2                               E080       B      11       0   .init       
+     continue_mode_0                           E08B       6       6       0   .init       
+     continue_mode_1                           E091       6       6       0   .init       
+     continue_mode_2                           E097       6       6       0   .init       
+     SUB_delay                                 E09D       6       6      10   .init       
+     SUB_delay_loop_0                          E0A3       A      10       0   .init       
+     SUB_delay_loop_1                          E0AD       C      12       0   .init       
+     SUB_delay_loop_2                          E0B9      10      16       0   .init       
+     SUB_delay_done                            E0C9       4       4       0   .init       
+     bus_init                                  E0CD       A      10       0   MyCode      
+     bus_read                                  E0D7      1A      26       4   MyCode      
+     bus_write                                 E0F1      16      22       7   MyCode      
+     i2c_init                                  E107       D      13       1   MyCode      
+     i2c_start                                 E114       8       8       5   MyCode      
+     i2c_stop                                  E11C       A      10       5   MyCode      
+     i2c_tx_byte                               E126       4       4      15   MyCode      
+     tx_nextbit                                E12A       8       8       0   MyCode      
+     tx_setup                                  E132       7       7       0   MyCode      
+     tx_send_low                               E139       7       7       0   MyCode      
+     tx_continue                               E140       8       8       0   MyCode      
+     tx_ack_poll                               E148       F      15       0   MyCode      
+     tx_done                                   E157       5       5       0   MyCode      
+     i2c_rx_byte                               E15C       A      10       9   MyCode      
+     rx_nextbit                                E166      11      17       0   MyCode      
+     rx_continue                               E177       0       0       0   MyCode      
+     rx_low                                    E177       D      13       0   MyCode      
+     rx_ack                                    E184       4       4       0   MyCode      
+     rx_nack                                   E188       2       2       0   MyCode      
+     rx_done                                   E18A       D      13       0   MyCode      
+     i2c_setup_delay                           E197       3       3       5   MyCode      
+     i2c_bit_delay                             E19A       6       6       6   MyCode      
+     keypad_scan                               E1A0      8E     142       1   MyCode      
+     keypad_interpret                          E22E      17      23       1   MyCode      
+     keypad_interpret_2                        E245       A      10       0   MyCode      
+     keypad_interpret_3                        E24F       A      10       0   MyCode      
+     keypad_interpret_A                        E259       C      12       0   MyCode      
+     keypad_interpret_lower_rows_jump          E265       2       2       0   MyCode      
+     keypad_interpret_4                        E267       A      10       0   MyCode      
+     keypad_interpret_5                        E271       A      10       0   MyCode      
+     keypad_interpret_6                        E27B       A      10       0   MyCode      
+     keypad_interpret_B                        E285       A      10       0   MyCode      
+     keypad_interpret_lower_rows               E28F      16      22       0   MyCode      
+     keypad_interpret_8                        E2A5       A      10       0   MyCode      
+     keypad_interpret_9                        E2AF       A      10       0   MyCode      
+     keypad_interpret_C                        E2B9       C      12       0   MyCode      
+     keypad_interpret_done_jump                E2C5       2       2       0   MyCode      
+     keypad_interpret_E                        E2C7       A      10       0   MyCode      
+     keypad_interpret_0                        E2D1       A      10       0   MyCode      
+     keypad_interpret_F                        E2DB       A      10       0   MyCode      
+     keypad_interpret_D                        E2E5       A      10       0   MyCode      
+     keypad_interpret_done                     E2EF       3       3       0   MyCode      
+     keypad_get_keypress                       E2F2       D      13      13   MyCode      
+     done                                      E2FF       1       1       0   MyCode      
+     lcd_init                                  E300      9A     154       1   MyCode      
+     lcd_write                                 E39A      39      57      22   MyCode      
+     lcd_char                                  E3D3      2B      43      45   MyCode      
+     lcd_str                                   E3FE       2       2       2   MyCode      
+     lcd_str_loop                              E400      18      24       0   MyCode      
+     lcd_num_to_char                           E418       3       3      11   MyCode      
+     lcd_clear                                 E41B      2D      45       3   MyCode      
+     lcd_goto_addr                             E448      10      16       8   MyCode      
+     lcd_goto_row0                             E458       B      11       1   MyCode      
+     lcd_goto_row1                             E463       B      11       2   MyCode      
+     led_write                                 E46E      24      36       4   MyCode      
+     lm92_init                                 E492       1       1       1   MyCode      
+     lm92_read_temp                            E493      33      51       2   MyCode      
+     lm92_write_lcd_K                          E4C6      11      17       2   MyCode      
+     k_small                                   E4D7       9       9       0   MyCode      
+     cont                                      E4E0      15      21       0   MyCode      
+     lm92_write_lcd_C                          E4F5      15      21       0   MyCode      
+     return                                    E512       1       1       0   MyCode      
+     mode_start                                E513      15      21       3   MyCode      
+     print_temp_time                           E528       D      13       3   MyCode      
+     mode_0                                    E535      1C      28       2   MyCode      
+     mode_1                                    E551      21      33       1   MyCode      
+     mode_2                                    E572      21      33       1   MyCode      
+     print_TEC_tag                             E593      38      56       1   MyCode      
+     print_temp_tag                            E5CB      18      24       1   MyCode      
+     print_time_tag                            E5E3      27      39       1   MyCode      
+     return_2                                  E60A       1       1       0   MyCode      
+     cont_mode_0                               E60B      13      19       1   MyCode      
+     cont_mode_1                               E61E      13      19       1   MyCode      
+     cont_mode_2                               E631      13      19       1   MyCode      
+     update_temp                               E644       C      12       3   MyCode      
+     update_time                               E650       9       9       3   MyCode      
+     Delay                                     E659       3       3       4   MyCode      
+     top                                       E65C       7       7       0   MyCode      
+     bottom                                    E663       6       6       0   MyCode      
+     done                                      E669       1       1       0   MyCode      
+     Big_Delay                                 E66A      25      37       4   MyCode      
+     rtc_init                                  E68F       4       4       1   MyCode      
+     rtc_set_time_zero                         E693      28      40       4   MyCode      
+     rtc_calc_tod                              E6BB      2C      44       0   MyCode      
+     rtc_write_tod                             E6E7      22      34       0   MyCode      
+     rtc_set_time                              E709      5F      95       1   MyCode      
+     rtc_get_time                              E768      6F     111       4   MyCode      
+     rtc_display_data                          E7D7      2A      42       2   MyCode      
+     rtc_mask_data                             E801      64     100       1   MyCode      
+     rtc_prompt_time                           E865      82     130       0   MyCode      
+     str_date                                  E8E7       8       8       0   MY_CONST    
+     str_date_length                           E8EF       1       1       0   MY_CONST    
+     str_time                                  E8F0       8       8       0   MY_CONST    
+     str_time_length                           E8F8       1       1       0   MY_CONST    
+     str_prompt_row0                           E8F9      10      16       1   MY_CONST    
+     str_prompt_row0_length                    E909       1       1       1   MY_CONST    
+     str_prompt_row1                           E90A      10      16       1   MY_CONST    
+     str_prompt_row1_length                    E91A       1       1       1   MY_CONST    
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -428,6 +441,9 @@ UNUSED-OBJECTS SECTION
 NOT USED PROCEDURES
 functions_asm.obj:
   PTBDD_Upper_output PTBDD_Upper_input toggle_clock delay top bottom last 
+NOT USED VARIABLES
+modes_asm.obj:
+  new_mode 
 
 *********************************************************************************************
 COPYDOWN SECTION
@@ -437,14 +453,14 @@ COPYDOWN SECTION
 OBJECT-DEPENDENCIES SECTION
 ---------------------------------------------------------------------------------------------
 _Startup                  USES __SEG_END_SSTACK lcd_init lcd_clear i2c_init 
-                                rtc_init lm92_init lm92_read_temp mode_0 
+                                rtc_init lm92_init mode_0 
 main_function             USES keypad_get_keypress main_function 
 goto_mode_0               USES rtc_set_time_zero mode_0 main_function 
 goto_mode_1               USES rtc_set_time_zero mode_1 main_function 
 goto_mode_2               USES rtc_set_time_zero mode_2 main_function 
-continue_mode_0           USES mode_0 main_function 
-continue_mode_1           USES mode_1 main_function 
-continue_mode_2           USES mode_2 main_function 
+continue_mode_0           USES cont_mode_0 main_function 
+continue_mode_1           USES cont_mode_1 main_function 
+continue_mode_2           USES cont_mode_2 main_function 
 SUB_delay                 USES SUB_delay_cnt 
 bus_read                  USES bus_addr bus_data 
 bus_write                 USES bus_data bus_addr 
@@ -498,9 +514,9 @@ lm92_write_lcd_K          USES Temp_c temp_k lcd_char
 k_small                   USES temp_k lcd_char 
 cont                      USES temp_k lcd_num_to_char lcd_char 
 lm92_write_lcd_C          USES Temp_c lcd_num_to_char lcd_char 
-mode_start                USES Big_Delay rtc_get_time lcd_clear print_TEC_tag 
-print_temp_time           USES print_temp_tag i2c_init lm92_init 
-                                lm92_read_temp lm92_write_lcd_K print_time_tag 
+mode_start                USES Big_Delay rtc_get_time lm92_read_temp lcd_clear 
+                                print_TEC_tag 
+print_temp_time           USES print_temp_tag lm92_write_lcd_K print_time_tag 
                                 rtc_display_data 
 mode_0                    USES mode_start lcd_char print_temp_time led_data 
                                 led_write 
@@ -511,6 +527,11 @@ mode_2                    USES mode_start lcd_char print_temp_time led_data
 print_TEC_tag             USES lcd_char 
 print_temp_tag            USES lcd_goto_row1 lcd_char 
 print_time_tag            USES lcd_char SUB_delay_cnt SUB_delay 
+cont_mode_0               USES Big_Delay rtc_get_time update_temp update_time 
+cont_mode_1               USES Big_Delay rtc_get_time update_temp update_time 
+cont_mode_2               USES Big_Delay rtc_get_time update_temp update_time 
+update_temp               USES lcd_goto_addr lm92_read_temp lm92_write_lcd_K 
+update_time               USES lcd_goto_addr rtc_display_data 
 Delay                     USES b m 
 top                       USES t m b 
 bottom                    USES b 
@@ -575,16 +596,6 @@ DEPENDENCY TREE
     |              
     +- lm92_init           
     |    
-    +- lm92_read_temp      
-    |  | 
-    |  +- i2c_start            (see above)
-    |  |  
-    |  +- i2c_tx_byte          (see above)
-    |  |  
-    |  +- i2c_stop             (see above)
-    |  |  
-    |  +- i2c_rx_byte         
-    |       
     +- mode_0              
        | 
        +- mode_start          
@@ -601,10 +612,20 @@ DEPENDENCY TREE
        |  |  |  
        |  |  +- i2c_stop             (see above)
        |  |  |  
-       |  |  +- i2c_rx_byte          (see above)
-       |  |  |  
+       |  |  +- i2c_rx_byte         
+       |  |  |    
        |  |  +- rtc_mask_data       
        |  |       
+       |  +- lm92_read_temp      
+       |  |  | 
+       |  |  +- i2c_start            (see above)
+       |  |  |  
+       |  |  +- i2c_tx_byte          (see above)
+       |  |  |  
+       |  |  +- i2c_stop             (see above)
+       |  |  |  
+       |  |  +- i2c_rx_byte          (see above)
+       |  |     
        |  +- lcd_clear            (see above)
        |  |  
        |  +- print_TEC_tag       
@@ -627,12 +648,6 @@ DEPENDENCY TREE
        |  |  |     
        |  |  +- lcd_char             (see above)
        |  |     
-       |  +- i2c_init             (see above)
-       |  |  
-       |  +- lm92_init            (see above)
-       |  |  
-       |  +- lm92_read_temp       (see above)
-       |  |  
        |  +- lm92_write_lcd_K    
        |  |  | 
        |  |  +- lcd_char             (see above)
@@ -659,6 +674,6 @@ STATISTIC SECTION
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 3
-Total size of all blocks to be downloaded: 2263
+Number of blocks to be downloaded: 4
+Total size of all blocks to be downloaded: 2333
 

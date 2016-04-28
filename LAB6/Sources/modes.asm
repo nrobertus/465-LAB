@@ -3,19 +3,21 @@
 
 
 ; export symbols
-            XDEF mode_0, mode_1, mode_2
+            XDEF mode_0, mode_1, mode_2, cont_mode_0, cont_mode_1, cont_mode_2
             ; we export both '_Startup' and 'main' as symbols. Either can
             ; be referenced in the linker .prm file or from C/C++ later on
 
 
 
-            XREF __SEG_END_SSTACK,SUB_delay,lm92_init, i2c_init,  lcd_write, rtc_get_time,rtc_write_tod, rtc_display_data,SUB_delay_cnt, PTBDD_Upper_output, lm92_write_lcd_C, lm92_write_lcd_K, lm92_read_temp, i2c_start, i2c_rx_byte, i2c_tx_byte, i2c_stop, PTBDD_Upper_input, toggle_clock, delay, BF_check,  n, t, m, b, lcd_clear, lcd_char, lcd_goto_row1, lcd_goto_row0, led_write, led_data  ; symbol defined by the linker for the end of the stack
+            XREF __SEG_END_SSTACK,SUB_delay,lm92_init, i2c_init, lcd_write, rtc_get_time,rtc_write_tod, rtc_display_data,SUB_delay_cnt, PTBDD_Upper_output, lm92_write_lcd_C, lm92_write_lcd_K, lm92_read_temp, i2c_start, i2c_rx_byte, i2c_tx_byte, i2c_stop, PTBDD_Upper_input, toggle_clock, delay, BF_check,  n, t, m, b, lcd_clear, lcd_char, lcd_goto_row1, lcd_goto_addr, lcd_goto_row0, led_write, led_data  ; symbol defined by the linker for the end of the stack
 
 
 ; variable/data section
 MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
 
 			old_time: EQU $98
+			
+			new_mode: DS.B 1;
 
 ; code section
 MyCode:     SECTION
@@ -26,10 +28,12 @@ _Startup:
 			CLI			; enable interrupts
 			
 			MOV #$FF, old_time
+
 			
 return:
 
 		RTS
+
 			
 mode_start:
 		JSR Big_Delay
@@ -40,6 +44,8 @@ mode_start:
 		
 		STA old_time
 		
+		JSR lm92_read_temp
+		
 		JSR lcd_clear
 		
 		JSR print_TEC_tag
@@ -48,12 +54,6 @@ mode_start:
 		
 print_temp_time:
 		JSR print_temp_tag
-		
-		JSR	i2c_init
-		
-		JSR	lm92_init
-			
-		JSR lm92_read_temp
 		
 		JSR lm92_write_lcd_K
 		
@@ -80,7 +80,6 @@ mode_0:
 		JSR print_temp_time
 		
 		MOV	#$00, led_data
-		
 		JSR led_write
 			
     	RTS
@@ -220,6 +219,54 @@ mode_delay:
 			JSR		SUB_delay
 			
 			RTS
+
+return_2:
+		RTS
+
+cont_mode_0:
+		JSR Big_Delay
+		JSR rtc_get_time
+		CMP old_time
+		BEQ return_2
+		STA old_time
+		JSR update_temp
+		JSR update_time
+		RTS
+
+cont_mode_1:
+		JSR Big_Delay
+		JSR rtc_get_time
+		CMP old_time
+		BEQ return_2
+		STA old_time
+		JSR update_temp
+		JSR update_time
+		RTS
+
+cont_mode_2:
+		JSR Big_Delay
+		JSR rtc_get_time
+		CMP old_time
+		BEQ return_2
+		STA old_time
+		JSR update_temp
+		JSR update_time
+		RTS
+		
+
+update_temp:
+		LDA #$C4
+		JSR lcd_goto_addr
+		JSR lm92_read_temp
+		JSR lm92_write_lcd_K
+		RTS
+
+update_time:
+		LDA #$CB
+		JSR lcd_goto_addr
+		JSR rtc_display_data
+		RTS
+		
 			
 Delay:
 	MOV b, m

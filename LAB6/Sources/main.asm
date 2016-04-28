@@ -19,7 +19,8 @@
 
 
             XREF __SEG_END_SSTACK, keypad_get_keypress, lm92_init, lm92_read_temp, lm92_write_lcd_C, lcd_init, lcd_clear, lcd_write, lcd_char, mode_0, mode_1, mode_2, i2c_init, rtc_init, rtc_set_time_zero ; symbol defined by the linker for the end of the stack
-
+			
+			XREF cont_mode_0, cont_mode_1, cont_mode_2
 
 ; variable/data section
 MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
@@ -123,15 +124,15 @@ goto_mode_2:
 		JMP main_function
 		
 continue_mode_0:
-		JSR mode_0
+		JSR cont_mode_0
 		JMP main_function
 
 continue_mode_1:
-		JSR mode_1
+		JSR cont_mode_1
 		JMP main_function
 
 continue_mode_2:
-		JSR mode_2
+		JSR cont_mode_2
 		JMP main_function
 		
 		
