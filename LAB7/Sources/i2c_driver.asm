@@ -15,7 +15,7 @@ SDA 		EQU 2 		;Serial data bit number
             INCLUDE 'MC9S08QG8.inc'
             
 ; export symbols
-            XDEF i2c_init, i2c_start, i2c_stop, i2c_tx_byte, i2c_rx_byte, i2c_rx_byte_nack
+            XDEF i2c_init, i2c_start, i2c_stop, i2c_tx_byte, i2c_rx_byte, i2c_rx_byte_nack, i2c_bit_delay
             ;XDEF 
             
 ; import symbols
@@ -87,6 +87,7 @@ i2c_stop:
 			BCLR 	SDA, PTAD
 			BSET 	SCL, PTAD
 			BSET 	SDA, PTAD
+			JSR 	i2c_bit_delay
 			JSR 	i2c_bit_delay
 			RTS
 

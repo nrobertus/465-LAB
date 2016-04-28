@@ -18,7 +18,11 @@
 
 
 
-            XREF __SEG_END_SSTACK, keypad_get_keypress, lm92_init, lm92_read_temp, lm92_write_lcd_C, lcd_init, lcd_clear, lcd_write, lcd_char, mode_0, mode_1, mode_2, i2c_init, rtc_init, rtc_set_time_zero, menu_1 ; symbol defined by the linker for the end of the stack
+            XREF __SEG_END_SSTACK, keypad_get_keypress, lm92_init, lm92_read_temp, lm92_write_lcd_C, lcd_init, lcd_clear 
+            
+            XREF lcd_write, lcd_char, mode_0, mode_1, mode_2, i2c_init, rtc_init, rtc_set_time_zero, menu_1 
+
+			XREF led_data, led_write
 
 
 ; variable/data section
@@ -38,6 +42,7 @@ MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
 MyCode:     SECTION
 main:
 _Startup:
+
 
             LDHX   #__SEG_END_SSTACK ; initialize the stack pointer
             TXS
@@ -76,9 +81,16 @@ _Startup:
         	
 			JSR		i2c_init
 			
+			; turn off the heater/cooler
+			MOV	#$00, led_data
+			JSR led_write
+			
 			JSR menu_1
 
 main_function:
+
+			
+		
 			
     		JMP main_function
 		

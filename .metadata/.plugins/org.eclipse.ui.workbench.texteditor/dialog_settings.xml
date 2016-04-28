@@ -13,16 +13,16 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="i2c_rx_byte" key="selection"/>
+		<item value="read_temp" key="selection"/>
 		<list key="findhistory">
-			<item value="i2c_rx_byte"/>
-			<item value="FF"/>
-			<item value="addr"/>
-			<item value="sub"/>
-			<item value="temp_k"/>
-			<item value="goto_sub_b"/>
-			<item value="goto_row"/>
-			<item value="menu_A"/>
+			<item value="read_temp"/>
+			<item value="lm92_read"/>
+			<item value="print_temp_time"/>
+			<item value="print_Temp_time"/>
+			<item value="rtc"/>
+			<item value="i2c_tx_byte"/>
+			<item value="LM92_ADDR_W"/>
+			<item value="i2c_bit_delay"/>
 		</list>
 		<list key="replacehistory">
 			<item value="lcd_char"/>

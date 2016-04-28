@@ -79,8 +79,6 @@ _Startup:
 			JSR		rtc_init		
 			
 			JSR		lm92_init
-			
-			JSR 	lm92_read_temp
         	
         	JSR mode_0
 

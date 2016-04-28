@@ -12,7 +12,9 @@
 LM92_ADDR_W 		EQU $90 	; Slave address to write to LM92
 LM92_ADDR_R 		EQU $91 	; Slave address to read from LM92
 
-LM92_REG_TEMP		EQU	$00		; register address of the seconds register
+LM92_REG_TEMP		EQU	$00		; register address of the temperature register
+LM92_REG_MFGID		EQU $07
+LM92_REG_CFG		EQU $01 
 
 ; Include derivative-specific definitions
             INCLUDE 'MC9S08QG8.inc'
@@ -21,7 +23,7 @@ LM92_REG_TEMP		EQU	$00		; register address of the seconds register
             XDEF lm92_init, lm92_read_temp, lm92_write_lcd_K, lm92_write_lcd_C
             
 ; import symbols
-			XREF i2c_init, i2c_start, i2c_stop, i2c_tx_byte, i2c_rx_byte, i2c_rx_byte_nack
+			XREF i2c_init, i2c_start, i2c_stop, i2c_tx_byte, i2c_rx_byte, i2c_rx_byte_nack, i2c_bit_delay
 			
 			XREF lcd_init, lcd_write, lcd_char, lcd_str, lcd_num_to_char, lcd_clear, lcd_goto_addr, lcd_goto_row0, lcd_goto_row1
 			            
@@ -70,11 +72,12 @@ lm92_init:
 ;* Exit Variables: Accu A
 ;**************************************************************
 lm92_read_temp:
+		
 
 			; start condition
 			JSR		i2c_start
 			
-			; send rtc write addr
+			; send lm92 write addr
 			LDA		#LM92_ADDR_W
 			JSR 	i2c_tx_byte
 			
@@ -84,8 +87,10 @@ lm92_read_temp:
 			
 			; stop condition
 			JSR		i2c_stop
-						
-
+			
+			JSR i2c_bit_delay
+			JSR i2c_bit_delay
+			
 			; start condition
 			JSR		i2c_start
 			
@@ -94,16 +99,19 @@ lm92_read_temp:
 			JSR 	i2c_tx_byte
 			
 			; read byte
-			LDA		#$00			; ack the byte			
+			LDA		#$01			; ack the byte			
 			JSR		i2c_rx_byte	
 			STA		Temp_Data_Raw+0
 			
+			
 			; read byte
-			LDA		#$01			; nack the byte			
+			LDA		#$00			; nack the byte			
 			JSR		i2c_rx_byte	
 			STA		Temp_Data_Raw+1
 			
 			; stop condition
+			
+			JSR 	i2c_bit_delay
 			
 			JSR		i2c_stop
 			

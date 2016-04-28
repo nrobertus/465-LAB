@@ -3,7 +3,7 @@
 
 
 ; export symbols
-            XDEF sub_B_1, B_1_output
+            XDEF sub_B_1, B_1_output, sub_B_1_char1, sub_B_1_char2
             ; we export both '_Startup' and 'main' as symbols. Either can
             ; be referenced in the linker .prm file or from C/C++ later on
 
@@ -32,9 +32,9 @@ MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
 			
 			digit2: DS.B 1;
 			
-			char1: DS.B 1;
+			sub_B_1_char1: DS.B 1;
 			
-			char2: DS.B 1;
+			sub_B_1_char2: DS.B 1;
 			
 			B_1_output: DS.B 1;
 
@@ -47,9 +47,9 @@ sub_B_1:
 			
 		MOV #$FF, digit2
 		
-		MOV #$20, char1
+		MOV #$20, sub_B_1_char1
 		
-		MOV #$20, char2
+		MOV #$20, sub_B_1_char2
 		
 		JSR lcd_clear
 			
@@ -247,44 +247,47 @@ _9:
 	JMP set_digits
 	
 set_digits:
-		LDA digit1
-		CMP #$FF
-		BEQ set_digit_1
 		LDA digit2
 		CMP #$FF
 		BEQ set_digit_2
+		LDA digit1
+		CMP #$FF
+		BEQ set_digit_1
 		JSR roll_digits
-		
+
+set_digits_mid:
+
 		LDA digit2
 		LDX #$0A
 		MUL
-		
 		ADD digit1
 		
 		STA B_1_output
 		
 		LDA #$CD
 		JSR lcd_goto_addr
-		LDA char2
+		LDA sub_B_1_char2
 		JSR lcd_char
-		LDA char1
+		LDA sub_B_1_char1
 		JSR lcd_char
+		
+		JMP sub_B_1_input
 	
 set_digit_1:
 		MOV input, digit1
-		MOV char_in, char1
-		JMP sub_B_1_input
+		MOV char_in, sub_B_1_char1
+		JMP set_digits_mid
 
 set_digit_2:
 		MOV input, digit2
-		MOV char_in, char2
-		JMP sub_B_1_input
+		MOV char_in, sub_B_1_char2
+		JMP set_digits_mid
 		
 roll_digits:
 		MOV digit1, digit2
-		MOV char1, char2
+		MOV sub_B_1_char1, sub_B_1_char2
 		MOV input, digit1
-		MOV char_in, char1
+		MOV char_in, sub_B_1_char1
 		RTS
 
 		
