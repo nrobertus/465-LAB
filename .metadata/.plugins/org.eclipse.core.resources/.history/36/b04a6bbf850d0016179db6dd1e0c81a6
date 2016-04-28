@@ -1,0 +1,278 @@
+; Include derivative-specific definitions
+            INCLUDE 'derivative.inc'
+
+
+; export symbols
+            XDEF menu_C, C_char1, C_char2, C_output
+            ; we export both '_Startup' and 'main' as symbols. Either can
+            ; be referenced in the linker .prm file or from C/C++ later on
+
+
+
+            XREF __SEG_END_SSTACK, SUB_delay, b_mode, lcd_write, rtc_get_time,rtc_write_tod
+			
+			XREF  rtc_display_data,SUB_delay_cnt, PTBDD_Upper_output, lm92_write_lcd_C
+			
+			XREF lm92_write_lcd_K, lm92_read_temp, i2c_start, i2c_rx_byte, i2c_tx_byte, i2c_stop
+			
+			XREF PTBDD_Upper_input, toggle_clock, delay, BF_check,  n, t, m, b, lcd_clear, lcd_char
+			
+			XREF lcd_goto_row1, lcd_goto_row0, led_write, led_data, keypad_get_keypress, lcd_goto_addr
+
+
+; variable/data section
+MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
+
+			input: DS.B 1 ; input value
+			
+			char_in: DS.B 1
+			
+			digit1: DS.B 1;
+			
+			digit2: DS.B 1;
+			
+			C_char1: DS.B 1;
+			
+			C_char2: DS.B 1;
+			
+			C_output: DS.B 1;
+
+; code section
+MyCode:     SECTION
+			
+menu_C:
+		JSR lcd_clear
+		LDA #'C'				
+		JSR lcd_char
+
+		LDA #':'				
+		JSR lcd_char
+
+		LDA #' '
+		JSR lcd_char
+
+		LDA #'T'
+		JSR lcd_char
+
+		LDA #'a'
+		JSR lcd_char
+
+		LDA #'r'
+		JSR lcd_char
+
+		LDA #'g'
+		JSR lcd_char
+
+		LDA #'e'
+		JSR lcd_char
+
+		LDA #'t'
+		JSR lcd_char
+
+		LDA #' '
+		JSR lcd_char
+		
+		LDA #'T'
+		JSR lcd_char
+		
+		LDA #'e'
+		JSR lcd_char
+		
+		LDA #'m'
+		JSR lcd_char
+		
+		LDA #'p'
+		JSR lcd_char
+		
+		LDA #'?'
+		JSR lcd_char
+		
+		JSR lcd_goto_row1
+		
+		LDA #'E'				
+		JSR lcd_char
+
+		LDA #'n'				
+		JSR lcd_char
+
+		LDA #'t'
+		JSR lcd_char
+
+		LDA #'e'
+		JSR lcd_char
+
+		LDA #'r'
+		JSR lcd_char
+
+		LDA #' '
+		JSR lcd_char
+
+		LDA #'1'
+		JSR lcd_char
+
+		LDA #'0'
+		JSR lcd_char
+
+		LDA #'-'
+		JSR lcd_char
+
+		LDA #'4'
+		JSR lcd_char
+		
+		LDA #'0'
+		JSR lcd_char
+		
+		LDA #' '
+		JSR lcd_char
+		
+		LDA #'C'
+		JSR lcd_char
+
+menu_C_input:
+		JSR keypad_get_keypress
+		JSR keypad_get_keypress ; Return in the accumulator
+		
+		CMP #$0E
+		BEQ return
+		
+		CMP #$0F
+		BEQ input_done
+		
+		CMP #$0A
+		BEQ menu_C_input
+		
+		CMP #$0B
+		BEQ menu_C_input
+		
+		CMP #$0C
+		BEQ menu_C_input
+		
+		CMP #$0D
+		BEQ menu_C_input
+		
+		; At this point, it has to be numeric input. 
+		
+		CMP #$00
+		BEQ _0
+		
+		CMP #$01
+		BEQ _1
+		
+		CMP #$02
+		BEQ _2
+		
+		CMP #$03
+		BEQ _3
+		
+		CMP #$04
+		BEQ _4
+		
+		CMP #$05
+		BEQ _5
+		
+		CMP #$06
+		BEQ _6
+		
+		CMP #$07
+		BEQ _7
+		
+		CMP #$08
+		BEQ _8
+		
+		CMP #$09
+		BEQ _9
+
+		JMP menu_C_input		
+
+return:
+
+		RTS
+
+input_done:
+		;JSR sub_C_1
+		JMP menu_C
+_0:
+	MOV #$00, input
+	MOV #$30, char_in
+	JMP set_digits
+_1:
+	MOV #$01, input
+	MOV #$31, char_in
+	JMP set_digits
+_2:
+	MOV #$02, input
+	MOV #$32, char_in
+	JMP set_digits
+_3:
+	MOV #$03, input
+	MOV #$33, char_in
+	JMP set_digits
+_4:
+	MOV #$04, input
+	MOV #$34, char_in
+	JMP set_digits
+_5:	
+	MOV #$05, input
+	MOV #$35, char_in
+	JMP set_digits
+_6:
+	MOV #$06, input
+	MOV #$36, char_in
+	JMP set_digits
+_7:
+	MOV #$07, input
+	MOV #$37, char_in
+	JMP set_digits
+_8:
+	MOV #$08, input
+	MOV #$38, char_in
+	JMP set_digits
+_9:
+	MOV #$09, input
+	MOV #$39, char_in
+	JMP set_digits
+	
+set_digits:
+		LDA digit2
+		CMP #$FF
+		BEQ set_digit_2
+		LDA digit1
+		CMP #$FF
+		BEQ set_digit_1
+		JSR roll_digits
+
+set_digits_mid:
+
+		LDA digit2
+		LDX #$0A
+		MUL
+		ADD digit1
+		
+		STA C_output
+		
+		LDA #$CE
+		JSR lcd_goto_addr
+		LDA C_char2
+		JSR lcd_char
+		LDA C_char1
+		JSR lcd_char
+		
+		JMP menu_C_input
+	
+set_digit_1:
+		MOV input, digit1
+		MOV char_in, C_char1
+		JMP set_digits_mid
+
+set_digit_2:
+		MOV input, digit2
+		MOV char_in, C_char2
+		JMP set_digits_mid
+		
+roll_digits:
+		MOV digit1, digit2
+		MOV C_char1, C_char2
+		MOV input, digit1
+		MOV char_in, C_char1
+		RTS
+

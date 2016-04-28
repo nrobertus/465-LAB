@@ -468,17 +468,17 @@ rtc_display_data:
 			;JSR		lcd_char
 			
 			; write minute
-			LDA		Min+0
-			JSR		lcd_num_to_char
-			JSR		lcd_char
+			;LDA		Min+0
+			;JSR		lcd_num_to_char
+			;JSR		lcd_char
 			
-			LDA		Min+1
-			JSR		lcd_num_to_char
-			JSR		lcd_char
+			;LDA		Min+1
+			;JSR		lcd_num_to_char
+			;JSR		lcd_char
 			
 			; write ':'
-			LDA		#':'
-			JSR		lcd_char
+			;LDA		#':'
+			;JSR		lcd_char
 			
 			; write seconds
 			LDA		Sec+0

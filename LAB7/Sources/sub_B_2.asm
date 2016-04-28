@@ -19,7 +19,7 @@
 			
 			XREF lcd_goto_row1, lcd_goto_row0, led_write, led_data, keypad_get_keypress, lcd_goto_addr
 			
-			XREF B_1_output, sub_B_1_char1, sub_B_1_char2, Sec
+			XREF B_1_output, sub_B_1_char1, sub_B_1_char2, Sec, lcd_num_to_char
 			
 
 MAX_TEMP EQU $32 ; 50 celcius 
@@ -129,11 +129,15 @@ sub_B_2_mid:
 		LDA #'='
 		JSR lcd_char
 		
-		LDA sub_B_1_char2
-		JSR lcd_char
+		JSR rtc_display_data
 		
-		LDA sub_B_1_char1
-		JSR lcd_char
+		;LDA Sec+1
+		;JSR lcd_num_to_char
+		;JSR lcd_char
+		
+		;LDA Sec+0
+		;JSR lcd_num_to_char
+		;JSR lcd_char
 		
 		JSR lcd_goto_row1
 		
@@ -185,7 +189,21 @@ print_temp:
 		CMP B_1_output
 		BEQ return
 		
+		
 		JSR Big_Delay
+		
+		JSR lcd_goto_row0
+		
+		LDA b_mode
+		CMP #$00
+		BEQ goto_print_cooling_time
+		
+		CMP #$01
+		BEQ print_heating_time
+		
+print_temp_mid:
+		
+		JSR lcd_goto_row1
 		
 		LDA #$C6
 		JSR lcd_goto_addr
@@ -213,6 +231,115 @@ return:
 		JSR led_write
 		
 		RTS
+		
+goto_print_cooling_time:
+		JMP print_cooling_time
+
+print_heating_time:
+		LDA #'B'
+		JSR lcd_char
+		
+		LDA #':'
+		JSR lcd_char
+		
+		LDA #' '
+		JSR lcd_char
+		
+		LDA #'H'
+		JSR lcd_char
+
+		LDA #'e'
+		JSR lcd_char
+
+		LDA #'a'
+		JSR lcd_char
+
+		LDA #'t'
+		JSR lcd_char
+		
+		LDA #'i'
+		JSR lcd_char
+		
+		LDA #'n'
+		JSR lcd_char
+		
+		LDA #'g'
+		JSR lcd_char
+		
+		LDA #' '
+		JSR lcd_char
+		
+		LDA #'T'
+		JSR lcd_char
+		
+		LDA #'='
+		JSR lcd_char
+		
+		LDA Sec+0
+		JSR lcd_num_to_char
+		JSR lcd_char
+		
+		LDA Sec+1
+		JSR lcd_num_to_char
+		JSR lcd_char
+		
+		LDA #' '
+		JSR lcd_char
+		
+		JMP print_temp_mid
+
+print_cooling_time:
+		LDA #'B'
+		JSR lcd_char
+		
+		LDA #':'
+		JSR lcd_char
+		
+		LDA #' '
+		JSR lcd_char
+		
+		LDA #'C'
+		JSR lcd_char
+
+		LDA #'o'
+		JSR lcd_char
+
+		LDA #'o'
+		JSR lcd_char
+
+		LDA #'l'
+		JSR lcd_char
+		
+		LDA #'i'
+		JSR lcd_char
+		
+		LDA #'n'
+		JSR lcd_char
+		
+		LDA #'g'
+		JSR lcd_char
+		
+		LDA #' '
+		JSR lcd_char
+		
+		LDA #'T'
+		JSR lcd_char
+		
+		LDA #'='
+		JSR lcd_char
+		
+		LDA Sec+0
+		JSR lcd_num_to_char
+		JSR lcd_char
+		
+		LDA Sec+1
+		JSR lcd_num_to_char
+		JSR lcd_char
+		
+		LDA #' '
+		JSR lcd_char
+		
+		JMP print_temp_mid
 		
 Delay:
 	MOV b, m

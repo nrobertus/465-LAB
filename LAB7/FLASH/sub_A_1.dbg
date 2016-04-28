@@ -1987,6 +1987,8 @@ MY_ZEROPAGE: SECTION  SHORT         ; Insert here your data definition
 			current_temp: DS.B 1
 			
 			seconds: DS.B 1
+			
+			off_mode: DS.B 1
 
 ; code section
 MyCode:     SECTION
@@ -2052,7 +2054,9 @@ print_cooling:
 			
 
 sub_A_1:
-
+		
+		MOV #$00, off_mode ; Using this as a boolean, yes I am a caveman. 
+		
 		JSR rtc_set_time_zero
 		
 		JSR lcd_clear
@@ -2152,11 +2156,12 @@ print_temp:
 		CMP #MAX_TEMP
 		BEQ return
 		
+		;Check to see if the temp is equal
+		LDA current_temp
 		CMP A_output
-		BEQ return
+		BEQ goto_off_mode
 		
 		JMP get_input
-		
 		
 return:
 		; turn off the heater/cooler
@@ -2164,6 +2169,58 @@ return:
 		JSR led_write
 		
 		RTS
+
+goto_off_mode:
+		MOV $01, off_mode ; Set off-mode to true
+		JMP print_off
+		
+
+print_off:
+
+		LDA #$03
+		JSR lcd_goto_addr
+
+		LDA #'O'
+		JSR lcd_char
+
+		LDA #'f'
+		JSR lcd_char
+
+		LDA #'f'
+		JSR lcd_char
+
+		LDA #' '
+		JSR lcd_char
+		
+		LDA #' '
+		JSR lcd_char
+		
+		LDA #' '
+		JSR lcd_char
+		
+		LDA #' '
+		JSR lcd_char
+		
+		LDA #' '
+		JSR lcd_char
+		
+		LDA #' '
+		JSR lcd_char
+		
+		LDA #' '
+		JSR lcd_char
+		
+		LDA #' '
+		JSR lcd_char
+		
+		; Turn on the cool
+		MOV	#$00, led_data
+		JSR led_write
+
+		JMP get_input
+		
+		
+
 		
 Delay:
 	MOV b, m

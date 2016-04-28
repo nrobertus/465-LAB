@@ -28,6 +28,7 @@ rtc_driver_asm.obj                      Model: SMALL,         Lang: Assembler
 sub_A_1_asm.obj                         Model: SMALL,         Lang: Assembler
 sub_B_1_asm.obj                         Model: SMALL,         Lang: Assembler
 sub_B_2_asm.obj                         Model: SMALL,         Lang: Assembler
+sub_C_1_asm.obj                         Model: SMALL,         Lang: Assembler
 
 *********************************************************************************************
 STARTUP SECTION
@@ -39,15 +40,15 @@ SECTION-ALLOCATION SECTION
 Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
 .init                            122     R     0xE000     0xE079   ROM
-MY_ZEROPAGE                       61   R/W       0x60       0x9C   Z_RAM
-MyCode                          3730     R     0xE07A     0xEF0B   ROM
-MY_CONST                          52     R     0xEF0C     0xEF3F   ROM
+MY_ZEROPAGE                       73   R/W       0x60       0xA8   Z_RAM
+MyCode                          4920     R     0xE07A     0xF3B1   ROM
+MY_CONST                          52     R     0xF3B2     0xF3E5   ROM
 .stack                            64   R/W      0x100      0x13F   RAM
 .vectSeg0_vect                     2     R     0xFFFE     0xFFFF   .vectSeg0
 
 Summary of section sizes per section type:
-READ_ONLY (R):         F42 (dec:     3906)
-READ_WRITE (R/W):       7D (dec:      125)
+READ_ONLY (R):        13E8 (dec:     5096)
+READ_WRITE (R/W):       89 (dec:      137)
 
 *********************************************************************************************
 VECTOR-ALLOCATION SECTION
@@ -119,7 +120,7 @@ MODULE:                 -- keypad_asm.obj --
      keypad_interpret_F                        E2BD       A      10       0   MyCode      
      keypad_interpret_D                        E2C7       A      10       0   MyCode      
      keypad_interpret_done                     E2D1       3       3       0   MyCode      
-     keypad_get_keypress                       E2D4       D      13      19   MyCode      
+     keypad_get_keypress                       E2D4       D      13      21   MyCode      
      done                                      E2E1       1       1       0   MyCode      
 - VARIABLES:
      keypad_data_0                               64       1       1       5   MY_ZEROPAGE 
@@ -131,14 +132,14 @@ MODULE:                 -- lcd_asm.obj --
 - PROCEDURES:
      lcd_init                                  E2E2      9A     154       1   MyCode      
      lcd_write                                 E37C      39      57      22   MyCode      
-     lcd_char                                  E3B5      2B      43     199   MyCode      
+     lcd_char                                  E3B5      2B      43     307   MyCode      
      lcd_str                                   E3E0       2       2       2   MyCode      
      lcd_str_loop                              E3E2      18      24       0   MyCode      
-     lcd_num_to_char                           E3FA       3       3      11   MyCode      
-     lcd_clear                                 E3FD      2D      45       9   MyCode      
-     lcd_goto_addr                             E42A      10      16      10   MyCode      
-     lcd_goto_row0                             E43A       B      11       1   MyCode      
-     lcd_goto_row1                             E445       B      11       7   MyCode      
+     lcd_num_to_char                           E3FA       3       3      13   MyCode      
+     lcd_clear                                 E3FD      2D      45      10   MyCode      
+     lcd_goto_addr                             E42A      10      16      14   MyCode      
+     lcd_goto_row0                             E43A       B      11       6   MyCode      
+     lcd_goto_row1                             E445       B      11       9   MyCode      
 - VARIABLES:
      lcd_data                                    69       1       1       3   MY_ZEROPAGE 
      lcd_char_data                               6A       1       1       2   MY_ZEROPAGE 
@@ -147,17 +148,17 @@ MODULE:                 -- lcd_asm.obj --
      str_length                                  6D       1       1       3   MY_ZEROPAGE 
 MODULE:                 -- led_asm.obj --
 - PROCEDURES:
-     led_write                                 E450      24      36       8   MyCode      
+     led_write                                 E450      24      36      14   MyCode      
 - VARIABLES:
-     led_data                                    6E       1       1       9   MY_ZEROPAGE 
+     led_data                                    6E       1       1      15   MY_ZEROPAGE 
 MODULE:                 -- lm92_driver_asm.obj --
 - PROCEDURES:
      lm92_init                                 E474       1       1       0   MyCode      
-     lm92_read_temp                            E475      3C      60       2   MyCode      
+     lm92_read_temp                            E475      3C      60       4   MyCode      
      lm92_write_lcd_K                          E4B1      11      17       0   MyCode      
      k_small                                   E4C2       9       9       0   MyCode      
      cont                                      E4CB      15      21       0   MyCode      
-     lm92_write_lcd_C                          E4E0      15      21       2   MyCode      
+     lm92_write_lcd_C                          E4E0      15      21       4   MyCode      
 - VARIABLES:
      Temp_Data_Raw                               6F       2       2       4   MY_ZEROPAGE 
      Temp_c                                      71       1       1       3   MY_ZEROPAGE 
@@ -176,162 +177,223 @@ MODULE:                 -- main_asm.obj --
      SUB_delay_cnt                               73       3       3      10   MY_ZEROPAGE 
 - LABELS:
      XOR_Mask                                    10       0       0       0   .text       
-     t                                           71       0       0      10   .text       
-     m                                           72       0       0       4   .text       
-     b                                           73       0       0      14   .text       
+     t                                           71       0       0      15   .text       
+     m                                           72       0       0       6   .text       
+     b                                           73       0       0      21   .text       
      i_temp                                      74       0       0       0   .text       
      n                                           7C       0       0       0   .text       
 MODULE:                 -- menu_A_asm.obj --
 - PROCEDURES:
      menu_A                                    E4F5      8A     138       2   MyCode      
-     menu_A_input                              E57F      46      70       2   MyCode      
+     menu_A_input                              E57F      46      70       3   MyCode      
      return                                    E5C5       1       1       0   MyCode      
-     input_done                                E5C6       6       6       0   MyCode      
-     0                                         E5CC       9       9       0   MyCode      
-     1                                         E5D5       9       9       0   MyCode      
-     2                                         E5DE       9       9       0   MyCode      
-     3                                         E5E7       9       9       0   MyCode      
-     4                                         E5F0       9       9       0   MyCode      
-     5                                         E5F9       9       9       0   MyCode      
-     6                                         E602       9       9       0   MyCode      
-     7                                         E60B       9       9       0   MyCode      
-     8                                         E614       9       9       0   MyCode      
-     9                                         E61D       9       9       0   MyCode      
-     set_digits                                E626       F      15      10   MyCode      
-     set_digits_mid                            E635      1E      30       2   MyCode      
-     set_digit_1                               E653       9       9       0   MyCode      
-     set_digit_2                               E65C       9       9       0   MyCode      
-     roll_digits                               E665       D      13       1   MyCode      
+     goto_menu_A_input                         E5C6       3       3       1   MyCode      
+     input_done                                E5C9       6       6       0   MyCode      
+     0                                         E5CF       9       9       0   MyCode      
+     1                                         E5D8       9       9       0   MyCode      
+     2                                         E5E1       9       9       0   MyCode      
+     3                                         E5EA       9       9       0   MyCode      
+     4                                         E5F3       9       9       0   MyCode      
+     5                                         E5FC       9       9       0   MyCode      
+     6                                         E605       9       9       0   MyCode      
+     7                                         E60E       9       9       0   MyCode      
+     8                                         E617       9       9       0   MyCode      
+     9                                         E620       C      12       0   MyCode      
+     set_digits                                E62C       F      15      10   MyCode      
+     set_digits_mid                            E63B      1E      30       2   MyCode      
+     set_digit_1                               E659       9       9       0   MyCode      
+     set_digit_2                               E662       9       9       0   MyCode      
+     roll_digits                               E66B       D      13       1   MyCode      
+     error                                     E678      68     104       1   MyCode      
 - VARIABLES:
-     input                                       76       1       1      13   MY_ZEROPAGE 
-     char_in                                     77       1       1      13   MY_ZEROPAGE 
-     digit1                                      78       1       1       6   MY_ZEROPAGE 
-     digit2                                      79       1       1       5   MY_ZEROPAGE 
-     A_char1                                     7A       1       1       6   MY_ZEROPAGE 
-     A_char2                                     7B       1       1       5   MY_ZEROPAGE 
+     input                                       76       1       1      14   MY_ZEROPAGE 
+     char_in                                     77       1       1      14   MY_ZEROPAGE 
+     digit1                                      78       1       1       7   MY_ZEROPAGE 
+     digit2                                      79       1       1       6   MY_ZEROPAGE 
+     A_char1                                     7A       1       1       7   MY_ZEROPAGE 
+     A_char2                                     7B       1       1       6   MY_ZEROPAGE 
      A_output                                    7C       1       1       3   MY_ZEROPAGE 
 MODULE:                 -- menu_B_asm.obj --
 - PROCEDURES:
-     menu_B                                    E672      A9     169       2   MyCode      
-     menu_B_input                              E71B      16      22       4   MyCode      
-     0_pressed                                 E731       6       6       0   MyCode      
-     1_pressed                                 E737       6       6       0   MyCode      
-     check_sub_b                               E73D       E      14       0   MyCode      
-     goto_sub_b                                E74B       6       6       0   MyCode      
-     return                                    E751       1       1       0   MyCode      
+     menu_B                                    E6E0      A9     169       2   MyCode      
+     menu_B_input                              E789      16      22       4   MyCode      
+     0_pressed                                 E79F       6       6       0   MyCode      
+     1_pressed                                 E7A5       6       6       0   MyCode      
+     check_sub_b                               E7AB       E      14       0   MyCode      
+     goto_sub_b                                E7B9       6       6       0   MyCode      
+     return                                    E7BF       1       1       0   MyCode      
 - VARIABLES:
      input                                       7D       1       1       0   MY_ZEROPAGE 
-     b_mode                                      7E       1       1       5   MY_ZEROPAGE 
+     b_mode                                      7E       1       1       6   MY_ZEROPAGE 
 MODULE:                 -- menu_C_asm.obj --
 - PROCEDURES:
-     menu_C                                    E752      92     146       1   MyCode      
-     menu_C_input                              E7E4       A      10       1   MyCode      
-     return                                    E7EE       1       1       0   MyCode      
+     menu_C                                    E7C0      9E     158       2   MyCode      
+     menu_C_input                              E85E      46      70       2   MyCode      
+     return                                    E8A4       1       1       0   MyCode      
+     input_done                                E8A5       6       6       0   MyCode      
+     0                                         E8AB       9       9       0   MyCode      
+     1                                         E8B4       9       9       0   MyCode      
+     2                                         E8BD       9       9       0   MyCode      
+     3                                         E8C6       9       9       0   MyCode      
+     4                                         E8CF       9       9       0   MyCode      
+     5                                         E8D8       9       9       0   MyCode      
+     6                                         E8E1       9       9       0   MyCode      
+     7                                         E8EA       9       9       0   MyCode      
+     8                                         E8F3       9       9       0   MyCode      
+     9                                         E8FC       9       9       0   MyCode      
+     set_digits                                E905       F      15      10   MyCode      
+     set_digits_mid                            E914      1E      30       2   MyCode      
+     set_digit_1                               E932       9       9       0   MyCode      
+     set_digit_2                               E93B       9       9       0   MyCode      
+     roll_digits                               E944       D      13       1   MyCode      
 - VARIABLES:
+     input                                       7F       1       1      13   MY_ZEROPAGE 
+     char_in                                     80       1       1      13   MY_ZEROPAGE 
+     digit1                                      81       1       1       6   MY_ZEROPAGE 
+     digit2                                      82       1       1       5   MY_ZEROPAGE 
+     C_char1                                     83       1       1       7   MY_ZEROPAGE 
+     C_char2                                     84       1       1       6   MY_ZEROPAGE 
+     C_output                                    85       1       1       4   MY_ZEROPAGE 
 MODULE:                 -- menus_asm.obj --
 - PROCEDURES:
-     menu_1                                    E7EF      3F      63       4   MyCode      
-     menu_1_input                              E82E      12      18       1   MyCode      
-     goto_menu_A                               E840       6       6       0   MyCode      
-     goto_menu_B                               E846       6       6       0   MyCode      
-     goto_menu_C                               E84C       7       7       0   MyCode      
+     menu_1                                    E951      3F      63       4   MyCode      
+     menu_1_input                              E990      12      18       1   MyCode      
+     goto_menu_A                               E9A2       6       6       0   MyCode      
+     goto_menu_B                               E9A8       6       6       0   MyCode      
+     goto_menu_C                               E9AE       7       7       0   MyCode      
 - VARIABLES:
 MODULE:                 -- rtc_driver_asm.obj --
 - PROCEDURES:
-     rtc_init                                  E853       4       4       0   MyCode      
-     rtc_set_time_zero                         E857      28      40       3   MyCode      
-     rtc_calc_tod                              E87F      2C      44       0   MyCode      
-     rtc_write_tod                             E8AB      22      34       0   MyCode      
-     rtc_set_time                              E8CD      5F      95       1   MyCode      
-     rtc_get_time                              E92C      6F     111       2   MyCode      
-     rtc_display_data                          E99B      2A      42       0   MyCode      
-     rtc_mask_data                             E9C5      64     100       1   MyCode      
-     rtc_prompt_time                           EA29      82     130       0   MyCode      
+     rtc_init                                  E9B5       4       4       0   MyCode      
+     rtc_set_time_zero                         E9B9      28      40       4   MyCode      
+     rtc_calc_tod                              E9E1      2C      44       0   MyCode      
+     rtc_write_tod                             EA0D      22      34       0   MyCode      
+     rtc_set_time                              EA2F      5F      95       1   MyCode      
+     rtc_get_time                              EA8E      6F     111       4   MyCode      
+     rtc_display_data                          EAFD      13      19       1   MyCode      
+     rtc_mask_data                             EB10      64     100       1   MyCode      
+     rtc_prompt_time                           EB74      82     130       0   MyCode      
 - VARIABLES:
-     Sec                                         7F       2       2      19   MY_ZEROPAGE 
-     Min                                         81       2       2      15   MY_ZEROPAGE 
-     Hour                                        83       2       2      12   MY_ZEROPAGE 
-     Date                                        85       2       2      12   MY_ZEROPAGE 
-     Month                                       87       2       2      12   MY_ZEROPAGE 
-     Year                                        89       2       2      12   MY_ZEROPAGE 
-     TOD                                         8B       2       2      13   MY_ZEROPAGE 
-     rtc_epoch_delta                             8D       2       2       0   MY_ZEROPAGE 
-     Byte_counter                                8F       1       1       1   MY_ZEROPAGE 
-     str_date                                  EF0C       8       8       0   MY_CONST    
-     str_date_length                           EF14       1       1       0   MY_CONST    
-     str_time                                  EF15       8       8       0   MY_CONST    
-     str_time_length                           EF1D       1       1       0   MY_CONST    
-     str_prompt_row0                           EF1E      10      16       1   MY_CONST    
-     str_prompt_row0_length                    EF2E       1       1       1   MY_CONST    
-     str_prompt_row1                           EF2F      10      16       1   MY_CONST    
-     str_prompt_row1_length                    EF3F       1       1       1   MY_CONST    
+     Sec                                         86       2       2      23   MY_ZEROPAGE 
+     Min                                         88       2       2      13   MY_ZEROPAGE 
+     Hour                                        8A       2       2      12   MY_ZEROPAGE 
+     Date                                        8C       2       2      12   MY_ZEROPAGE 
+     Month                                       8E       2       2      12   MY_ZEROPAGE 
+     Year                                        90       2       2      12   MY_ZEROPAGE 
+     TOD                                         92       2       2      13   MY_ZEROPAGE 
+     rtc_epoch_delta                             94       2       2       0   MY_ZEROPAGE 
+     Byte_counter                                96       1       1       1   MY_ZEROPAGE 
+     str_date                                  F3B2       8       8       0   MY_CONST    
+     str_date_length                           F3BA       1       1       0   MY_CONST    
+     str_time                                  F3BB       8       8       0   MY_CONST    
+     str_time_length                           F3C3       1       1       0   MY_CONST    
+     str_prompt_row0                           F3C4      10      16       1   MY_CONST    
+     str_prompt_row0_length                    F3D4       1       1       1   MY_CONST    
+     str_prompt_row1                           F3D5      10      16       1   MY_CONST    
+     str_prompt_row1_length                    F3E5       1       1       1   MY_CONST    
 MODULE:                 -- sub_A_1_asm.obj --
 - PROCEDURES:
-     print_heating                             EAAB      2C      44       0   MyCode      
-     print_cooling                             EAD7      2C      44       1   MyCode      
-     sub_A_1                                   EB03      1F      31       1   MyCode      
-     sub_A_1_mid                               EB22      3C      60       2   MyCode      
-     get_input                                 EB5E      14      20       2   MyCode      
-     print_temp                                EB72      25      37       0   MyCode      
-     return                                    EB97       7       7       0   MyCode      
-     Delay                                     EB9E       3       3       4   MyCode      
-     top                                       EBA1       7       7       0   MyCode      
-     bottom                                    EBA8       6       6       0   MyCode      
-     done                                      EBAE       1       1       0   MyCode      
-     Big_Delay                                 EBAF      25      37      12   MyCode      
-     Bigger_Delay                              EBD4      3E      62      10   MyCode      
+     print_heating                             EBF6      2C      44       0   MyCode      
+     print_cooling                             EC22      2C      44       1   MyCode      
+     sub_A_1                                   EC4E      22      34       1   MyCode      
+     sub_A_1_mid                               EC70      3C      60       2   MyCode      
+     get_input                                 ECAC      14      20       3   MyCode      
+     print_temp                                ECC0      27      39       0   MyCode      
+     return                                    ECE7       7       7       0   MyCode      
+     goto_off_mode                             ECEE       6       6       0   MyCode      
+     print_off                                 ECF4      45      69       1   MyCode      
+     Delay                                     ED39       3       3       4   MyCode      
+     top                                       ED3C       7       7       0   MyCode      
+     bottom                                    ED43       6       6       0   MyCode      
+     done                                      ED49       1       1       0   MyCode      
+     Big_Delay                                 ED4A      25      37      12   MyCode      
+     Bigger_Delay                              ED6F      3E      62      10   MyCode      
 - VARIABLES:
-     old_time                                    90       1       1       2   MY_ZEROPAGE 
-     current_temp                                91       1       1       3   MY_ZEROPAGE 
-     seconds                                     92       1       1       0   MY_ZEROPAGE 
+     old_time                                    97       1       1       2   MY_ZEROPAGE 
+     current_temp                                98       1       1       4   MY_ZEROPAGE 
+     seconds                                     99       1       1       0   MY_ZEROPAGE 
+     off_mode                                    9A       1       1       2   MY_ZEROPAGE 
 MODULE:                 -- sub_B_1_asm.obj --
 - PROCEDURES:
-     sub_B_1                                   EC12      99     153       2   MyCode      
-     sub_B_1_input                             ECAB      46      70       2   MyCode      
-     return                                    ECF1       1       1       0   MyCode      
-     input_done                                ECF2       6       6       0   MyCode      
-     0                                         ECF8       9       9       0   MyCode      
-     1                                         ED01       9       9       0   MyCode      
-     2                                         ED0A       9       9       0   MyCode      
-     3                                         ED13       9       9       0   MyCode      
-     4                                         ED1C       9       9       0   MyCode      
-     5                                         ED25       9       9       0   MyCode      
-     6                                         ED2E       9       9       0   MyCode      
-     7                                         ED37       9       9       0   MyCode      
-     8                                         ED40       9       9       0   MyCode      
-     9                                         ED49       9       9       0   MyCode      
-     set_digits                                ED52       F      15      10   MyCode      
-     set_digits_mid                            ED61      1E      30       2   MyCode      
-     set_digit_1                               ED7F       9       9       0   MyCode      
-     set_digit_2                               ED88       9       9       0   MyCode      
-     roll_digits                               ED91       D      13       1   MyCode      
+     sub_B_1                                   EDAD      99     153       2   MyCode      
+     sub_B_1_input                             EE46      46      70       2   MyCode      
+     return                                    EE8C       1       1       0   MyCode      
+     input_done                                EE8D       6       6       0   MyCode      
+     0                                         EE93       9       9       0   MyCode      
+     1                                         EE9C       9       9       0   MyCode      
+     2                                         EEA5       9       9       0   MyCode      
+     3                                         EEAE       9       9       0   MyCode      
+     4                                         EEB7       9       9       0   MyCode      
+     5                                         EEC0       9       9       0   MyCode      
+     6                                         EEC9       9       9       0   MyCode      
+     7                                         EED2       9       9       0   MyCode      
+     8                                         EEDB       9       9       0   MyCode      
+     9                                         EEE4       9       9       0   MyCode      
+     set_digits                                EEED       F      15      10   MyCode      
+     set_digits_mid                            EEFC      1E      30       2   MyCode      
+     set_digit_1                               EF1A       9       9       0   MyCode      
+     set_digit_2                               EF23       9       9       0   MyCode      
+     roll_digits                               EF2C       D      13       1   MyCode      
 - VARIABLES:
-     input                                       93       1       1      13   MY_ZEROPAGE 
-     char_in                                     94       1       1      13   MY_ZEROPAGE 
-     digit1                                      95       1       1       6   MY_ZEROPAGE 
-     digit2                                      96       1       1       5   MY_ZEROPAGE 
-     sub_B_1_char1                               97       1       1       6   MY_ZEROPAGE 
-     sub_B_1_char2                               98       1       1       5   MY_ZEROPAGE 
-     B_1_output                                  99       1       1       2   MY_ZEROPAGE 
+     input                                       9B       1       1      13   MY_ZEROPAGE 
+     char_in                                     9C       1       1      13   MY_ZEROPAGE 
+     digit1                                      9D       1       1       6   MY_ZEROPAGE 
+     digit2                                      9E       1       1       5   MY_ZEROPAGE 
+     sub_B_1_char1                               9F       1       1       5   MY_ZEROPAGE 
+     sub_B_1_char2                               A0       1       1       4   MY_ZEROPAGE 
+     B_1_output                                  A1       1       1       2   MY_ZEROPAGE 
 MODULE:                 -- sub_B_2_asm.obj --
 - PROCEDURES:
-     print_heating                             ED9E      2C      44       0   MyCode      
-     print_cooling                             EDCA      2C      44       0   MyCode      
-     sub_B_2                                   EDF6      20      32       1   MyCode      
-     sub_B_2_mid                               EE16      37      55       2   MyCode      
-     get_input                                 EE4D      14      20       2   MyCode      
-     print_temp                                EE61      30      48       0   MyCode      
-     return                                    EE91       7       7       0   MyCode      
-     Delay                                     EE98       3       3       4   MyCode      
-     top                                       EE9B       7       7       0   MyCode      
-     bottom                                    EEA2       6       6       0   MyCode      
-     done                                      EEA8       1       1       0   MyCode      
-     Big_Delay                                 EEA9      25      37      12   MyCode      
-     Bigger_Delay                              EECE      3E      62      10   MyCode      
+     print_heating                             EF39      2C      44       0   MyCode      
+     print_cooling                             EF65      2C      44       0   MyCode      
+     sub_B_2                                   EF91      20      32       1   MyCode      
+     sub_B_2_mid                               EFB1      2E      46       2   MyCode      
+     get_input                                 EFDF      14      20       2   MyCode      
+     print_temp                                EFF3      23      35       0   MyCode      
+     print_temp_mid                            F016      1E      30       2   MyCode      
+     return                                    F034       7       7       0   MyCode      
+     goto_print_cooling_time                   F03B       3       3       0   MyCode      
+     print_heating_time                        F03E      5B      91       0   MyCode      
+     print_cooling_time                        F099      5B      91       1   MyCode      
+     Delay                                     F0F4       3       3       4   MyCode      
+     top                                       F0F7       7       7       0   MyCode      
+     bottom                                    F0FE       6       6       0   MyCode      
+     done                                      F104       1       1       0   MyCode      
+     Big_Delay                                 F105      25      37      12   MyCode      
+     Bigger_Delay                              F12A      3E      62      10   MyCode      
 - VARIABLES:
-     old_time                                    9A       1       1       2   MY_ZEROPAGE 
-     current_temp                                9B       1       1       2   MY_ZEROPAGE 
-     seconds                                     9C       1       1       1   MY_ZEROPAGE 
+     old_time                                    A2       1       1       2   MY_ZEROPAGE 
+     current_temp                                A3       1       1       2   MY_ZEROPAGE 
+     seconds                                     A4       1       1       1   MY_ZEROPAGE 
+MODULE:                 -- sub_C_1_asm.obj --
+- PROCEDURES:
+     print_heating                             F168      41      65       1   MyCode      
+     print_cooling                             F1A9      41      65       2   MyCode      
+     goto_print_heating_2                      F1EA       3       3       1   MyCode      
+     goto_print_cooling_2                      F1ED       3       3       1   MyCode      
+     sub_C_1                                   F1F0      22      34       1   MyCode      
+     sub_C_1_mid                               F212      3C      60       2   MyCode      
+     get_input                                 F24E      14      20       2   MyCode      
+     print_temp                                F262      27      39       0   MyCode      
+     return                                    F289       7       7       0   MyCode      
+     goto_off_mode                             F290       6       6       0   MyCode      
+     goto_print_heating                        F296       3       3       0   MyCode      
+     goto_print_cooling                        F299       3       3       0   MyCode      
+     print_off                                 F29C      5E      94       1   MyCode      
+     holding_pattern                           F2FA      1D      29       3   MyCode      
+     evaluate                                  F317      20      32       0   MyCode      
+     return_2                                  F337       7       7       0   MyCode      
+     Delay                                     F33E       3       3       4   MyCode      
+     top                                       F341       7       7       0   MyCode      
+     bottom                                    F348       6       6       0   MyCode      
+     done                                      F34E       1       1       0   MyCode      
+     Big_Delay                                 F34F      25      37      14   MyCode      
+     Bigger_Delay                              F374      3E      62      10   MyCode      
+- VARIABLES:
+     old_time                                    A5       1       1       4   MY_ZEROPAGE 
+     current_temp                                A6       1       1       7   MY_ZEROPAGE 
+     seconds                                     A7       1       1       0   MY_ZEROPAGE 
+     off_mode                                    A8       1       1       4   MY_ZEROPAGE 
 
 *********************************************************************************************
 MODULE STATISTIC
@@ -344,14 +406,15 @@ MODULE STATISTIC
   led_asm.obj                                  1     36      0
   lm92_driver_asm.obj                          4    129      0
   main_asm.obj                                 3    122      0
-  menu_A_asm.obj                               7    381      0
+  menu_A_asm.obj                               7    491      0
   menu_B_asm.obj                               2    224      0
-  menu_C_asm.obj                               0    157      0
+  menu_C_asm.obj                               7    401      0
   menus_asm.obj                                0    100      0
-  rtc_driver_asm.obj                          17    600     52
-  sub_A_1_asm.obj                              3    359      0
+  rtc_driver_asm.obj                          17    577     52
+  sub_A_1_asm.obj                              4    439      0
   sub_B_1_asm.obj                              7    396      0
-  sub_B_2_asm.obj                              3    366      0
+  sub_B_2_asm.obj                              3    559      0
+  sub_C_1_asm.obj                              4    586      0
   other                                       64      2      0
 
 *********************************************************************************************
@@ -367,9 +430,10 @@ SECTION: "MY_ZEROPAGE"
   keypad_data_0_old keypad_data_1_old keypad_data_cmp lcd_data lcd_char_data 
   lcd_col_idx lcd_addr str_length led_data Temp_Data_Raw Temp_c temp_k 
   SUB_delay_cnt input char_in digit1 digit2 A_char1 A_char2 A_output input 
-  b_mode Sec Min Hour Date Month Year TOD rtc_epoch_delta Byte_counter old_time 
-  current_temp seconds input char_in digit1 digit2 sub_B_1_char1 sub_B_1_char2 
-  B_1_output old_time current_temp seconds 
+  b_mode input char_in digit1 digit2 C_char1 C_char2 C_output Sec Min Hour Date 
+  Month Year TOD rtc_epoch_delta Byte_counter old_time current_temp seconds 
+  off_mode input char_in digit1 digit2 sub_B_1_char1 sub_B_1_char2 B_1_output 
+  old_time current_temp seconds old_time current_temp seconds off_mode 
 SECTION: "MyCode"
   bus_init bus_read bus_write i2c_init i2c_start i2c_stop i2c_tx_byte 
   tx_nextbit tx_setup tx_send_low tx_continue tx_ack_poll tx_done i2c_rx_byte 
@@ -383,17 +447,24 @@ SECTION: "MyCode"
   keypad_interpret_done keypad_get_keypress done lcd_init lcd_write lcd_char 
   lcd_str lcd_str_loop lcd_num_to_char lcd_clear lcd_goto_addr lcd_goto_row0 
   lcd_goto_row1 led_write lm92_init lm92_read_temp lm92_write_lcd_K k_small 
-  cont lm92_write_lcd_C menu_A menu_A_input return input_done 0 1 2 3 4 5 6 7 8 
-  9 set_digits set_digits_mid set_digit_1 set_digit_2 roll_digits menu_B 
-  menu_B_input 0_pressed 1_pressed check_sub_b goto_sub_b return menu_C 
-  menu_C_input return menu_1 menu_1_input goto_menu_A goto_menu_B goto_menu_C 
-  rtc_init rtc_set_time_zero rtc_calc_tod rtc_write_tod rtc_set_time 
-  rtc_get_time rtc_display_data rtc_mask_data rtc_prompt_time print_heating 
-  print_cooling sub_A_1 sub_A_1_mid get_input print_temp return Delay top 
-  bottom done Big_Delay Bigger_Delay sub_B_1 sub_B_1_input return input_done 0 
-  1 2 3 4 5 6 7 8 9 set_digits set_digits_mid set_digit_1 set_digit_2 
-  roll_digits print_heating print_cooling sub_B_2 sub_B_2_mid get_input 
-  print_temp return Delay top bottom done Big_Delay Bigger_Delay 
+  cont lm92_write_lcd_C menu_A menu_A_input return goto_menu_A_input input_done 
+  0 1 2 3 4 5 6 7 8 9 set_digits set_digits_mid set_digit_1 set_digit_2 
+  roll_digits error menu_B menu_B_input 0_pressed 1_pressed check_sub_b 
+  goto_sub_b return menu_C menu_C_input return input_done 0 1 2 3 4 5 6 7 8 9 
+  set_digits set_digits_mid set_digit_1 set_digit_2 roll_digits menu_1 
+  menu_1_input goto_menu_A goto_menu_B goto_menu_C rtc_init rtc_set_time_zero 
+  rtc_calc_tod rtc_write_tod rtc_set_time rtc_get_time rtc_display_data 
+  rtc_mask_data rtc_prompt_time print_heating print_cooling sub_A_1 sub_A_1_mid 
+  get_input print_temp return goto_off_mode print_off Delay top bottom done 
+  Big_Delay Bigger_Delay sub_B_1 sub_B_1_input return input_done 0 1 2 3 4 5 6 
+  7 8 9 set_digits set_digits_mid set_digit_1 set_digit_2 roll_digits 
+  print_heating print_cooling sub_B_2 sub_B_2_mid get_input print_temp 
+  print_temp_mid return goto_print_cooling_time print_heating_time 
+  print_cooling_time Delay top bottom done Big_Delay Bigger_Delay print_heating 
+  print_cooling goto_print_heating_2 goto_print_cooling_2 sub_C_1 sub_C_1_mid 
+  get_input print_temp return goto_off_mode goto_print_heating 
+  goto_print_cooling print_off holding_pattern evaluate return_2 Delay top 
+  bottom done Big_Delay Bigger_Delay 
 SECTION: "MY_CONST"
   str_date str_date_length str_time str_time_length str_prompt_row0 
   str_prompt_row0_length str_prompt_row1 str_prompt_row1_length 
@@ -417,47 +488,59 @@ OBJECT LIST SORTED BY ADDRESS
      lcd_col_idx                                 6B       1       1       0   MY_ZEROPAGE 
      lcd_addr                                    6C       1       1       2   MY_ZEROPAGE 
      str_length                                  6D       1       1       3   MY_ZEROPAGE 
-     led_data                                    6E       1       1       9   MY_ZEROPAGE 
+     led_data                                    6E       1       1      15   MY_ZEROPAGE 
      Temp_Data_Raw                               6F       2       2       4   MY_ZEROPAGE 
      Temp_c                                      71       1       1       3   MY_ZEROPAGE 
-     t                                           71       0       0      10   .text       
+     t                                           71       0       0      15   .text       
      temp_k                                      72       1       1       3   MY_ZEROPAGE 
-     m                                           72       0       0       4   .text       
+     m                                           72       0       0       6   .text       
      SUB_delay_cnt                               73       3       3      10   MY_ZEROPAGE 
-     b                                           73       0       0      14   .text       
+     b                                           73       0       0      21   .text       
      i_temp                                      74       0       0       0   .text       
-     input                                       76       1       1      13   MY_ZEROPAGE 
-     char_in                                     77       1       1      13   MY_ZEROPAGE 
-     digit1                                      78       1       1       6   MY_ZEROPAGE 
-     digit2                                      79       1       1       5   MY_ZEROPAGE 
-     A_char1                                     7A       1       1       6   MY_ZEROPAGE 
-     A_char2                                     7B       1       1       5   MY_ZEROPAGE 
+     input                                       76       1       1      14   MY_ZEROPAGE 
+     char_in                                     77       1       1      14   MY_ZEROPAGE 
+     digit1                                      78       1       1       7   MY_ZEROPAGE 
+     digit2                                      79       1       1       6   MY_ZEROPAGE 
+     A_char1                                     7A       1       1       7   MY_ZEROPAGE 
+     A_char2                                     7B       1       1       6   MY_ZEROPAGE 
      A_output                                    7C       1       1       3   MY_ZEROPAGE 
      n                                           7C       0       0       0   .text       
      input                                       7D       1       1       0   MY_ZEROPAGE 
-     b_mode                                      7E       1       1       5   MY_ZEROPAGE 
-     Sec                                         7F       2       2      19   MY_ZEROPAGE 
-     Min                                         81       2       2      15   MY_ZEROPAGE 
-     Hour                                        83       2       2      12   MY_ZEROPAGE 
-     Date                                        85       2       2      12   MY_ZEROPAGE 
-     Month                                       87       2       2      12   MY_ZEROPAGE 
-     Year                                        89       2       2      12   MY_ZEROPAGE 
-     TOD                                         8B       2       2      13   MY_ZEROPAGE 
-     rtc_epoch_delta                             8D       2       2       0   MY_ZEROPAGE 
-     Byte_counter                                8F       1       1       1   MY_ZEROPAGE 
-     old_time                                    90       1       1       2   MY_ZEROPAGE 
-     current_temp                                91       1       1       3   MY_ZEROPAGE 
-     seconds                                     92       1       1       0   MY_ZEROPAGE 
-     input                                       93       1       1      13   MY_ZEROPAGE 
-     char_in                                     94       1       1      13   MY_ZEROPAGE 
-     digit1                                      95       1       1       6   MY_ZEROPAGE 
-     digit2                                      96       1       1       5   MY_ZEROPAGE 
-     sub_B_1_char1                               97       1       1       6   MY_ZEROPAGE 
-     sub_B_1_char2                               98       1       1       5   MY_ZEROPAGE 
-     B_1_output                                  99       1       1       2   MY_ZEROPAGE 
-     old_time                                    9A       1       1       2   MY_ZEROPAGE 
-     current_temp                                9B       1       1       2   MY_ZEROPAGE 
-     seconds                                     9C       1       1       1   MY_ZEROPAGE 
+     b_mode                                      7E       1       1       6   MY_ZEROPAGE 
+     input                                       7F       1       1      13   MY_ZEROPAGE 
+     char_in                                     80       1       1      13   MY_ZEROPAGE 
+     digit1                                      81       1       1       6   MY_ZEROPAGE 
+     digit2                                      82       1       1       5   MY_ZEROPAGE 
+     C_char1                                     83       1       1       7   MY_ZEROPAGE 
+     C_char2                                     84       1       1       6   MY_ZEROPAGE 
+     C_output                                    85       1       1       4   MY_ZEROPAGE 
+     Sec                                         86       2       2      23   MY_ZEROPAGE 
+     Min                                         88       2       2      13   MY_ZEROPAGE 
+     Hour                                        8A       2       2      12   MY_ZEROPAGE 
+     Date                                        8C       2       2      12   MY_ZEROPAGE 
+     Month                                       8E       2       2      12   MY_ZEROPAGE 
+     Year                                        90       2       2      12   MY_ZEROPAGE 
+     TOD                                         92       2       2      13   MY_ZEROPAGE 
+     rtc_epoch_delta                             94       2       2       0   MY_ZEROPAGE 
+     Byte_counter                                96       1       1       1   MY_ZEROPAGE 
+     old_time                                    97       1       1       2   MY_ZEROPAGE 
+     current_temp                                98       1       1       4   MY_ZEROPAGE 
+     seconds                                     99       1       1       0   MY_ZEROPAGE 
+     off_mode                                    9A       1       1       2   MY_ZEROPAGE 
+     input                                       9B       1       1      13   MY_ZEROPAGE 
+     char_in                                     9C       1       1      13   MY_ZEROPAGE 
+     digit1                                      9D       1       1       6   MY_ZEROPAGE 
+     digit2                                      9E       1       1       5   MY_ZEROPAGE 
+     sub_B_1_char1                               9F       1       1       5   MY_ZEROPAGE 
+     sub_B_1_char2                               A0       1       1       4   MY_ZEROPAGE 
+     B_1_output                                  A1       1       1       2   MY_ZEROPAGE 
+     old_time                                    A2       1       1       2   MY_ZEROPAGE 
+     current_temp                                A3       1       1       2   MY_ZEROPAGE 
+     seconds                                     A4       1       1       1   MY_ZEROPAGE 
+     old_time                                    A5       1       1       4   MY_ZEROPAGE 
+     current_temp                                A6       1       1       7   MY_ZEROPAGE 
+     seconds                                     A7       1       1       0   MY_ZEROPAGE 
+     off_mode                                    A8       1       1       4   MY_ZEROPAGE 
      main                                      E000       0       0       0   .init       
      _Startup                                  E000      4A      74       0   .init       
      main_function                             E04A       3       3       1   .init       
@@ -509,121 +592,167 @@ OBJECT LIST SORTED BY ADDRESS
      keypad_interpret_F                        E2BD       A      10       0   MyCode      
      keypad_interpret_D                        E2C7       A      10       0   MyCode      
      keypad_interpret_done                     E2D1       3       3       0   MyCode      
-     keypad_get_keypress                       E2D4       D      13      19   MyCode      
+     keypad_get_keypress                       E2D4       D      13      21   MyCode      
      done                                      E2E1       1       1       0   MyCode      
      lcd_init                                  E2E2      9A     154       1   MyCode      
      lcd_write                                 E37C      39      57      22   MyCode      
-     lcd_char                                  E3B5      2B      43     199   MyCode      
+     lcd_char                                  E3B5      2B      43     307   MyCode      
      lcd_str                                   E3E0       2       2       2   MyCode      
      lcd_str_loop                              E3E2      18      24       0   MyCode      
-     lcd_num_to_char                           E3FA       3       3      11   MyCode      
-     lcd_clear                                 E3FD      2D      45       9   MyCode      
-     lcd_goto_addr                             E42A      10      16      10   MyCode      
-     lcd_goto_row0                             E43A       B      11       1   MyCode      
-     lcd_goto_row1                             E445       B      11       7   MyCode      
-     led_write                                 E450      24      36       8   MyCode      
+     lcd_num_to_char                           E3FA       3       3      13   MyCode      
+     lcd_clear                                 E3FD      2D      45      10   MyCode      
+     lcd_goto_addr                             E42A      10      16      14   MyCode      
+     lcd_goto_row0                             E43A       B      11       6   MyCode      
+     lcd_goto_row1                             E445       B      11       9   MyCode      
+     led_write                                 E450      24      36      14   MyCode      
      lm92_init                                 E474       1       1       0   MyCode      
-     lm92_read_temp                            E475      3C      60       2   MyCode      
+     lm92_read_temp                            E475      3C      60       4   MyCode      
      lm92_write_lcd_K                          E4B1      11      17       0   MyCode      
      k_small                                   E4C2       9       9       0   MyCode      
      cont                                      E4CB      15      21       0   MyCode      
-     lm92_write_lcd_C                          E4E0      15      21       2   MyCode      
+     lm92_write_lcd_C                          E4E0      15      21       4   MyCode      
      menu_A                                    E4F5      8A     138       2   MyCode      
-     menu_A_input                              E57F      46      70       2   MyCode      
+     menu_A_input                              E57F      46      70       3   MyCode      
      return                                    E5C5       1       1       0   MyCode      
-     input_done                                E5C6       6       6       0   MyCode      
-     0                                         E5CC       9       9       0   MyCode      
-     1                                         E5D5       9       9       0   MyCode      
-     2                                         E5DE       9       9       0   MyCode      
-     3                                         E5E7       9       9       0   MyCode      
-     4                                         E5F0       9       9       0   MyCode      
-     5                                         E5F9       9       9       0   MyCode      
-     6                                         E602       9       9       0   MyCode      
-     7                                         E60B       9       9       0   MyCode      
-     8                                         E614       9       9       0   MyCode      
-     9                                         E61D       9       9       0   MyCode      
-     set_digits                                E626       F      15      10   MyCode      
-     set_digits_mid                            E635      1E      30       2   MyCode      
-     set_digit_1                               E653       9       9       0   MyCode      
-     set_digit_2                               E65C       9       9       0   MyCode      
-     roll_digits                               E665       D      13       1   MyCode      
-     menu_B                                    E672      A9     169       2   MyCode      
-     menu_B_input                              E71B      16      22       4   MyCode      
-     0_pressed                                 E731       6       6       0   MyCode      
-     1_pressed                                 E737       6       6       0   MyCode      
-     check_sub_b                               E73D       E      14       0   MyCode      
-     goto_sub_b                                E74B       6       6       0   MyCode      
-     return                                    E751       1       1       0   MyCode      
-     menu_C                                    E752      92     146       1   MyCode      
-     menu_C_input                              E7E4       A      10       1   MyCode      
-     return                                    E7EE       1       1       0   MyCode      
-     menu_1                                    E7EF      3F      63       4   MyCode      
-     menu_1_input                              E82E      12      18       1   MyCode      
-     goto_menu_A                               E840       6       6       0   MyCode      
-     goto_menu_B                               E846       6       6       0   MyCode      
-     goto_menu_C                               E84C       7       7       0   MyCode      
-     rtc_init                                  E853       4       4       0   MyCode      
-     rtc_set_time_zero                         E857      28      40       3   MyCode      
-     rtc_calc_tod                              E87F      2C      44       0   MyCode      
-     rtc_write_tod                             E8AB      22      34       0   MyCode      
-     rtc_set_time                              E8CD      5F      95       1   MyCode      
-     rtc_get_time                              E92C      6F     111       2   MyCode      
-     rtc_display_data                          E99B      2A      42       0   MyCode      
-     rtc_mask_data                             E9C5      64     100       1   MyCode      
-     rtc_prompt_time                           EA29      82     130       0   MyCode      
-     print_heating                             EAAB      2C      44       0   MyCode      
-     print_cooling                             EAD7      2C      44       1   MyCode      
-     sub_A_1                                   EB03      1F      31       1   MyCode      
-     sub_A_1_mid                               EB22      3C      60       2   MyCode      
-     get_input                                 EB5E      14      20       2   MyCode      
-     print_temp                                EB72      25      37       0   MyCode      
-     return                                    EB97       7       7       0   MyCode      
-     Delay                                     EB9E       3       3       4   MyCode      
-     top                                       EBA1       7       7       0   MyCode      
-     bottom                                    EBA8       6       6       0   MyCode      
-     done                                      EBAE       1       1       0   MyCode      
-     Big_Delay                                 EBAF      25      37      12   MyCode      
-     Bigger_Delay                              EBD4      3E      62      10   MyCode      
-     sub_B_1                                   EC12      99     153       2   MyCode      
-     sub_B_1_input                             ECAB      46      70       2   MyCode      
-     return                                    ECF1       1       1       0   MyCode      
-     input_done                                ECF2       6       6       0   MyCode      
-     0                                         ECF8       9       9       0   MyCode      
-     1                                         ED01       9       9       0   MyCode      
-     2                                         ED0A       9       9       0   MyCode      
-     3                                         ED13       9       9       0   MyCode      
-     4                                         ED1C       9       9       0   MyCode      
-     5                                         ED25       9       9       0   MyCode      
-     6                                         ED2E       9       9       0   MyCode      
-     7                                         ED37       9       9       0   MyCode      
-     8                                         ED40       9       9       0   MyCode      
-     9                                         ED49       9       9       0   MyCode      
-     set_digits                                ED52       F      15      10   MyCode      
-     set_digits_mid                            ED61      1E      30       2   MyCode      
-     set_digit_1                               ED7F       9       9       0   MyCode      
-     set_digit_2                               ED88       9       9       0   MyCode      
-     roll_digits                               ED91       D      13       1   MyCode      
-     print_heating                             ED9E      2C      44       0   MyCode      
-     print_cooling                             EDCA      2C      44       0   MyCode      
-     sub_B_2                                   EDF6      20      32       1   MyCode      
-     sub_B_2_mid                               EE16      37      55       2   MyCode      
-     get_input                                 EE4D      14      20       2   MyCode      
-     print_temp                                EE61      30      48       0   MyCode      
-     return                                    EE91       7       7       0   MyCode      
-     Delay                                     EE98       3       3       4   MyCode      
-     top                                       EE9B       7       7       0   MyCode      
-     bottom                                    EEA2       6       6       0   MyCode      
-     done                                      EEA8       1       1       0   MyCode      
-     Big_Delay                                 EEA9      25      37      12   MyCode      
-     Bigger_Delay                              EECE      3E      62      10   MyCode      
-     str_date                                  EF0C       8       8       0   MY_CONST    
-     str_date_length                           EF14       1       1       0   MY_CONST    
-     str_time                                  EF15       8       8       0   MY_CONST    
-     str_time_length                           EF1D       1       1       0   MY_CONST    
-     str_prompt_row0                           EF1E      10      16       1   MY_CONST    
-     str_prompt_row0_length                    EF2E       1       1       1   MY_CONST    
-     str_prompt_row1                           EF2F      10      16       1   MY_CONST    
-     str_prompt_row1_length                    EF3F       1       1       1   MY_CONST    
+     goto_menu_A_input                         E5C6       3       3       1   MyCode      
+     input_done                                E5C9       6       6       0   MyCode      
+     0                                         E5CF       9       9       0   MyCode      
+     1                                         E5D8       9       9       0   MyCode      
+     2                                         E5E1       9       9       0   MyCode      
+     3                                         E5EA       9       9       0   MyCode      
+     4                                         E5F3       9       9       0   MyCode      
+     5                                         E5FC       9       9       0   MyCode      
+     6                                         E605       9       9       0   MyCode      
+     7                                         E60E       9       9       0   MyCode      
+     8                                         E617       9       9       0   MyCode      
+     9                                         E620       C      12       0   MyCode      
+     set_digits                                E62C       F      15      10   MyCode      
+     set_digits_mid                            E63B      1E      30       2   MyCode      
+     set_digit_1                               E659       9       9       0   MyCode      
+     set_digit_2                               E662       9       9       0   MyCode      
+     roll_digits                               E66B       D      13       1   MyCode      
+     error                                     E678      68     104       1   MyCode      
+     menu_B                                    E6E0      A9     169       2   MyCode      
+     menu_B_input                              E789      16      22       4   MyCode      
+     0_pressed                                 E79F       6       6       0   MyCode      
+     1_pressed                                 E7A5       6       6       0   MyCode      
+     check_sub_b                               E7AB       E      14       0   MyCode      
+     goto_sub_b                                E7B9       6       6       0   MyCode      
+     return                                    E7BF       1       1       0   MyCode      
+     menu_C                                    E7C0      9E     158       2   MyCode      
+     menu_C_input                              E85E      46      70       2   MyCode      
+     return                                    E8A4       1       1       0   MyCode      
+     input_done                                E8A5       6       6       0   MyCode      
+     0                                         E8AB       9       9       0   MyCode      
+     1                                         E8B4       9       9       0   MyCode      
+     2                                         E8BD       9       9       0   MyCode      
+     3                                         E8C6       9       9       0   MyCode      
+     4                                         E8CF       9       9       0   MyCode      
+     5                                         E8D8       9       9       0   MyCode      
+     6                                         E8E1       9       9       0   MyCode      
+     7                                         E8EA       9       9       0   MyCode      
+     8                                         E8F3       9       9       0   MyCode      
+     9                                         E8FC       9       9       0   MyCode      
+     set_digits                                E905       F      15      10   MyCode      
+     set_digits_mid                            E914      1E      30       2   MyCode      
+     set_digit_1                               E932       9       9       0   MyCode      
+     set_digit_2                               E93B       9       9       0   MyCode      
+     roll_digits                               E944       D      13       1   MyCode      
+     menu_1                                    E951      3F      63       4   MyCode      
+     menu_1_input                              E990      12      18       1   MyCode      
+     goto_menu_A                               E9A2       6       6       0   MyCode      
+     goto_menu_B                               E9A8       6       6       0   MyCode      
+     goto_menu_C                               E9AE       7       7       0   MyCode      
+     rtc_init                                  E9B5       4       4       0   MyCode      
+     rtc_set_time_zero                         E9B9      28      40       4   MyCode      
+     rtc_calc_tod                              E9E1      2C      44       0   MyCode      
+     rtc_write_tod                             EA0D      22      34       0   MyCode      
+     rtc_set_time                              EA2F      5F      95       1   MyCode      
+     rtc_get_time                              EA8E      6F     111       4   MyCode      
+     rtc_display_data                          EAFD      13      19       1   MyCode      
+     rtc_mask_data                             EB10      64     100       1   MyCode      
+     rtc_prompt_time                           EB74      82     130       0   MyCode      
+     print_heating                             EBF6      2C      44       0   MyCode      
+     print_cooling                             EC22      2C      44       1   MyCode      
+     sub_A_1                                   EC4E      22      34       1   MyCode      
+     sub_A_1_mid                               EC70      3C      60       2   MyCode      
+     get_input                                 ECAC      14      20       3   MyCode      
+     print_temp                                ECC0      27      39       0   MyCode      
+     return                                    ECE7       7       7       0   MyCode      
+     goto_off_mode                             ECEE       6       6       0   MyCode      
+     print_off                                 ECF4      45      69       1   MyCode      
+     Delay                                     ED39       3       3       4   MyCode      
+     top                                       ED3C       7       7       0   MyCode      
+     bottom                                    ED43       6       6       0   MyCode      
+     done                                      ED49       1       1       0   MyCode      
+     Big_Delay                                 ED4A      25      37      12   MyCode      
+     Bigger_Delay                              ED6F      3E      62      10   MyCode      
+     sub_B_1                                   EDAD      99     153       2   MyCode      
+     sub_B_1_input                             EE46      46      70       2   MyCode      
+     return                                    EE8C       1       1       0   MyCode      
+     input_done                                EE8D       6       6       0   MyCode      
+     0                                         EE93       9       9       0   MyCode      
+     1                                         EE9C       9       9       0   MyCode      
+     2                                         EEA5       9       9       0   MyCode      
+     3                                         EEAE       9       9       0   MyCode      
+     4                                         EEB7       9       9       0   MyCode      
+     5                                         EEC0       9       9       0   MyCode      
+     6                                         EEC9       9       9       0   MyCode      
+     7                                         EED2       9       9       0   MyCode      
+     8                                         EEDB       9       9       0   MyCode      
+     9                                         EEE4       9       9       0   MyCode      
+     set_digits                                EEED       F      15      10   MyCode      
+     set_digits_mid                            EEFC      1E      30       2   MyCode      
+     set_digit_1                               EF1A       9       9       0   MyCode      
+     set_digit_2                               EF23       9       9       0   MyCode      
+     roll_digits                               EF2C       D      13       1   MyCode      
+     print_heating                             EF39      2C      44       0   MyCode      
+     print_cooling                             EF65      2C      44       0   MyCode      
+     sub_B_2                                   EF91      20      32       1   MyCode      
+     sub_B_2_mid                               EFB1      2E      46       2   MyCode      
+     get_input                                 EFDF      14      20       2   MyCode      
+     print_temp                                EFF3      23      35       0   MyCode      
+     print_temp_mid                            F016      1E      30       2   MyCode      
+     return                                    F034       7       7       0   MyCode      
+     goto_print_cooling_time                   F03B       3       3       0   MyCode      
+     print_heating_time                        F03E      5B      91       0   MyCode      
+     print_cooling_time                        F099      5B      91       1   MyCode      
+     Delay                                     F0F4       3       3       4   MyCode      
+     top                                       F0F7       7       7       0   MyCode      
+     bottom                                    F0FE       6       6       0   MyCode      
+     done                                      F104       1       1       0   MyCode      
+     Big_Delay                                 F105      25      37      12   MyCode      
+     Bigger_Delay                              F12A      3E      62      10   MyCode      
+     print_heating                             F168      41      65       1   MyCode      
+     print_cooling                             F1A9      41      65       2   MyCode      
+     goto_print_heating_2                      F1EA       3       3       1   MyCode      
+     goto_print_cooling_2                      F1ED       3       3       1   MyCode      
+     sub_C_1                                   F1F0      22      34       1   MyCode      
+     sub_C_1_mid                               F212      3C      60       2   MyCode      
+     get_input                                 F24E      14      20       2   MyCode      
+     print_temp                                F262      27      39       0   MyCode      
+     return                                    F289       7       7       0   MyCode      
+     goto_off_mode                             F290       6       6       0   MyCode      
+     goto_print_heating                        F296       3       3       0   MyCode      
+     goto_print_cooling                        F299       3       3       0   MyCode      
+     print_off                                 F29C      5E      94       1   MyCode      
+     holding_pattern                           F2FA      1D      29       3   MyCode      
+     evaluate                                  F317      20      32       0   MyCode      
+     return_2                                  F337       7       7       0   MyCode      
+     Delay                                     F33E       3       3       4   MyCode      
+     top                                       F341       7       7       0   MyCode      
+     bottom                                    F348       6       6       0   MyCode      
+     done                                      F34E       1       1       0   MyCode      
+     Big_Delay                                 F34F      25      37      14   MyCode      
+     Bigger_Delay                              F374      3E      62      10   MyCode      
+     str_date                                  F3B2       8       8       0   MY_CONST    
+     str_date_length                           F3BA       1       1       0   MY_CONST    
+     str_time                                  F3BB       8       8       0   MY_CONST    
+     str_time_length                           F3C3       1       1       0   MY_CONST    
+     str_prompt_row0                           F3C4      10      16       1   MY_CONST    
+     str_prompt_row0_length                    F3D4       1       1       1   MY_CONST    
+     str_prompt_row1                           F3D5      10      16       1   MY_CONST    
+     str_prompt_row1_length                    F3E5       1       1       1   MY_CONST    
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -699,7 +828,36 @@ lm92_write_lcd_C          USES Temp_c lcd_num_to_char lcd_char
 menu_A                    USES digit1 digit2 A_char1 A_char2 lcd_clear 
                                 lcd_char lcd_goto_row1 
 menu_A_input              USES keypad_get_keypress menu_A_input 
+goto_menu_A_input         USES menu_A_input 
 input_done                USES sub_A_1 menu_A 
+0                         USES input char_in set_digits 
+1                         USES input char_in set_digits 
+2                         USES input char_in set_digits 
+3                         USES input char_in set_digits 
+4                         USES input char_in set_digits 
+5                         USES input char_in set_digits 
+6                         USES input char_in set_digits 
+7                         USES input char_in set_digits 
+8                         USES input char_in set_digits 
+9                         USES input char_in set_digits error 
+set_digits                USES digit2 digit1 roll_digits 
+set_digits_mid            USES digit2 digit1 A_output lcd_goto_addr A_char2 
+                                lcd_char A_char1 menu_A_input 
+set_digit_1               USES input digit1 char_in A_char1 set_digits_mid 
+set_digit_2               USES input digit2 char_in A_char2 set_digits_mid 
+roll_digits               USES digit1 digit2 A_char1 A_char2 input char_in 
+error                     USES lcd_goto_row0 digit1 digit2 A_char1 A_char2 
+                                input char_in lcd_char goto_menu_A_input 
+menu_B                    USES b_mode lcd_clear lcd_char lcd_goto_row1 
+menu_B_input              USES keypad_get_keypress menu_B_input 
+0_pressed                 USES b_mode menu_B_input 
+1_pressed                 USES b_mode menu_B_input 
+check_sub_b               USES b_mode menu_B_input 
+goto_sub_b                USES sub_B_1 menu_B 
+menu_C                    USES digit1 digit2 C_char1 C_char2 lcd_clear 
+                                lcd_char lcd_goto_row1 
+menu_C_input              USES keypad_get_keypress menu_C_input 
+input_done                USES sub_C_1 menu_C 
 0                         USES input char_in set_digits 
 1                         USES input char_in set_digits 
 2                         USES input char_in set_digits 
@@ -711,19 +869,11 @@ input_done                USES sub_A_1 menu_A
 8                         USES input char_in set_digits 
 9                         USES input char_in set_digits 
 set_digits                USES digit2 digit1 roll_digits 
-set_digits_mid            USES digit2 digit1 A_output lcd_goto_addr A_char2 
-                                lcd_char A_char1 menu_A_input 
-set_digit_1               USES input digit1 char_in A_char1 set_digits_mid 
-set_digit_2               USES input digit2 char_in A_char2 set_digits_mid 
-roll_digits               USES digit1 digit2 A_char1 A_char2 input char_in 
-menu_B                    USES b_mode lcd_clear lcd_char lcd_goto_row1 
-menu_B_input              USES keypad_get_keypress menu_B_input 
-0_pressed                 USES b_mode menu_B_input 
-1_pressed                 USES b_mode menu_B_input 
-check_sub_b               USES b_mode menu_B_input 
-goto_sub_b                USES sub_B_1 menu_B 
-menu_C                    USES lcd_clear lcd_char lcd_goto_row1 
-menu_C_input              USES keypad_get_keypress menu_C_input 
+set_digits_mid            USES digit2 digit1 C_output lcd_goto_addr C_char2 
+                                lcd_char C_char1 menu_C_input 
+set_digit_1               USES input digit1 char_in C_char1 set_digits_mid 
+set_digit_2               USES input digit2 char_in C_char2 set_digits_mid 
+roll_digits               USES digit1 digit2 C_char1 C_char2 input char_in 
 menu_1                    USES lcd_clear lcd_char 
 menu_1_input              USES keypad_get_keypress menu_1_input 
 goto_menu_A               USES menu_A menu_1 
@@ -737,7 +887,7 @@ rtc_set_time              USES i2c_start i2c_tx_byte Sec Min Hour Date Month
                                 Year i2c_stop 
 rtc_get_time              USES i2c_start i2c_tx_byte i2c_stop Byte_counter 
                                 i2c_rx_byte Sec Min Hour Date Month Year rtc_mask_data 
-rtc_display_data          USES Min lcd_num_to_char lcd_char Sec 
+rtc_display_data          USES Sec lcd_num_to_char lcd_char 
 rtc_mask_data             USES Sec Min Hour Date Month Year 
 rtc_prompt_time           USES lcd_clear lcd_goto_row0 str_prompt_row0 
                                 str_prompt_row0_length lcd_str lcd_goto_row1 str_prompt_row1 
@@ -745,7 +895,7 @@ rtc_prompt_time           USES lcd_clear lcd_goto_row0 str_prompt_row0
                                 Year Hour Min Sec 
 print_heating             USES lcd_char led_data led_write sub_A_1_mid 
 print_cooling             USES lcd_char led_data led_write sub_A_1_mid 
-sub_A_1                   USES rtc_set_time_zero lcd_clear lcd_char 
+sub_A_1                   USES off_mode rtc_set_time_zero lcd_clear lcd_char 
                                 current_temp A_output print_cooling 
 sub_A_1_mid               USES lcd_char A_char2 A_char1 lcd_goto_row1 
 get_input                 USES keypad_get_keypress Big_Delay rtc_get_time 
@@ -753,6 +903,9 @@ get_input                 USES keypad_get_keypress Big_Delay rtc_get_time
 print_temp                USES old_time Big_Delay lcd_goto_addr lm92_read_temp 
                                 current_temp lm92_write_lcd_C lcd_char A_output get_input 
 return                    USES led_data led_write 
+goto_off_mode             USES off_mode print_off 
+print_off                 USES lcd_goto_addr lcd_char led_data led_write 
+                                get_input 
 Delay                     USES b m 
 top                       USES t m b 
 bottom                    USES b 
@@ -784,14 +937,46 @@ roll_digits               USES digit1 digit2 sub_B_1_char1 sub_B_1_char2 input
 print_heating             USES lcd_char led_data led_write sub_B_2_mid 
 print_cooling             USES lcd_char led_data led_write sub_B_2_mid 
 sub_B_2                   USES rtc_set_time_zero lcd_clear lcd_char b_mode 
-sub_B_2_mid               USES lcd_char sub_B_1_char2 sub_B_1_char1 
-                                lcd_goto_row1 
+sub_B_2_mid               USES lcd_char rtc_display_data lcd_goto_row1 
 get_input                 USES keypad_get_keypress Big_Delay rtc_get_time 
                                 old_time get_input 
 print_temp                USES old_time Sec seconds B_1_output Big_Delay 
-                                lcd_goto_addr lm92_read_temp current_temp lm92_write_lcd_C 
-                                lcd_char get_input 
+                                lcd_goto_row0 b_mode 
+print_temp_mid            USES lcd_goto_row1 lcd_goto_addr lm92_read_temp 
+                                current_temp lm92_write_lcd_C lcd_char get_input 
 return                    USES led_data led_write 
+goto_print_cooling_time   USES print_cooling_time 
+print_heating_time        USES lcd_char Sec lcd_num_to_char print_temp_mid 
+print_cooling_time        USES lcd_char Sec lcd_num_to_char print_temp_mid 
+Delay                     USES b m 
+top                       USES t m b 
+bottom                    USES b 
+Big_Delay                 USES t b Delay 
+Bigger_Delay              USES Big_Delay Bigger_Delay 
+print_heating             USES off_mode lcd_goto_row0 lcd_char led_data 
+                                led_write sub_C_1_mid 
+print_cooling             USES off_mode lcd_goto_row0 lcd_char led_data 
+                                led_write sub_C_1_mid 
+goto_print_heating_2      USES print_heating 
+goto_print_cooling_2      USES print_cooling 
+sub_C_1                   USES off_mode rtc_set_time_zero lcd_clear lcd_char 
+                                current_temp C_output print_cooling 
+sub_C_1_mid               USES lcd_char C_char2 C_char1 lcd_goto_row1 
+get_input                 USES keypad_get_keypress Big_Delay rtc_get_time 
+                                old_time get_input 
+print_temp                USES old_time Big_Delay lcd_goto_addr lm92_read_temp 
+                                current_temp lm92_write_lcd_C lcd_char C_output get_input 
+return                    USES led_data led_write 
+goto_off_mode             USES off_mode print_off 
+goto_print_heating        USES goto_print_heating_2 
+goto_print_cooling        USES goto_print_cooling_2 
+print_off                 USES lcd_goto_row0 lcd_char C_char2 C_char1 led_data 
+                                led_write holding_pattern 
+holding_pattern           USES keypad_get_keypress Big_Delay rtc_get_time 
+                                old_time current_temp C_output holding_pattern 
+evaluate                  USES old_time Big_Delay lcd_goto_addr lm92_read_temp 
+                                current_temp lm92_write_lcd_C lcd_char holding_pattern 
+return_2                  USES led_data led_write 
 Delay                     USES b m 
 top                       USES t m b 
 bottom                    USES b 
@@ -845,6 +1030,6 @@ STATISTIC SECTION
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 4
-Total size of all blocks to be downloaded: 3906
+Number of blocks to be downloaded: 3
+Total size of all blocks to be downloaded: 5096
 

@@ -18,6 +18,9 @@
 			XREF PTBDD_Upper_input, toggle_clock, delay, BF_check,  n, t, m, b, lcd_clear, lcd_char
 			
 			XREF lcd_goto_row1, lcd_goto_row0, led_write, led_data, keypad_get_keypress, lcd_goto_addr, sub_A_1
+			
+MIN EQU $0A
+MAX EQU $28
 
 
 ; variable/data section
@@ -181,7 +184,19 @@ menu_A_input:
 return:
 		RTS
 		
+goto_menu_A_input:
+		JMP menu_A_input
+		
+		
 input_done:
+		;LDA A_output
+		
+		;CMP MIN
+		;BLT goto_error
+		;LDA A_output
+		;CMP MAX
+		;BGT goto_error
+		
 		JSR sub_A_1
 		JMP menu_A
 _0:
@@ -224,6 +239,9 @@ _9:
 	MOV #$09, input
 	MOV #$39, char_in
 	JMP set_digits
+
+goto_error:
+		JMP error
 	
 set_digits:
 		LDA digit2
@@ -268,3 +286,65 @@ roll_digits:
 		MOV input, digit1
 		MOV char_in, A_char1
 		RTS
+		
+error:
+		JSR lcd_goto_row0
+		
+		MOV #$FF, digit1
+		MOV #$FF, digit2
+		MOV #$20, A_char1
+		MOV #$20, A_char2
+		MOV #$FF, input
+		MOV #$20, char_in
+		
+		
+		LDA #'E'				
+		JSR lcd_char
+
+		LDA #'n'				
+		JSR lcd_char
+
+		LDA #'t'
+		JSR lcd_char
+
+		LDA #'e'
+		JSR lcd_char
+
+		LDA #'r'
+		JSR lcd_char
+
+		LDA #' '
+		JSR lcd_char
+
+		LDA #'T'
+		JSR lcd_char
+
+		LDA #'s'
+		JSR lcd_char
+
+		LDA #'e'
+		JSR lcd_char
+
+		LDA #'t'
+		JSR lcd_char
+		
+		LDA #'?'
+		JSR lcd_char
+		
+		LDA #' '
+		JSR lcd_char
+		
+		LDA #'E'
+		JSR lcd_char
+		
+		LDA #'r'
+		JSR lcd_char
+		
+		LDA #'r'
+		JSR lcd_char
+		
+		LDA #' '
+		JSR lcd_char
+		
+		JMP goto_menu_A_input
+		
