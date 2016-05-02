@@ -1,12 +1,3 @@
-;************************************************************** 
-;* File Name    : 	bus.asm
-;* Author Names : 	Matthew Handley 
-;* Date         : 	2014-03-04
-;* Description  : 	Contains subroutines for controlling the
-;*					bus.
-;*
-;**************************************************************
-
 ; EQU statements
 mDataBus		EQU	$F0		; Mask for the data bus pins on PortB
 mAddrBus		EQU	$0F		; Mask for the address bus pins on PortB
@@ -30,17 +21,7 @@ MY_ZEROPAGE: SECTION  SHORT
 
 ; code section
 MyCode:     SECTION
-			
-;************************************************************** 
-;* Subroutine Name: bus_init 
-;* Description: Reads data from the device whose address is
-;*				the lower 3 bits of bus_addr, and store the
-;*				data to the lower 4 bits of bus_data.
-;* 
-;* Registers Modified: None
-;* Entry Variables: None
-;* Exit Variables: None
-;**************************************************************
+
 bus_init:
 			; preserve registers
 			PSHA
@@ -54,18 +35,6 @@ bus_init:
 			; restore registers
 			PULA
 
-;**************************************************************
-			
-;************************************************************** 
-;* Subroutine Name: bus_read 
-;* Description: Reads data from the device whose address is
-;*				the lower 3 bits of bus_addr, and store the
-;*				data to the lower 4 bits of bus_data.
-;* 
-;* Registers Modified: None
-;* Entry Variables: bus_addr
-;* Exit Variables: bus_data
-;**************************************************************
 bus_read:
 			; preserve accumulator A
 			PSHA
@@ -95,18 +64,6 @@ bus_read:
 			; return from subroutine bus_read
 			RTS
 
-;**************************************************************
-
-
-;************************************************************** 
-;* Subroutine Name: bus_write 
-;* Description: Writes the lower 4 bits of bus_data to the 
-;*				device on whose address is the lower 3 bits
-;* 				of bus_addr. 
-;* Registers Modified: None
-;* Entry Variables: bus_addr, bus_data
-;* Exit Variables: None 
-;**************************************************************
 bus_write:
 			; preserve accumulator A
 			PSHA			
@@ -133,5 +90,4 @@ bus_write:
 			; return from subroutine bus_write
 			RTS
 
-;**************************************************************
 			

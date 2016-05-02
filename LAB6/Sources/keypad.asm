@@ -1,15 +1,3 @@
-;************************************************************** 
-;* File Name    : 	keypad.asm
-;* Author Names : 	Matthew Handley 
-;* Date         : 	2014-03-04
-;* Description  : 	Contains subroutines for reading the
-;*					keypad.
-;*
-;**************************************************************
-
-; EQU statements
-
-
 ; Include derivative-specific definitions
             INCLUDE 'derivative.inc'
             
@@ -36,19 +24,6 @@ MY_ZEROPAGE: SECTION  SHORT
 ; code section
 MyCode:     SECTION
 
-
-
-;************************************************************** 
-;* Subroutine Name: keypad_scan 
-;* Description: Scans the greyhill 4x4 keypad, and saves the 
-;*				result to variable.
-;*				Note that this method will overwrite values in 
-;*				the bus_addr and bus_data variables.
-;* 
-;* Registers Modified: None
-;* Entry Variables: None
-;* Exit Variables: keypad_data_0, keypad_data_1
-;**************************************************************
 keypad_scan:
 			; preserve registers
 			PSHA
@@ -200,20 +175,6 @@ keypad_scan:
 			; return from subroutine keypad_scan
 			RTS
 
-;**************************************************************
-
-;************************************************************** 
-;* Subroutine Name: keypad_interpret  
-;* Description: Checks if a numeric key (1..9) was pressed. 
-;*				When a key is pressed, it writes it to the LCD 
-;*				and returns the numeric value in Accu A. 
-;*				Returns 0xFF when (1..9) was not pressed.
-;*				
-;* 
-;* Registers Modified: None
-;* Entry Variables: None
-;* Exit Variables: Accu A
-;**************************************************************
 keypad_interpret:
 
 ;*** was a key pressed in the first 2 rows ? ***
@@ -511,20 +472,6 @@ keypad_interpret_done:
 			LDA		#$FF
 			RTS
 
-;**************************************************************
- 
-
-
-;************************************************************** 
-;* Subroutine Name: keypad_get_keypress  
-;* Description: Continously scans and interprets the keypad
-;*				until a key is pressed.
-;*				
-;* 
-;* Registers Modified: None
-;* Entry Variables: None
-;* Exit Variables: Accu A
-;**************************************************************
 keypad_get_keypress:
 
 			
@@ -546,6 +493,3 @@ keypad_get_keypress:
 			
 done:
 	RTS
-
-
-;**************************************************************

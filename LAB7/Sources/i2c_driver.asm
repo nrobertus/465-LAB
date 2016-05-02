@@ -1,12 +1,3 @@
-;************************************************************** 
-;* File Name    : 	i2c_driver.asm
-;* Author Names : 	Matthew Handley 
-;* Date         : 	2014-03-25
-;* Description  : 	Contains subroutines for a bit-banging 
-;*					software I2C driver, based on AN1820.
-;*
-;**************************************************************
-
 ; EQU statements
 SCL 		EQU 3 		;Serial clock bit number
 SDA 		EQU 2 		;Serial data bit number
@@ -31,14 +22,6 @@ MY_ZEROPAGE: SECTION  SHORT
 ; code section
 MyCode:     SECTION
 
-;************************************************************** 
-;* Subroutine Name: i2c_init  
-;* Description: Initilizes the software I2C driver.
-;* 
-;* Registers Modified: None
-;* Entry Variables: None
-;* Exit Variables: None
-;**************************************************************
 i2c_init: 
 			;Initialize variables
 			CLR 	Value 			;Clear all RAM variables
@@ -54,17 +37,6 @@ i2c_init:
 
 			RTS
 
-;**************************************************************
-
-
-;************************************************************** 
-;* Subroutine Name: i2c_start  
-;* Description: Generate a START condition on the bus.
-;* 
-;* Registers Modified: None
-;* Entry Variables: None
-;* Exit Variables: None
-;**************************************************************
 i2c_start: 
 			; create falling edge on SDA while SCL high
 			BCLR 	SDA, PTAD
@@ -72,16 +44,6 @@ i2c_start:
 			BCLR 	SCL, PTAD
 			RTS
 
-;**************************************************************
-
-;************************************************************** 
-;* Subroutine Name: i2c_stop  
-;* Description: Generate a STOP condition on the bus.
-;* 
-;* Registers Modified: None
-;* Entry Variables: None
-;* Exit Variables: None
-;**************************************************************
 i2c_stop: 
 			; create rising edge on SDA while SCL high
 			BCLR 	SDA, PTAD
@@ -91,21 +53,6 @@ i2c_stop:
 			JSR 	i2c_bit_delay
 			RTS
 
-;**************************************************************
-
-;************************************************************** 
-;* Subroutine Name: i2c_tx_byte  
-;* Description: Transmit the byte in Acc to the SDA pin
-;*				(Acc will not be restored on return)
-;*
-;*				Must be careful to change SDA values only 
-;*				while SCL is low, otherwise a STOP or START 
-;*				could be implied.
-;* 
-;* Registers Modified: A, X
-;* Entry Variables: None
-;* Exit Variables: None
-;**************************************************************
 i2c_tx_byte: 			
 			;Initialize variable
 			LDX 	#$08
@@ -152,18 +99,7 @@ tx_done:
 			BCLR	SCL, PTAD			; restore the clock line
 			BSET	SDA, PTADD			; SDA back to output
 			RTS							; done
-;**************************************************************
 
-;************************************************************** 
-;* Subroutine Name: i2c_rx_byte  
-;* Description: Recieves a byte from the I2C bus. 
-;*				Will Ack the byte if Accu A != 0
-;*				Data returned in Accu A 
-;* 
-;* Registers Modified: A, X
-;* Entry Variables: None
-;* Exit Variables: None
-;**************************************************************
 i2c_rx_byte:
 
 			; clear output var
@@ -303,44 +239,12 @@ rx_done_nack:
 			
 			RTS
 
-
-
-
-
-
-
-
-
-;**************************************************************
-
-;************************************************************** 
-;* Subroutine Name: i2c_setup_delay  
-;* Description: Provide some data setup time to allow
-;* 				SDA to stabilize in slave device
-;*				Completely arbitrary delay (10 cycles?)
-;* 
-;* Registers Modified: None
-;* Entry Variables: None
-;* Exit Variables: None
-;**************************************************************
 i2c_setup_delay: 
 			
 			NOP
 			NOP
 			RTS
 
-;**************************************************************
-
-;************************************************************** 
-;* Subroutine Name: i2c_setup_delay  
-;* Description: Bit delay to provide (approximately) the desired
-;*				SCL frequency
-;*				Again, this is arbitrary (16 cycles?)
-;* 
-;* Registers Modified: None
-;* Entry Variables: None
-;* Exit Variables: None
-;**************************************************************
 i2c_bit_delay: 
 			
 			NOP
@@ -350,4 +254,3 @@ i2c_bit_delay:
 			NOP
 			RTS
 
-;**************************************************************

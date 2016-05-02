@@ -189,14 +189,6 @@ goto_menu_A_input:
 		
 		
 input_done:
-		;LDA A_output
-		
-		;CMP MIN
-		;BLT goto_error
-		;LDA A_output
-		;CMP MAX
-		;BGT goto_error
-		
 		JSR sub_A_1
 		JMP menu_A
 _0:

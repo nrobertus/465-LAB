@@ -1,12 +1,3 @@
-;*******************************************************************
-;* This stationery serves as the framework for a user application. *
-;* For a more comprehensive program that demonstrates the more     *
-;* advanced functionality of this processor, please see the        *
-;* demonstration applications, located in the examples             *
-;* subdirectory of the "Freescale CodeWarrior for HC08" program    *
-;* directory.                                                      *
-;*******************************************************************
-
 ; Include derivative-specific definitions
             INCLUDE 'derivative.inc'
 
@@ -134,18 +125,7 @@ continue_mode_1:
 continue_mode_2:
 		JSR cont_mode_2
 		JMP main_function
-		
-		
-;************************************************************** 
-;* Subroutine Name: SUB_delay 
-;* Description: Decrements SUB_delay_cnt until it reaches zero.
-;*				1 count in SUB_delay_cnt is approx 4.019 us
-;*
-;* Registers Modified: None.
-;* Entry Variables: SUB_delay_cnt - 3 byte variable, determines length 
-;*					of time the SUB_delay routine will take to execute.
-;* Exit Variables: SUB_delay_cnt - will be zero at exit. 
-;**************************************************************
+
 SUB_delay:
 			; save the existing values of registers
 			PSHH
@@ -212,4 +192,3 @@ SUB_delay_done:
 			PULH
 
 			RTS
-;**************************************************************

@@ -1,15 +1,3 @@
-;************************************************************** 
-;* File Name    : 	lcd.asm
-;* Author Names : 	Matthew Handley 
-;* Date         : 	2014-03-04
-;* Description  : 	Contains subroutines for controlling the
-;*					lcd.
-;*
-;**************************************************************
-
-; EQU statements
-
-
 ; Include derivative-specific definitions
             INCLUDE 'MC9S08QG8.inc'
             
@@ -36,14 +24,6 @@ MY_ZEROPAGE: SECTION  SHORT
 ; code section
 MyCode:     SECTION
 
-;************************************************************** 
-;* Subroutine Name: lcd_init  
-;* Description: Initilizes the LCD.
-;* 
-;* Registers Modified: None
-;* Entry Variables: None
-;* Exit Variables: None
-;**************************************************************
 lcd_init:
 			; preserve registers
 			PSHA
@@ -194,16 +174,6 @@ lcd_init:
 			; return from subroutine lcd_init
 			RTS
 
-;**************************************************************
-
-;************************************************************** 
-;* Subroutine Name: lcd_write 
-;* Description: Sends data to the LCD.
-;*
-;* Registers Modified: Accu A
-;* Entry Variables: Accu A
-;* Exit Variables:  
-;**************************************************************
 lcd_write:
 			; preserve HX register
 			PSHH
@@ -257,19 +227,6 @@ lcd_write:
 			; done
 			RTS
 
-;**************************************************************
-
-;************************************************************** 
-;* Subroutine Name: lcd_char 
-;* Description: Writes a character to the LCD.
-;*				If lcd_col_idx is off of the first line, the
-;*				LCD will be cleared and the new char will be 
-;*				written to the first column of row 0
-;*
-;* Registers Modified: Accu A
-;* Entry Variables: Accu A
-;* Exit Variables:  
-;**************************************************************
 lcd_char:
 			; preserve registers
 			PSHH
@@ -309,20 +266,6 @@ lcd_char:
 			PULH
 			RTS
 
-
-;**************************************************************
-
-;************************************************************** 
-;* Subroutine Name: lcd_str 
-;* Description: Writes a 0x00 terminated string of bytes to  
-;*				the lcd, starting at the address in the HX 
-;*				register. Does not keep track of location 
-;*				on lcd.
-;*
-;* Registers Modified: Accu A, HX
-;* Entry Variables: HX, A
-;* Exit Variables:  none
-;**************************************************************
 lcd_str:
 			; save str length
 			STA		str_length
@@ -360,36 +303,11 @@ lcd_str_done:
 
 			RTS
 
-;**************************************************************
-
-
-;************************************************************** 
-;* Subroutine Name: lcd_num_to_char 
-;* Description: Takes a number in Accu A and converts it to the
-;*				ASCII representation of that number. Only works
-;*				for lower for bits of Accu A.
-;*
-;* Registers Modified: None.
-;* Entry Variables: Accu A
-;* Exit Variables: Accu A 
-;**************************************************************
 lcd_num_to_char:
 			; Add 0x30
 			ADD		#$30
 			RTS
-			
-;**************************************************************
 
-
-;************************************************************** 
-;* Subroutine Name: lcd_clear 
-;* Description: Sends the clear command to the lcd and waits
-;*				for it to clear (20 ms).
-;*
-;* Registers Modified: A, HX
-;* Entry Variables: None
-;* Exit Variables: None 
-;**************************************************************
 lcd_clear:
 						
 ;*** Wait for 20 ms ***
@@ -428,18 +346,7 @@ lcd_clear:
 
 			; done
 			RTS
-			
-;**************************************************************
 
-;************************************************************** 
-;* Subroutine Name: lcd_goto_addr 
-;* Description: Commands the LCD to put the cursor at the 
-;*				location given in Accu A.
-;*
-;* Registers Modified: A, HX
-;* Entry Variables: None
-;* Exit Variables: None 
-;**************************************************************
 lcd_goto_addr:
 
 			; store addr
@@ -456,19 +363,7 @@ lcd_goto_addr:
 			JSR		lcd_write
 
 			RTS
-			
-;**************************************************************
 
-
-;************************************************************** 
-;* Subroutine Name: lcd_goto_row0 
-;* Description: Commands the LCD to put the cursor at colum 0
-;*				of row 0.
-;*
-;* Registers Modified: A, HX
-;* Entry Variables: None
-;* Exit Variables: None 
-;**************************************************************
 lcd_goto_row0:
 
 			; go back to first column and row of LCD
@@ -479,17 +374,6 @@ lcd_goto_row0:
 			
 			RTS
 
-;**************************************************************
-
-;************************************************************** 
-;* Subroutine Name: lcd_goto_row1 
-;* Description: Commands the LCD to put the cursor at colum 0
-;*				of row 1.
-;*
-;* Registers Modified: A, HX
-;* Entry Variables: None
-;* Exit Variables: None 
-;**************************************************************
 lcd_goto_row1:
 
 			; go back to first column and row of LCD
@@ -499,7 +383,6 @@ lcd_goto_row1:
 			JSR		lcd_write
 
 			RTS
-			
-;**************************************************************
+
 
 

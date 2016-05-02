@@ -1,12 +1,3 @@
-;************************************************************** 
-;* File Name    : 	rtc_driver.asm
-;* Author Names : 	Matthew Handley 
-;* Date         : 	2014-03-27
-;* Description  : 	Contains subroutines talking to a DS1337
-;*					Real Time Clock, using i2c_driver.asm
-;*
-;**************************************************************
-
 ; EQU statements
 
 LM92_ADDR_W 		EQU $90 	; Slave address to write to LM92
@@ -45,30 +36,10 @@ MY_CONST: SECTION
 ; code section
 MyCode:     SECTION
 
-;************************************************************** 
-;* Subroutine Name: lm92_init  
-;* Description: Initilizes the LM92 digital temperature
-;*				sensor driver.
-;* 
-;* Registers Modified: None
-;* Entry Variables: None
-;* Exit Variables: None
-;**************************************************************
 lm92_init:
 			; nothing to see here			
 			RTS
 
-;**************************************************************
-
-;************************************************************** 
-;* Subroutine Name: lm92_read_temp  
-;* Description: Read temperature from LM92 and converts to 
-;*				degrees C. The result is returned in Accu A.
-;* 
-;* Registers Modified: Accu A
-;* Entry Variables: None
-;* Exit Variables: Accu A
-;**************************************************************
 lm92_read_temp:
 
 			; start condition
@@ -119,18 +90,6 @@ lm92_read_temp:
 			; done			
 			RTS
 
-;**************************************************************
-
-
-;************************************************************** 
-;* Subroutine Name: lm92_write_lcd_K  
-;* Description: Writes the temperature in Accu A to the LCD
-;*				in degrees Kelvin
-;* 
-;* Registers Modified: Accu A
-;* Entry Variables: Temp_c
-;* Exit Variables: None
-;**************************************************************
 lm92_write_lcd_K:
 
 			LDA		Temp_c
@@ -184,20 +143,7 @@ cont:
 			
 			; done
 			RTS
-			
-;**************************************************************
 
-
-
-;************************************************************** 
-;* Subroutine Name: lm92_write_lcd_K  
-;* Description: Writes the temperature in Accu A to the LCD
-;*				in degrees Kelvin
-;* 
-;* Registers Modified: Accu A
-;* Entry Variables: Temp_c
-;* Exit Variables: None
-;**************************************************************
 lm92_write_lcd_C:
 
 			LDA		Temp_c
@@ -225,8 +171,6 @@ lm92_write_lcd_C:
 			
 			; done
 			RTS
-			
-;**************************************************************
 
 
 

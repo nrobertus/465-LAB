@@ -1,15 +1,3 @@
-;************************************************************** 
-;* File Name    : 	led.asm
-;* Author Names : 	Matthew Handley 
-;* Date         : 	2014-03-04
-;* Description  : 	Contains subroutines for controlling the
-;*					DFF-driven LEDs.
-;*
-;**************************************************************
-
-; EQU statements
-
-
 ; Include derivative-specific definitions
             INCLUDE 'MC9S08QG8.inc'
             
@@ -28,15 +16,6 @@ MY_ZEROPAGE: SECTION  SHORT
 ; code section
 MyCode:     SECTION
 
-;************************************************************** 
-;* Subroutine Name: led_write 
-;* Description: Writes the 8 bits of led_data two the 8 LEDs
-;* 				on the DFFs at address 0 and 1 on the bus
-;* 
-;* Registers Modified: None
-;* Entry Variables: led_data
-;* Exit Variables: None
-;**************************************************************
 led_write:
 			; preserve accumulator A
 			PSHA
@@ -73,5 +52,3 @@ led_write:
 			PULA			
 			RTS
 
-
-;**************************************************************
