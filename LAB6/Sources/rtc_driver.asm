@@ -1,12 +1,3 @@
-;************************************************************** 
-;* File Name    : 	rtc_driver.asm
-;* Author Names : 	Matthew Handley 
-;* Date         : 	2014-03-27
-;* Description  : 	Contains subroutines talking to a DS1337
-;*					Real Time Clock, using i2c_driver.asm
-;*
-;**************************************************************
-
 ; EQU statements
 
 RTC_ADDR_W 		EQU $D0 	; Slave address to write to RTC
@@ -62,31 +53,12 @@ MY_CONST: SECTION
 ; code section
 MyCode:     SECTION
 
-;************************************************************** 
-;* Subroutine Name: rtc_init  
-;* Description: Initilizes the RTC driver.
-;* 
-;* Registers Modified: None
-;* Entry Variables: None
-;* Exit Variables: None
-;**************************************************************
 rtc_init:	
 			; set rtc
 			JSR		rtc_set_time_zero
 						
 			RTS
 
-;**************************************************************
-
-
-;************************************************************** 
-;* Subroutine Name: rtc_set_time_zero  
-;* Description: Sets the RTC to time zero
-;* 
-;* Registers Modified: A, X
-;* Entry Variables: None
-;* Exit Variables: None
-;**************************************************************
 rtc_set_time_zero:
 
 			MOV		#$00, Sec+0
@@ -112,17 +84,6 @@ rtc_set_time_zero:
 			;done
 			RTS
 
-;**************************************************************
-
-
-;************************************************************** 
-;* Subroutine Name: rtc_calc_tod
-;* Description: 
-;* 
-;* Registers Modified: A, X
-;* Entry Variables: None
-;* Exit Variables: None
-;**************************************************************
 rtc_calc_tod:
 
 			; clear TOD var
@@ -162,17 +123,6 @@ rtc_calc_tod:
 			;done
 			RTS
 
-;**************************************************************
-
-
-;************************************************************** 
-;* Subroutine Name: rtc_write_tod
-;* Description: 
-;* 
-;* Registers Modified: A, X
-;* Entry Variables: None
-;* Exit Variables: rtc_delta
-;**************************************************************
 rtc_write_tod:
 			
 
@@ -214,19 +164,7 @@ rtc_write_tod:
 			
 			; done
 			RTS
-			
-;**************************************************************
 
-
-;************************************************************** 
-;* Subroutine Name: rtc_set_time  
-;* Description: Set the RTC with the current time in the Sec, 
-;*				Min, etc var values
-;* 
-;* Registers Modified: Accu A
-;* Entry Variables: None
-;* Exit Variables: None
-;**************************************************************
 rtc_set_time:
 
 			; start condition
@@ -289,20 +227,7 @@ rtc_set_time:
 			
 			; send stop condition
 			JSR		i2c_stop
-			
 
-
-;**************************************************************
-
-
-;************************************************************** 
-;* Subroutine Name: rtc_get_time  
-;* Description: Get the RTC time and save to vars
-;* 
-;* Registers Modified: Accu A
-;* Entry Variables: None
-;* Exit Variables: None
-;**************************************************************
 rtc_get_time:
 
 			; start condition
@@ -385,87 +310,7 @@ rtc_get_time:
 
 			RTS
 
-
-;**************************************************************
-
-
-;************************************************************** 
-;* Subroutine Name: rtc_display_data  
-;* Description: Takes the data in the Sec, Min, etc vars and 
-;*				writes it to the lcd.
-;* 
-;* Registers Modified: Accu A
-;* Entry Variables: None
-;* Exit Variables: None
-;**************************************************************
 rtc_display_data:
-
-			; clear the lcd
-			;JSR 	lcd_clear
-			
-			; goto top row
-			;JSR		lcd_goto_row0
-			
-			; write header
-			;LDHX	#str_date
-			;LDA		str_date_length
-			;JSR		lcd_str
-			
-			; write month
-			;LDA		Month+0
-			;JSR		lcd_num_to_char
-			;JSR		lcd_char
-			
-			;LDA		Month+1
-			;JSR		lcd_num_to_char
-			;JSR		lcd_char
-			
-			; write '/'
-			;LDA		#'/'
-			;JSR		lcd_char
-			
-			; write Date
-			;LDA		Date+0
-			;JSR		lcd_num_to_char
-			;JSR		lcd_char
-			
-			;LDA		Date+1
-			;JSR		lcd_num_to_char
-			;JSR		lcd_char
-			
-			; write '/'
-			;LDA		#'/'
-			;JSR		lcd_char
-			
-			; write Year
-			;LDA		Year+0
-			;JSR		lcd_num_to_char
-			;JSR		lcd_char
-			
-			;LDA		Year+1
-			;JSR		lcd_num_to_char
-			;JSR		lcd_char
-			
-			; goto second row on lcd
-			;JSR		lcd_goto_row1
-			
-			; write header
-			;LDHX	#str_time
-			;LDA		str_time_length
-			;JSR		lcd_str
-			
-			; write hour
-			;LDA		Hour+0
-			;JSR		lcd_num_to_char
-			;JSR		lcd_char
-			
-			;LDA		Hour+1
-			;JSR		lcd_num_to_char
-			;JSR		lcd_char
-			
-			; write ':'
-			;LDA		#':'
-			;JSR		lcd_char
 			
 			; write minute
 			LDA		Min+0
@@ -491,21 +336,7 @@ rtc_display_data:
 			
 			; done
 			RTS
-			
 
-			
-;**************************************************************
-
-;************************************************************** 
-;* Subroutine Name: rtc_mask_data  
-;* Description: Takes the raw register values recieved in the 
-;*				Sec, Min, etc vars and masks off the data we 
-;*				want.
-;* 
-;* Registers Modified: Accu A
-;* Entry Variables: None
-;* Exit Variables: None
-;**************************************************************
 rtc_mask_data:
 
 			; Seconds
@@ -567,20 +398,6 @@ rtc_mask_data:
 			; done
 			RTS
 
-
-;**************************************************************
-
-
-;************************************************************** 
-;* Subroutine Name: rtc_prompt_time  
-;* Description: Prompts the user to enter a date and time on  
-;*				the LCD with the keypad, and saves the 
-;*				user-entered time into the Sec, Min, etc vars.
-;* 
-;* Registers Modified: Accu A
-;* Entry Variables: None
-;* Exit Variables: None
-;**************************************************************
 rtc_prompt_time:
 
 ;*** write promt to display
@@ -678,8 +495,3 @@ rtc_prompt_time:
 			
 			; done 
 			RTS
-			
-
-
-;**************************************************************
-
